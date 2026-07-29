@@ -1,10 +1,16 @@
 """
 PDF Generator
-
-Future implementation.
+Ahmed Adawy Tech Capsules
 """
 
+from pathlib import Path
+from weasyprint import HTML
 
-def export_pdf(html):
 
-    print("PDF generation coming soon...")
+class PDFGenerator:
+
+    def generate(self, html: str, output_file: Path):
+
+        HTML(string=html).write_pdf(output_file)
+
+        return output_file
