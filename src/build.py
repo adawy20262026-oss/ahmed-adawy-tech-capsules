@@ -1,40 +1,43 @@
 """
 Ahmed Adawy Tech Capsules
-Build Script
-
-Author: Ahmed Adawy
-Version: 0.1.0
+Build Engine v0.1.0
 """
+
+from parser import read_capsule
+from html_generator import generate_html
 
 from pathlib import Path
 
 
-PROJECT_NAME = "Ahmed Adawy Tech Capsules"
-VERSION = "0.1.0"
+def main():
 
+    capsule = Path("../capsules/linux-cli.md")
 
-def print_banner():
     print("=" * 50)
-    print(PROJECT_NAME)
-    print(f"Version {VERSION}")
+    print("Ahmed Adawy Tech Capsules")
     print("=" * 50)
 
+    print("\nReading capsule...")
 
-def check_structure():
-    folders = [
-        "assets",
-        "capsules",
-        "templates",
-        "output",
-    ]
+    markdown = read_capsule(capsule)
 
-    print("\nChecking project structure...\n")
+    print("Done.")
 
-    for folder in folders:
-        if Path(folder).exists():
-            print(f"[OK] {folder}")
-        else:
-            print(f"[Missing] {folder}")
+    print("\nGenerating HTML...")
+
+    html = generate_html(markdown)
+
+    print("Done.")
+
+    print("\nPreview:\n")
+
+    print(html[:600])
+
+    print("\nBuild completed successfully.")
+
+
+if __name__ == "__main__":
+    main()            print(f"[Missing] {folder}")
 
 
 def main():
