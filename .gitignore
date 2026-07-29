@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual Environment
+venv/
+
+# Build Output
+output/*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
