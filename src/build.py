@@ -1,3 +1,4 @@
+from pdf_generator import PDFGenerator
 from pathlib import Path
 
 from parser import MarkdownParser
@@ -31,7 +32,14 @@ def main():
         html,
         encoding="utf-8"
     )
+pdf = PDFGenerator()
 
+pdf.generate(
+    html,
+    Path("output/book.pdf")
+)
+
+print("PDF generated successfully.")
     print("Book generated successfully.")
 
 
