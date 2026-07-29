@@ -25,13 +25,14 @@ def main():
     html = renderer.render(document)
 
     OUTPUT.parent.mkdir(
-        exist_ok=True
-    )
+    exist_ok=True
+)
 
-    OUTPUT.write_text(
-        html,
-        encoding="utf-8"
-    )
+OUTPUT.write_text(
+    html,
+    encoding="utf-8"
+)
+
 pdf = PDFGenerator()
 
 pdf.generate(
@@ -40,8 +41,7 @@ pdf.generate(
 )
 
 print("PDF generated successfully.")
-    print("Book generated successfully.")
-
+print("Book generated successfully.")
 
 if __name__ == "__main__":
     main()
