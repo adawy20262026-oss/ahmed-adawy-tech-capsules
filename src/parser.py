@@ -1,19 +1,99 @@
 """
-Markdown Parser
+Tech Capsules Markdown Parser
+Author: Ahmed Adawy
 """
 
-from pathlib import Path
+from dataclasses import dataclass
 
 
-def read_capsule(path):
-    """Read markdown capsule."""
+@dataclass
+class Heading:
+    level: int
+    text: str
 
-    with open(path, "r", encoding="utf-8") as file:
-        return file.read()
+
+@dataclass
+class Paragraph:
+    text: str
 
 
-if __name__ == "__main__":
+@dataclass
+class BulletList:
+    items: list[str]
 
-    capsule = Path("../capsules/linux-cli.md")
 
-    print(read_capsule(capsule))
+class MarkdownParser:
+    def parse(self, text: str):
+        document = []
+
+        lines = text.splitlines()
+
+        i = 0
+
+        while i < len(lines):
+
+            line = lines[i].strip()
+
+            if not line:
+                i += 1
+                continue
+
+            # Heading
+            if line.startswith("#"):
+
+                level = len(line) - len(line.lstrip("#"))
+
+                text = line[level:].strip()
+
+                document.append(
+                    Heading(level, text)
+                )
+
+                i += 1
+                continue
+
+            # Bullet List
+            if line.startswith("- "):
+
+                items = []
+
+                while i < len(lines):
+
+                    current = lines[i].strip()
+
+                    if current.startswith("- "):
+                        items.append(current[2:].strip())
+                        i += 1
+                    else:
+                        break
+
+                document.append(
+                    BulletList(items)
+                )
+
+                continue
+
+            # Paragraph
+
+            paragraph = []
+
+            while i < len(lines):
+
+                current = lines[i].strip()
+
+                if (
+                    not current
+                    or current.startswith("#")
+                    or current.startswith("- ")
+                ):
+                    break
+
+                paragraph.append(current)
+
+                i += 1
+
+            document.append(
+                Paragraph(" ".join(paragraph))
+            )
+
+        return document
