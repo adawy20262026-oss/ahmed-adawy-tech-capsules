@@ -1,1 +1,4 @@
-# Project dependencies will be added here.
+markdown
+weasyprint
+pygments
+pyyaml
