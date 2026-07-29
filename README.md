@@ -1,3 +1,4 @@
+![GitHub last commit](https://img.shields.io/github/last-commit/adawy20262026-oss/ahmed-adawy-tech-capsules)
 # Ahmed Adawy Tech Capsules
 
 > Build beautiful technical micro-books from Markdown.
