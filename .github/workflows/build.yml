@@ -7,11 +7,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -23,7 +21,14 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install markdown weasyprint pygments
 
-      - name: Show Project Structure
+      - name: Build Capsule
         run: |
-          ls -R
+          python src/build.py
+
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: tech-capsules
+          path: output/
