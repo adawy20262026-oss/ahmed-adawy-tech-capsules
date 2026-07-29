@@ -1,50 +1,38 @@
-"""
-Ahmed Adawy Tech Capsules
-Build Engine v0.1.0
-"""
-
-from parser import read_capsule
-from html_generator import generate_html
-
 from pathlib import Path
 
-
-def main():
-
-    capsule = Path("../capsules/linux-cli.md")
-
-    print("=" * 50)
-    print("Ahmed Adawy Tech Capsules")
-    print("=" * 50)
-
-    print("\nReading capsule...")
-
-    markdown = read_capsule(capsule)
-
-    print("Done.")
-
-    print("\nGenerating HTML...")
-
-    html = generate_html(markdown)
-
-    print("Done.")
-
-    print("\nPreview:\n")
-
-    print(html[:600])
-
-    print("\nBuild completed successfully.")
+from parser import MarkdownParser
+from renderer import HTMLRenderer
 
 
-if __name__ == "__main__":
-    main()            print(f"[Missing] {folder}")
+SOURCE = Path("capsules/example.md")
+
+OUTPUT = Path("output/book.html")
 
 
 def main():
-    print_banner()
-    check_structure()
-    print("\nBuilder is ready.")
-    print("PDF generation will be added soon.")
+
+    markdown = SOURCE.read_text(
+        encoding="utf-8"
+    )
+
+    parser = MarkdownParser()
+
+    document = parser.parse(markdown)
+
+    renderer = HTMLRenderer()
+
+    html = renderer.render(document)
+
+    OUTPUT.parent.mkdir(
+        exist_ok=True
+    )
+
+    OUTPUT.write_text(
+        html,
+        encoding="utf-8"
+    )
+
+    print("Book generated successfully.")
 
 
 if __name__ == "__main__":
