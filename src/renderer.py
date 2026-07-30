@@ -1,3 +1,5 @@
+from mistletoe.block_token import BlockCode
+# أو إذا كنت تستخدم Custom Tokens/Imports أضف BlockCode للمستوردات
 """
 Tech Capsules HTML Renderer
 Author: Ahmed Adawy
