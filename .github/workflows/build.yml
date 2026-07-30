@@ -36,7 +36,7 @@ jobs:
 
       - name: Build Capsule
         run: |
-          python src/build.py
+          python src/build.py capsules/linux-cli-essentials.md
 
       - name: Debug Output Directory
         run: |
