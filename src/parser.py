@@ -22,78 +22,79 @@ class BulletList:
     items: list[str]
 
 
+@dataclass
+class CodeBlock:
+    language: str
+    code: str
+
+
 class MarkdownParser:
     def parse(self, text: str):
         document = []
-
         lines = text.splitlines()
-
         i = 0
 
         while i < len(lines):
-
             line = lines[i].strip()
 
             if not line:
                 i += 1
                 continue
 
-            # Heading
-            if line.startswith("#"):
+            # Code Block (```python ... ```)
+            if line.startswith("```"):
+                language = line.lstrip("`").strip()
+                code_lines = []
+                i += 1
 
-                level = len(line) - len(line.lstrip("#"))
-
-                text = line[level:].strip()
+                while i < len(lines):
+                    current_line = lines[i]
+                    if current_line.strip().startswith("```"):
+                        i += 1
+                        break
+                    code_lines.append(current_line)
+                    i += 1
 
                 document.append(
-                    Heading(level, text)
+                    CodeBlock(language=language, code="\n".join(code_lines))
                 )
+                continue
 
+            # Heading
+            if line.startswith("#"):
+                level = len(line) - len(line.lstrip("#"))
+                text = line[level:].strip()
+                document.append(Heading(level, text))
                 i += 1
                 continue
 
             # Bullet List
             if line.startswith("- "):
-
                 items = []
-
                 while i < len(lines):
-
                     current = lines[i].strip()
-
                     if current.startswith("- "):
                         items.append(current[2:].strip())
                         i += 1
                     else:
                         break
-
-                document.append(
-                    BulletList(items)
-                )
-
+                document.append(BulletList(items))
                 continue
 
             # Paragraph
-
             paragraph = []
-
             while i < len(lines):
-
                 current = lines[i].strip()
-
                 if (
                     not current
                     or current.startswith("#")
                     or current.startswith("- ")
+                    or current.startswith("```")
                 ):
                     break
-
                 paragraph.append(current)
-
                 i += 1
 
-            document.append(
-                Paragraph(" ".join(paragraph))
-            )
+            document.append(Paragraph(" ".join(paragraph)))
 
         return document
