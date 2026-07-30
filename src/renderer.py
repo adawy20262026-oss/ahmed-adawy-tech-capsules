@@ -197,7 +197,6 @@ pre code {
 """)
 
         for node in document:
-
     if isinstance(node, Heading):
         html.append(f"<h{node.level}>{node.text}</h{node.level}>")
 
