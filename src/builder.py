@@ -26,8 +26,10 @@ class CapsuleBuilder:
         output = Path("output")
         output.mkdir(exist_ok=True)
 
-        html_file = output / "book.html"
-        pdf_file = output / "book.pdf"
+        capsule_name = source.stem
+
+html_file = output / f"{capsule_name}.html"
+pdf_file = output / f"{capsule_name}.pdf"
 
         html_file.write_text(
             html,
