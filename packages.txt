@@ -1,0 +1,5 @@
+libgobject-2.0-0
+pango1.0-tools
+libcairo2
+libffi-dev
+shared-mime-info
