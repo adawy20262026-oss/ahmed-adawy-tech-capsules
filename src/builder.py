@@ -1,4 +1,3 @@
-
 """
 Capsule Builder
 Ahmed Adawy Tech Capsules
@@ -23,7 +22,7 @@ class CapsuleBuilder:
         renderer = HTMLRenderer()
         html = renderer.render(document)
 
-                output = Path("output")
+        output = Path("output")
         output.mkdir(exist_ok=True)
 
         capsule_name = source.stem
