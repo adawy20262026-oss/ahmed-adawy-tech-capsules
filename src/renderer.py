@@ -4,26 +4,29 @@ class HTMLRenderer:
     def render(self, document):
         html = []
         
-        # 1. HTML Header and Full CSS Styles
+        # 1. HTML Header with RTL & Arabic Fonts
         html.append("""<!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <title>Tech Capsule</title>
 <style>
+/* IMPORT ARABIC FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
 /* PAGE SETUP & WEASYPRINT PRINT STYLES */
 @page {
     size: A4;
     margin: 20mm 15mm 20mm 15mm;
-    @top-right {
-        content: "Ahmed Adawy Tech Capsules";
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    @top-left {
+        content: "كبسولات أحمد العدوي التقنية";
+        font-family: 'Cairo', sans-serif;
         font-size: 8pt;
         color: #888888;
     }
     @bottom-center {
-        content: "Page " counter(page) " of " counter(pages);
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        content: "صفحة " counter(page) " من " counter(pages);
+        font-family: 'Cairo', sans-serif;
         font-size: 9pt;
         color: #666666;
     }
@@ -31,16 +34,18 @@ class HTMLRenderer:
 
 @page :first {
     margin: 0;
-    @top-right { content: normal; }
+    @top-left { content: normal; }
     @bottom-center { content: normal; }
 }
 
 /* GENERAL TYPOGRAPHY & BODY STYLES */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
     color: #2d3748;
-    line-height: 1.7;
+    line-height: 1.8;
     font-size: 11pt;
+    direction: rtl;
+    text-align: right;
 }
 
 /* COVER PAGE STYLE */
@@ -62,14 +67,13 @@ body {
     font-weight: bold;
     font-size: 10pt;
     letter-spacing: 1px;
-    text-transform: uppercase;
     margin-bottom: 20px;
 }
 
 .cover-title {
-    font-size: 32pt;
+    font-size: 30pt;
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.3;
     margin: 0 0 15px 0;
     color: #f8fafc;
 }
@@ -121,14 +125,15 @@ p {
 ul {
     margin-top: 5px;
     margin-bottom: 15px;
-    padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 0;
 }
 
 li {
     margin-bottom: 6px;
 }
 
-/* INLINE CODE & CODE BLOCKS */
+/* INLINE CODE & CODE BLOCKS (Keep LTR for code) */
 code {
     background-color: #f1f5f9;
     color: #0f172a;
@@ -136,6 +141,8 @@ code {
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 9.5pt;
+    direction: ltr;
+    display: inline-block;
 }
 
 pre {
@@ -145,6 +152,8 @@ pre {
     border-radius: 8px;
     overflow-x: auto;
     font-family: 'Courier New', Courier, monospace;
+    direction: ltr;
+    text-align: left;
 }
 
 pre code {
@@ -164,7 +173,7 @@ table {
 th, td {
     border: 1px solid #cbd5e1;
     padding: 10px 12px;
-    text-align: left;
+    text-align: right;
 }
 
 th {
@@ -196,12 +205,12 @@ img {
         # 2. Cover Page
         html.append("""
 <div class="cover-page">
-    <div class="cover-badge">TECH CAPSULE</div>
-    <div class="cover-title">Ahmed Adawy Tech Capsules</div>
-    <div class="cover-subtitle">Architectural Insights & Backend Best Practices</div>
+    <div class="cover-badge">كبسولة تقنية</div>
+    <div class="cover-title">كبسولات أحمد العدوي التقنية</div>
+    <div class="cover-subtitle">رؤى معمارية وأفضل الممارسات في تطوير الأنظمة</div>
     <div class="cover-footer">
-        <strong>Author:</strong> Ahmed Adawy<br>
-        <strong>Generated via:</strong> Automated Pipeline
+        <strong>الكاتب:</strong> أحمد العدوي<br>
+        <strong>تم الإنشاء عبر:</strong> Automated Pipeline
     </div>
 </div>
 <div class="content">
@@ -235,7 +244,7 @@ img {
                     for cell in row:
                         table_html.append(f"<td>{cell}</td>")
                     table_html.append("</tr>")
-                table_html.append("tbody")
+                table_html.append("</tbody>")
                 table_html.append("</table>")
                 html.append("\n".join(table_html))
 
