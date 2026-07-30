@@ -184,7 +184,21 @@ pre code {
         </html>
         """)
 
-        # Start generating body content nodes
+        # 1. Automatic Cover Page
+        html.append("""
+        <div class="cover-page">
+            <div class="cover-badge">TECH CAPSULE</div>
+            <div class="cover-title">Ahmed Adawy Tech Capsules</div>
+            <div class="cover-subtitle">Architectural Insights & Backend Best Practices</div>
+            <div class="cover-footer">
+                <strong>Author:</strong> Ahmed Adawy<br>
+                <strong>Generated via:</strong> Automated Pipeline
+            </div>
+        </div>
+        <div class="content">
+        """)
+
+        # 2. Document Content Nodes
         for node in document:
             if isinstance(node, Heading):
                 html.append(f"<h{node.level}>{node.text}</h{node.level}>")
@@ -198,7 +212,7 @@ pre code {
             elif isinstance(node, CodeBlock):
                 html.append(f"<pre><code>{node.text}</code></pre>")
 
-        # Close content wrapper and document
+        # 3. Close Wrappers & Document
         html.append("""
         </div>
         </body>
