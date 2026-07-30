@@ -1,4 +1,5 @@
 import sys
+import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -9,7 +10,10 @@ from parser import MarkdownParser
 from renderer import HTMLRenderer
 from pdf_generator import PDFGenerator
 
-SOURCE = Path("capsules/linux-cli-essentials.md")
+if len(sys.argv) > 1:
+    SOURCE = Path(sys.argv[1])
+else:
+    SOURCE = Path("capsules/linux-cli-essentials.md")
 OUTPUT_HTML = Path("output/book.html")
 OUTPUT_PDF = Path("output/book.pdf")
 
