@@ -1,3 +1,9 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from renderer import HTMLRenderer
 from pathlib import Path
 from parser import MarkdownParser
 from renderer import HTMLRenderer
