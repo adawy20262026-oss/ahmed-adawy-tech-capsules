@@ -105,3 +105,6 @@ def parse_markdown(markdown_text):
             nodes.append(Table(header=header, rows=rows))
 
     return nodes
+    
+# Alias for backward compatibility with build.py
+MarkdownParser = parse_markdown
