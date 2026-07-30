@@ -1,13 +1,10 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/adawy20262026-oss/ahmed-adawy-tech-capsules)
 # Ahmed Adawy Tech Capsules
 
-> Build beautiful technical micro-books from Markdown.
+Build beautiful technical micro-books from Markdown.
 
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Status](https://img.shields.io/badge/Status-In%20Development-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
-
----
+![Python](https://img.shields.io/badge/Python-3.x-blue) ![Status](https://img.shields.io/badge/Status-In_Development-orange) ![License](https://img.shields.io/badge/License-MIT-green)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black__white.svg)](https://share.streamlit.io)
 
 ## 📖 About
 
