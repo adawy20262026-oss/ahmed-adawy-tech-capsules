@@ -9,7 +9,7 @@ from parser import MarkdownParser
 from renderer import HTMLRenderer
 from pdf_generator import PDFGenerator
 
-SOURCE = Path("capsules/example.md")
+SOURCE = Path("capsules/linux-cli-essentials.md")
 OUTPUT_HTML = Path("output/book.html")
 OUTPUT_PDF = Path("output/book.pdf")
 
