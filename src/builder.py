@@ -41,3 +41,15 @@ class CapsuleBuilder:
         )
 
         return html_file, pdf_file
+
+    def build_all(self):
+
+        capsules = Path("capsules")
+
+        for source in sorted(capsules.glob("*.md")):
+
+            print(f"Building {source.name}")
+
+            self.build(source)
+
+        print("All capsules generated successfully.")
