@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install System Dependencies
+      - name: Install System Dependencies for WeasyPrint
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -38,11 +38,12 @@ jobs:
         run: |
           python src/build.py
 
-      - name: Show Output
+      - name: Debug Output Directory
         run: |
-          ls -R output
+          echo "=== Checking Output Directory Content ==="
+          ls -lah output/
 
-      - name: Upload Output
+      - name: Upload Output Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tech-capsules
