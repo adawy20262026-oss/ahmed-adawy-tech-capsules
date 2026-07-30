@@ -1,3 +1,8 @@
+"""
+Build Entry Point
+Ahmed Adawy Tech Capsules
+"""
+
 from pathlib import Path
 import sys
 
@@ -6,16 +11,22 @@ from builder import CapsuleBuilder
 
 def main():
 
-    if len(sys.argv) > 1:
-        source = Path(sys.argv[1])
-    else:
-        source = Path("capsules/linux-cli-essentials.md")
-
     builder = CapsuleBuilder()
 
-    builder.build(source)
+    # لو المستخدم كتب اسم ملف
+    if len(sys.argv) > 1:
 
-    print("Capsule built successfully.")
+        source = Path(sys.argv[1])
+
+        builder.build(source)
+
+    # لو مفيش Arguments
+    # ابني كل الكبسولات
+    else:
+
+        builder.build_all()
+
+    print("Build completed successfully.")
 
 
 if __name__ == "__main__":
