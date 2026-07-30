@@ -180,42 +180,29 @@ pre code {
 </style>
 </head>
 
-<body>
-
-<!-- Automatic Cover Page -->
-<div class="cover-page">
-    <div class="cover-badge">TECH CAPSULE</div>
-    <div class="cover-title">Ahmed Adawy Tech Capsules</div>
-    <div class="cover-subtitle">Architectural Insights & Backend Best Practices</div>
-    <div class="cover-footer">
-        <strong>Author:</strong> Ahmed Adawy<br>
-        <strong>Generated via:</strong> Automated Pipeline
-    </div>
-</div>
-
-<div class="content">
-""")
-
-        for node in document:
-    if isinstance(node, Heading):
-        html.append(f"<h{node.level}>{node.text}</h{node.level}>")
-
-        elif isinstance(node, Paragraph):
-            html.append(f"<p>{node.text}</p>")
-
-        elif isinstance(node, BulletList):
-            html.append("<ul>")
-            for item in node.items:
-                html.append(f"<li>{item}</li>")
-            html.append("</ul>")
-
-        elif isinstance(node, CodeBlock):
-            html.append(f"<pre><code>{node.text}</code></pre>")
-        
-        html.append("""
-</div>
 </body>
-</html>
-""")
+        </html>
+        """)
+
+        # Start generating body content nodes
+        for node in document:
+            if isinstance(node, Heading):
+                html.append(f"<h{node.level}>{node.text}</h{node.level}>")
+            elif isinstance(node, Paragraph):
+                html.append(f"<p>{node.text}</p>")
+            elif isinstance(node, BulletList):
+                html.append("<ul>")
+                for item in node.items:
+                    html.append(f"<li>{item}</li>")
+                html.append("</ul>")
+            elif isinstance(node, CodeBlock):
+                html.append(f"<pre><code>{node.text}</code></pre>")
+
+        # Close content wrapper and document
+        html.append("""
+        </div>
+        </body>
+        </html>
+        """)
 
         return "\n".join(html)
