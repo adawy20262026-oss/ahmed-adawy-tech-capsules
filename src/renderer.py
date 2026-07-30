@@ -1,4 +1,10 @@
-from .parser import  Heading, Paragraph, BulletList, CodeBlock, Image, Table
+import sys
+import os
+
+# ضمان قراءة المجلد الحالي بغض النظر عن طريقة التشغيل
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from parser import Heading, Paragraph, BulletList, CodeBlock, Image, Table
 
 class HTMLRenderer:
     def render(self, document):
