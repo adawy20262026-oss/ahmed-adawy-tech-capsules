@@ -106,5 +106,10 @@ def parse_markdown(markdown_text):
 
     return nodes
     
-# Alias for backward compatibility with build.py
-MarkdownParser = parse_markdown
+# Wrapper class to match build.py usage
+class MarkdownParser:
+    def parse(self, markdown_text):
+        return parse_markdown(markdown_text)
+
+    def __call__(self, markdown_text):
+        return parse_markdown(markdown_text)
