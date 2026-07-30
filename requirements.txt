@@ -3,4 +3,4 @@ weasyprint
 pygments
 pyyaml
 mistletoe
-weasyprint
+streamlit
