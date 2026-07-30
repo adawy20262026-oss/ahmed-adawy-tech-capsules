@@ -1,40 +1,26 @@
-
-"""
-Tech Capsules HTML Renderer
-Author: Ahmed Adawy
-"""
-
-from parser import Heading, Paragraph, BulletList, CodeBlock
-
+from parser import Heading, Paragraph, BulletList, CodeBlock, Image, Table
 
 class HTMLRenderer:
-
     def render(self, document):
-
         html = []
-
-        html.append("""
-<!DOCTYPE html>
+        
+        # 1. HTML Header and Full CSS Styles
+        html.append("""<!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="utf-8">
 <title>Tech Capsule</title>
-
 <style>
-/* ==========================================
-   PAGE SETUP & WEASYPRINT PRINT STYLES
-   ========================================== */
+/* PAGE SETUP & WEASYPRINT PRINT STYLES */
 @page {
     size: A4;
     margin: 20mm 15mm 20mm 15mm;
-    
     @top-right {
         content: "Ahmed Adawy Tech Capsules";
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         font-size: 8pt;
         color: #888888;
     }
-    
     @bottom-center {
         content: "Page " counter(page) " of " counter(pages);
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -43,16 +29,13 @@ class HTMLRenderer:
     }
 }
 
-/* الصفحة الأولى: غلاف بدون Header أو Footer */
 @page :first {
     margin: 0;
     @top-right { content: normal; }
     @bottom-center { content: normal; }
 }
 
-/* ==========================================
-   GENERAL TYPOGRAPHY & BODY STYLES
-   ========================================== */
+/* GENERAL TYPOGRAPHY & BODY STYLES */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #2d3748;
@@ -60,9 +43,7 @@ body {
     font-size: 11pt;
 }
 
-/* ==========================================
-   COVER PAGE STYLE
-   ========================================== */
+/* COVER PAGE STYLE */
 .cover-page {
     page-break-after: always;
     height: 100vh;
@@ -109,9 +90,7 @@ body {
     font-size: 10pt;
 }
 
-/* ==========================================
-   HEADINGS & CONTENT STYLES
-   ========================================== */
+/* HEADINGS & CONTENT STYLES */
 h1 {
     font-size: 20pt;
     color: #0f172a;
@@ -149,7 +128,7 @@ li {
     margin-bottom: 6px;
 }
 
-/* Inline Code & Code Blocks */
+/* INLINE CODE & CODE BLOCKS */
 code {
     background-color: #f1f5f9;
     color: #0f172a;
@@ -166,10 +145,6 @@ pre {
     border-radius: 8px;
     overflow-x: auto;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 9pt;
-    line-height: 1.5;
-    margin: 15px 0;
-    page-break-inside: avoid;
 }
 
 pre code {
@@ -177,28 +152,62 @@ pre code {
     color: inherit;
     padding: 0;
 }
+
+/* TABLES STYLING */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 10pt;
+}
+
+th, td {
+    border: 1px solid #cbd5e1;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* IMAGES STYLING */
+.img-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
 </style>
 </head>
+<body>
+""")
 
-</body>
-        </html>
-        """)
-
-        # 1. Automatic Cover Page
+        # 2. Cover Page
         html.append("""
-        <div class="cover-page">
-            <div class="cover-badge">TECH CAPSULE</div>
-            <div class="cover-title">Ahmed Adawy Tech Capsules</div>
-            <div class="cover-subtitle">Architectural Insights & Backend Best Practices</div>
-            <div class="cover-footer">
-                <strong>Author:</strong> Ahmed Adawy<br>
-                <strong>Generated via:</strong> Automated Pipeline
-            </div>
-        </div>
-        <div class="content">
-        """)
+<div class="cover-page">
+    <div class="cover-badge">TECH CAPSULE</div>
+    <div class="cover-title">Ahmed Adawy Tech Capsules</div>
+    <div class="cover-subtitle">Architectural Insights & Backend Best Practices</div>
+    <div class="cover-footer">
+        <strong>Author:</strong> Ahmed Adawy<br>
+        <strong>Generated via:</strong> Automated Pipeline
+    </div>
+</div>
+<div class="content">
+""")
 
-        # 2. Document Content Nodes
+        # 3. Process Content Nodes
         for node in document:
             if isinstance(node, Heading):
                 html.append(f"<h{node.level}>{node.text}</h{node.level}>")
@@ -211,12 +220,30 @@ pre code {
                 html.append("</ul>")
             elif isinstance(node, CodeBlock):
                 html.append(f"<pre><code>{node.text}</code></pre>")
+            elif isinstance(node, Image):
+                html.append(f'<div class="img-container"><img src="{node.src}" alt="{node.alt}"></div>')
+            elif isinstance(node, Table):
+                table_html = ["<table>"]
+                if node.header:
+                    table_html.append("<thead><tr>")
+                    for h in node.header:
+                        table_html.append(f"<th>{h}</th>")
+                    table_html.append("</tr></thead>")
+                table_html.append("<tbody>")
+                for row in node.rows:
+                    table_html.append("<tr>")
+                    for cell in row:
+                        table_html.append(f"<td>{cell}</td>")
+                    table_html.append("</tr>")
+                table_html.append("tbody")
+                table_html.append("</table>")
+                html.append("\n".join(table_html))
 
-        # 3. Close Wrappers & Document
+        # 4. Close Wrappers & Document
         html.append("""
-        </div>
-        </body>
-        </html>
-        """)
+</div>
+</body>
+</html>
+""")
 
         return "\n".join(html)
