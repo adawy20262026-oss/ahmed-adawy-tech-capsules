@@ -8,13 +8,19 @@ from pathlib import Path
 from parser import MarkdownParser
 from renderer import HTMLRenderer
 from pdf_generator import PDFGenerator
+from metadata import MetadataParser
 
 
 class CapsuleBuilder:
 
     def build(self, source: Path):
 
-        markdown = source.read_text(encoding="utf-8")
+        text = source.read_text(encoding="utf-8")
+
+        metadata_parser = MetadataParser()
+        metadata, markdown = metadata_parser.parse(text)
+
+        print("Metadata:", metadata)
 
         parser = MarkdownParser()
         document = parser.parse(markdown)
