@@ -1,4 +1,4 @@
-from parser import Heading, Paragraph, BulletList, CodeBlock, Image, Table
+from .parser import  Heading, Paragraph, BulletList, CodeBlock, Image, Table
 
 class HTMLRenderer:
     def render(self, document):
