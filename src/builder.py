@@ -23,13 +23,13 @@ class CapsuleBuilder:
         renderer = HTMLRenderer()
         html = renderer.render(document)
 
-        output = Path("output")
+                output = Path("output")
         output.mkdir(exist_ok=True)
 
         capsule_name = source.stem
 
-html_file = output / f"{capsule_name}.html"
-pdf_file = output / f"{capsule_name}.pdf"
+        html_file = output / f"{capsule_name}.html"
+        pdf_file = output / f"{capsule_name}.pdf"
 
         html_file.write_text(
             html,
