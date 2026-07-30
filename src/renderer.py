@@ -1,11 +1,10 @@
-from mistletoe.block_token import BlockCode
-# أو إذا كنت تستخدم Custom Tokens/Imports أضف BlockCode للمستوردات
+
 """
 Tech Capsules HTML Renderer
 Author: Ahmed Adawy
 """
 
-from parser import Heading, Paragraph, BulletList
+from parser import Heading, Paragraph, BulletList, CodeBlock
 
 
 class HTMLRenderer:
@@ -200,17 +199,20 @@ pre code {
         for node in document:
 
             if isinstance(node, Heading):
-                html.append(f"<h{node.level}>{node.text}</h{node.level}>")
+            html.append(f"<h{node.level}>{node.text}</h{node.level}>")
 
-            elif isinstance(node, Paragraph):
-                html.append(f"<p>{node.text}</p>")
+        elif isinstance(node, Paragraph):
+            html.append(f"<p>{node.text}</p>")
 
-            elif isinstance(node, BulletList):
-                html.append("<ul>")
-                for item in node.items:
-                    html.append(f"<li>{item}</li>")
-                html.append("</ul>")
+        elif isinstance(node, BulletList):
+            html.append("<ul>")
+            for item in node.items:
+                html.append(f"<li>{item}</li>")
+            html.append("</ul>")
 
+        elif isinstance(node, CodeBlock):
+            html.append(f"<pre><code>{node.text}</code></pre>")
+        
         html.append("""
 </div>
 </body>
