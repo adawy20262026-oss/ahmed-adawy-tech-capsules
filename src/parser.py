@@ -1,100 +1,107 @@
-"""
-Tech Capsules Markdown Parser
-Author: Ahmed Adawy
-"""
+import mistletoe
+from mistletoe.block_token import Heading as MistletoeHeading, Paragraph as MistletoeParagraph, List as MistletoeList, BlockCode, Table as MistletoeTable
+from mistletoe.span_token import RawText, Strong, Emphasis, InlineCode, Link as MistletoeLink, Image as MistletoeImage
 
-from dataclasses import dataclass
+# Custom Data Classes / Classes for Document Nodes
 
-
-@dataclass
 class Heading:
-    level: int
-    text: str
+    def __init__(self, level, text):
+        self.level = level
+        self.text = text
 
-
-@dataclass
 class Paragraph:
-    text: str
+    def __init__(self, text):
+        self.text = text
 
-
-@dataclass
 class BulletList:
-    items: list[str]
+    def __init__(self, items):
+        self.items = items
 
-
-@dataclass
 class CodeBlock:
-    language: str
-    code: str
+    def __init__(self, text, language=""):
+        self.text = text
+        self.language = language
+
+class Image:
+    def __init__(self, src, alt):
+        self.src = src
+        self.alt = alt
+
+class Table:
+    def __init__(self, header, rows):
+        self.header = header
+        self.rows = rows
 
 
-class MarkdownParser:
-    def parse(self, text: str):
-        document = []
-        lines = text.splitlines()
-        i = 0
+def parse_inline(token):
+    """Recursively converts inline markdown tokens (Bold, Italic, Links, etc.) to HTML string."""
+    if isinstance(token, RawText):
+        return token.content
+    elif isinstance(token, Strong):
+        return f"<strong>{''.join(parse_inline(child) for child in token.children)}</strong>"
+    elif isinstance(token, Emphasis):
+        return f"<em>{''.join(parse_inline(child) for child in token.children)}</em>"
+    elif isinstance(token, InlineCode):
+        return f"<code>{''.join(parse_inline(child) for child in token.children)}</code>"
+    elif isinstance(token, MistletoeLink):
+        target = token.target
+        children_text = ''.join(parse_inline(child) for child in token.children)
+        return f'<a href="{target}">{children_text}</a>'
+    elif hasattr(token, 'children') and token.children:
+        return ''.join(parse_inline(child) for child in token.children)
+    return getattr(token, 'content', '')
 
-        while i < len(lines):
-            line = lines[i].strip()
 
-            if not line:
-                i += 1
-                continue
+def parse_markdown(markdown_text):
+    """Parses markdown string and returns a list of custom node objects."""
+    doc = mistletoe.Document(markdown_text)
+    nodes = []
 
-            # Code Block (```python ... ```)
-            if line.startswith("```"):
-                language = line.lstrip("`").strip()
-                code_lines = []
-                i += 1
+    for token in doc.children:
+        if isinstance(token, MistletoeHeading):
+            text = ''.join(parse_inline(child) for child in token.children)
+            nodes.append(Heading(token.level, text))
 
-                while i < len(lines):
-                    current_line = lines[i]
-                    if current_line.strip().startswith("```"):
-                        i += 1
-                        break
-                    code_lines.append(current_line)
-                    i += 1
+        elif isinstance(token, MistletoeParagraph):
+            # Check if paragraph contains only an image
+            if len(token.children) == 1 and isinstance(token.children[0], MistletoeImage):
+                img_token = token.children[0]
+                alt_text = ''.join(parse_inline(child) for child in img_token.children)
+                nodes.append(Image(src=img_token.src, alt=alt_text))
+            else:
+                text = ''.join(parse_inline(child) for child in token.children)
+                nodes.append(Paragraph(text))
 
-                document.append(
-                    CodeBlock(language=language, code="\n".join(code_lines))
-                )
-                continue
+        elif isinstance(token, MistletoeList):
+            items = []
+            for item in token.children:
+                # Extract text inside list item
+                item_text = ""
+                for child in item.children:
+                    if hasattr(child, 'children'):
+                        item_text += ''.join(parse_inline(c) for c in child.children)
+                items.append(item_text)
+            nodes.append(BulletList(items))
 
-            # Heading
-            if line.startswith("#"):
-                level = len(line) - len(line.lstrip("#"))
-                text = line[level:].strip()
-                document.append(Heading(level, text))
-                i += 1
-                continue
+        elif isinstance(token, BlockCode):
+            code_text = ''.join(parse_inline(child) for child in token.children)
+            nodes.append(CodeBlock(text=code_text, language=token.language))
 
-            # Bullet List
-            if line.startswith("- "):
-                items = []
-                while i < len(lines):
-                    current = lines[i].strip()
-                    if current.startswith("- "):
-                        items.append(current[2:].strip())
-                        i += 1
-                    else:
-                        break
-                document.append(BulletList(items))
-                continue
+        elif isinstance(token, MistletoeTable):
+            # Table Header
+            header = []
+            if hasattr(token, 'header'):
+                for cell in token.header.children:
+                    header.append(''.join(parse_inline(child) for child in cell.children))
+            
+            # Table Rows
+            rows = []
+            for row in token.children:
+                row_data = []
+                for cell in row.children:
+                    row_data.append(''.join(parse_inline(child) for child in cell.children))
+                rows.append(row_data)
+                
+            nodes.append(Table(header=header, rows=rows))
 
-            # Paragraph
-            paragraph = []
-            while i < len(lines):
-                current = lines[i].strip()
-                if (
-                    not current
-                    or current.startswith("#")
-                    or current.startswith("- ")
-                    or current.startswith("```")
-                ):
-                    break
-                paragraph.append(current)
-                i += 1
-
-            document.append(Paragraph(" ".join(paragraph)))
-
-        return document
+    return nodes
