@@ -1,15 +1,18 @@
 from pathlib import Path
-
 from parser import MarkdownParser
 from renderer import HTMLRenderer
 from pdf_generator import PDFGenerator
 
-
 SOURCE = Path("capsules/example.md")
-OUTPUT = Path("output/book.html")
+OUTPUT_HTML = Path("output/book.html")
+OUTPUT_PDF = Path("output/book.pdf")
 
 
 def main():
+    if not SOURCE.exists():
+        print(f"Error: Source file {SOURCE} does not exist.")
+        return
+
     markdown = SOURCE.read_text(encoding="utf-8")
 
     parser = MarkdownParser()
@@ -18,29 +21,17 @@ def main():
     renderer = HTMLRenderer()
     html = renderer.render(document)
 
-    OUTPUT.parent.mkdir(exist_ok=True)
+    OUTPUT_HTML.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_HTML.write_text(html, encoding="utf-8")
+    print("HTML generated successfully.")
 
-    OUTPUT.write_text(
-        html,
-        encoding="utf-8"
-    )
-
-    pdf = PDFGenerator()
     try:
-    pdf = PDFGenerator()
-    pdf.generate(
-        html,
-        Path("output/book.pdf")
-    )
-    print("PDF generated successfully.")
-except Exception as e:
-    print("PDF ERROR:")
-    print(e)
-
-print("Book generated successfully.")
-
-    print("PDF generated successfully.")
-    print("Book generated successfully.")
+        pdf = PDFGenerator()
+        pdf.generate(html, OUTPUT_PDF)
+        print("PDF generated successfully.")
+    except Exception as e:
+        print(f"Failed to generate PDF: {e}")
+        raise e
 
 
 if __name__ == "__main__":
