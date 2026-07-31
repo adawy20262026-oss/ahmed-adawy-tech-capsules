@@ -5,11 +5,11 @@ Ahmed Adawy Tech Capsules
 
 from pathlib import Path
 
-from src.parser import MarkdownParser
-from src.renderer import HTMLRenderer
-from src.pdf_generator import PDFGenerator
-from src.metadata import MetadataParser
-from src.index_generator import IndexGenerator
+from parser import MarkdownParser
+from renderer import HTMLRenderer
+from pdf_generator import PDFGenerator
+from metadata import MetadataParser
+from index_generator import IndexGenerator
 
 
 class CapsuleBuilder:
