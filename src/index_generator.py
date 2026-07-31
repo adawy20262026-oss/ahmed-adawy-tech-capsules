@@ -17,52 +17,73 @@ class IndexGenerator:
 <html>
 <head>
 <meta charset="utf-8">
+
 <title>Ahmed Adawy Tech Capsules</title>
 
 <style>
 
 body{
-    font-family:Arial,sans-serif;
-    margin:40px;
-    background:#f5f5f5;
+font-family:Arial,sans-serif;
+margin:40px;
+background:#f5f5f5;
 }
 
 h1{
-    color:#0F62FE;
+color:#0F62FE;
+}
+
+p{
+color:#666;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-}
-
-th,td{
-    border:1px solid #ddd;
-    padding:12px;
+width:100%;
+border-collapse:collapse;
+background:white;
 }
 
 th{
-    background:#0F62FE;
-    color:white;
+background:#0F62FE;
+color:white;
+padding:12px;
+}
+
+td{
+padding:12px;
+border:1px solid #ddd;
+}
+
+tr:nth-child(even){
+background:#fafafa;
 }
 
 a{
-    text-decoration:none;
+text-decoration:none;
+font-weight:bold;
+color:#0F62FE;
 }
 
 </style>
 
 </head>
+
 <body>
 
 <h1>Ahmed Adawy Tech Capsules</h1>
+
+<p>
+Automatically generated library.
+</p>
 
 <table>
 
 <tr>
 
 <th>Title</th>
+
+<th>Category</th>
+
+<th>Version</th>
 
 <th>PDF</th>
 
@@ -77,21 +98,35 @@ a{
             html.append(f"""
 <tr>
 
-<td>{capsule}</td>
+<td>{capsule["title"]}</td>
 
-<td><a href="{capsule}.pdf">PDF</a></td>
+<td>{capsule["category"]}</td>
 
-<td><a href="{capsule}.html">HTML</a></td>
+<td>{capsule["version"]}</td>
+
+<td>
+<a href="{capsule["file"]}.pdf">
+PDF
+</a>
+</td>
+
+<td>
+<a href="{capsule["file"]}.html">
+HTML
+</a>
+</td>
 
 </tr>
 """)
 
         html.append("""
+
 </table>
 
 </body>
 
 </html>
+
 """)
 
         output = Path("output/index.html")
