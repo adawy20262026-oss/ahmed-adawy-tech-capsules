@@ -158,7 +158,10 @@ onkeyup="searchCapsules()"
         for capsule in capsules:
 
             title = capsule.get("title", "Untitled Capsule")
+            subtitle = capsule.get("subtitle", "")
             category = capsule.get("category", "General")
+            difficulty = capsule.get("difficulty", "Beginner")
+            language = capsule.get("language", "en")
             version = capsule.get("version", "1.0")
             filename = capsule.get("file", "unknown")
             
