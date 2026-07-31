@@ -115,34 +115,7 @@ max-width:100%;
 
 <body>
 """
-font-family:Arial,sans-serif;
-margin:40px;
-line-height:1.7;
-color:#222;
-}
 
-.cover{
-text-align:center;
-padding:120px 40px;
-page-break-after:always;
-background:#0F62FE;
-color:white;
-border-radius:12px;
-}
-
-.cover h1{
-font-size:42px;
-margin-bottom:20px;
-color:white;
-}
-
-.cover h2{
-font-size:22px;
-font-weight:normal;
-color:#E0E0E0;
-}
-
-.cover p{
 margin-top:45px;
 font-size:18px;
 color:white;
