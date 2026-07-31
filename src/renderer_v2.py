@@ -12,6 +12,15 @@ from parser import (
     Table,
 )
 
+from theme import (
+    PRIMARY_COLOR,
+    SECONDARY_COLOR,
+    BACKGROUND,
+    TEXT_COLOR,
+    TITLE_FONT,
+    BODY_FONT,
+)
+
 
 class HTMLRenderer:
 
@@ -31,7 +40,7 @@ class HTMLRenderer:
 
     def header(self):
 
-        return """<!DOCTYPE html>
+        return f"""<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -39,7 +48,73 @@ class HTMLRenderer:
 
 <style>
 
-body{
+body{{
+font-family:{BODY_FONT},sans-serif;
+margin:40px;
+line-height:1.7;
+color:{TEXT_COLOR};
+background:{BACKGROUND};
+}}
+
+.cover{{
+text-align:center;
+padding:120px 40px;
+page-break-after:always;
+background:{PRIMARY_COLOR};
+color:white;
+}}
+
+.cover h1{{
+font-size:42px;
+margin-bottom:20px;
+color:white;
+}}
+
+.cover h2{{
+font-size:22px;
+font-weight:normal;
+color:#e5e7eb;
+}}
+
+.cover p{{
+margin-top:40px;
+font-size:18px;
+color:white;
+}}
+
+pre{{
+background:{SECONDARY_COLOR};
+color:white;
+padding:15px;
+border-radius:8px;
+overflow:auto;
+}}
+
+code{{
+background:#f5f5f5;
+padding:2px 6px;
+}}
+
+table{{
+border-collapse:collapse;
+width:100%;
+}}
+
+th,td{{
+border:1px solid #ddd;
+padding:8px;
+}}
+
+img{{
+max-width:100%;
+}}
+
+</style>
+
+</head>
+
+<body>
+"""
 font-family:Arial,sans-serif;
 margin:40px;
 line-height:1.7;
