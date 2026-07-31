@@ -6,7 +6,7 @@ Ahmed Adawy Tech Capsules
 from pathlib import Path
 
 from parser import MarkdownParser
-from renderer import HTMLRenderer
+from renderer_v2 import HTMLRenderer
 from pdf_generator import PDFGenerator
 from metadata import MetadataParser
 
@@ -26,7 +26,11 @@ class CapsuleBuilder:
         document = parser.parse(markdown)
 
         renderer = HTMLRenderer()
-        html = renderer.render(document)
+
+        html = renderer.render(
+            document,
+            metadata
+        )
 
         output = Path("output")
         output.mkdir(exist_ok=True)
