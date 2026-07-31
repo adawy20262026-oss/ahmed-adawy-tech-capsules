@@ -116,45 +116,6 @@ max-width:100%;
 <body>
 """
 
-margin-top:45px;
-font-size:18px;
-color:white;
-}
-
-pre{
-background:#1E1E1E;
-color:white;
-padding:15px;
-border-radius:8px;
-overflow:auto;
-}
-
-code{
-background:#f5f5f5;
-padding:2px 6px;
-}
-
-table{
-border-collapse:collapse;
-width:100%;
-}
-
-th,td{
-border:1px solid #ddd;
-padding:8px;
-}
-
-img{
-max-width:100%;
-}
-
-</style>
-
-</head>
-
-<body>
-"""
-
     def cover(self, metadata):
 
         title = metadata.get(
