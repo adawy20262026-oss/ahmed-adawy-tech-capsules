@@ -52,10 +52,13 @@ class CapsuleBuilder:
         )
 
         return {
-            "file": capsule_name,
-            "title": metadata.get("title", capsule_name),
-            "category": metadata.get("category", "-"),
-            "version": metadata.get("version", "-")
+    "file": capsule_name,
+    "title": metadata.get("title", capsule_name),
+    "subtitle": metadata.get("subtitle", ""),
+    "category": metadata.get("category", "-"),
+    "difficulty": metadata.get("difficulty", "Beginner"),
+    "language": metadata.get("language", "en"),
+    "version": metadata.get("version", "-")
         }
 
     def build_all(self):
