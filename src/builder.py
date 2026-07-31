@@ -21,8 +21,6 @@ class CapsuleBuilder:
         metadata_parser = MetadataParser()
         metadata, markdown = metadata_parser.parse(text)
 
-        print("Metadata:", metadata)
-
         parser = MarkdownParser()
         document = parser.parse(markdown)
 
@@ -51,24 +49,29 @@ class CapsuleBuilder:
             pdf_file
         )
 
-        return capsule_name
+        return {
+            "file": capsule_name,
+            "title": metadata.get("title", capsule_name),
+            "category": metadata.get("category", "-"),
+            "version": metadata.get("version", "-")
+        }
 
     def build_all(self):
 
         capsules_dir = Path("capsules")
 
-        built_capsules = []
+        library = []
 
         for source in sorted(capsules_dir.glob("*.md")):
 
             print(f"Building {source.name}")
 
-            capsule_name = self.build(source)
-
-            built_capsules.append(capsule_name)
+            library.append(
+                self.build(source)
+            )
 
         IndexGenerator().generate(
-            built_capsules
+            library
         )
 
         print("All capsules generated successfully.")
