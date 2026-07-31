@@ -6,7 +6,7 @@ Ahmed Adawy Tech Capsules
 from pathlib import Path
 
 from parser import MarkdownParser
-from renderer_v2 import HTMLRenderer
+from renderer import HTMLRenderer
 from pdf_generator import PDFGenerator
 from metadata import MetadataParser
 from index_generator import IndexGenerator
