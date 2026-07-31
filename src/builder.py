@@ -9,6 +9,7 @@ from parser import MarkdownParser
 from renderer_v2 import HTMLRenderer
 from pdf_generator import PDFGenerator
 from metadata import MetadataParser
+from index_generator import IndexGenerator
 
 
 class CapsuleBuilder:
@@ -50,16 +51,24 @@ class CapsuleBuilder:
             pdf_file
         )
 
-        return html_file, pdf_file
+        return capsule_name
 
     def build_all(self):
 
-        capsules = Path("capsules")
+        capsules_dir = Path("capsules")
 
-        for source in sorted(capsules.glob("*.md")):
+        built_capsules = []
+
+        for source in sorted(capsules_dir.glob("*.md")):
 
             print(f"Building {source.name}")
 
-            self.build(source)
+            capsule_name = self.build(source)
+
+            built_capsules.append(capsule_name)
+
+        IndexGenerator().generate(
+            built_capsules
+        )
 
         print("All capsules generated successfully.")
