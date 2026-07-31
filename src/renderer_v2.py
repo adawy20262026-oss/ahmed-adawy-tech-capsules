@@ -48,25 +48,29 @@ color:#222;
 
 .cover{
 text-align:center;
-padding:80px 20px;
+padding:120px 40px;
 page-break-after:always;
+background:#0F62FE;
+color:white;
+border-radius:12px;
 }
 
 .cover h1{
-font-size:36px;
-margin-bottom:10px;
-color:#0F62FE;
+font-size:42px;
+margin-bottom:20px;
+color:white;
 }
 
 .cover h2{
-font-size:20px;
+font-size:22px;
 font-weight:normal;
-color:#666;
+color:#E0E0E0;
 }
 
 .cover p{
-margin-top:40px;
+margin-top:45px;
 font-size:18px;
+color:white;
 }
 
 pre{
@@ -126,7 +130,10 @@ max-width:100%;
         )
 
         return f"""
+        
 <div class="cover">
+
+<p>Ahmed Adawy Tech Capsules</p>
 
 <h1>{title}</h1>
 
