@@ -175,31 +175,34 @@ onkeyup="searchCapsules()"
 📘 {title}
 </div>
 
-<div
-class="badge"
-style="background:{color};"
->
+<p style="color:#666;margin-top:8px;margin-bottom:18px;">
+{subtitle}
+</p>
+
+<div class="badge" style="background:{color};">
 {category}
 </div>
 
+<p>
+⭐ <b>{difficulty}</b>
+</p>
+
+<p>
+🌍 {language.upper()}
+</p>
+
 <div class="version">
-
 Version {version}
-
 </div>
 
 <div class="buttons">
 
-<a href="{filename}.pdf">
-
-PDF
-
+<a href="{filename}.html">
+📄 Read Online
 </a>
 
-<a href="{filename}.html">
-
-HTML
-
+<a href="{filename}.pdf">
+⬇ Download PDF
 </a>
 
 </div>
