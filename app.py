@@ -6,7 +6,7 @@ import os
 import tempfile
 from src.parser import parse_markdown
 from src.renderer import HTMLRenderer
-from weasyprint import HTML
+from src.pdf_generator import PDFGenerator
 
 # ضبط إعدادات الصفحة
 st.set_page_config(
@@ -42,7 +42,7 @@ if uploaded_file is not None:
                 html_code = renderer.render(nodes)
                 
                 # 3. Generating PDF via WeasyPrint
-                pdf_bytes = HTML(string=html_code).write_pdf()
+                pdf_bytes = PDFGenerator().generate(html_code)
                 
                 st.balloons()
                 st.success("تم إنشاء الـ PDF بنجاح!")
