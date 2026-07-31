@@ -1,58 +1,96 @@
+"""
+Ahmed Adawy Tech Capsules
+Streamlit Application
+"""
+
+import os
 import sys
-import os
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+# Allow running from project root
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 import streamlit as st
-import os
-import tempfile
-from src.parser import parse_markdown
+
+from src.parser import MarkdownParser
 from src.renderer import HTMLRenderer
 from src.pdf_generator import PDFGenerator
 
-# ضبط إعدادات الصفحة
+
 st.set_page_config(
-    page_title="مُحول الكبسولات التقنية لـ PDF",
+    page_title="Ahmed Adawy Tech Capsules",
     page_icon="📚",
     layout="centered"
 )
 
-st.title("📚 محول الكبسولات التقنية إلى PDF")
-st.write("قم برفع ملف الماركداون (.md) وسيتم تحويله فوراً إلى كتاب PDF احترافي يدعم اللغة العربية.")
+st.title("📚 Ahmed Adawy Tech Capsules")
+st.write(
+    "Upload a Markdown (.md) file to generate a professional PDF capsule."
+)
 
-# رفع الملف
-uploaded_file = st.file_uploader("اختر ملف Markdown", type=["md"])
+uploaded_file = st.file_uploader(
+    "Choose Markdown file",
+    type=["md"]
+)
 
 if uploaded_file is not None:
-    # قراءة المحتوى
-    markdown_content = uploaded_file.read().decode("utf-8")
-    
-    st.success("تم رفع الملف بنجاح!")
-    
-    # معاينة سريعة للمحتوى
-    with st.expander("معاينة النص"):
-        st.code(markdown_content, language="markdown")
 
-    if st.button("🚀 تحويل إلى PDF"):
-        with st.spinner("جاري معالجة الكبسولة وبناء الـ PDF..."):
+    try:
+
+        markdown_content = uploaded_file.read().decode("utf-8")
+
+    except UnicodeDecodeError:
+
+        st.error(
+            "The uploaded file is not UTF-8 encoded."
+        )
+
+        st.stop()
+
+    st.success("File uploaded successfully.")
+
+    with st.expander("Preview"):
+
+        st.code(
+            markdown_content,
+            language="markdown"
+        )
+
+    if st.button("🚀 Generate PDF"):
+
+        with st.spinner("Building capsule..."):
+
             try:
-                # 1. Parsing
-                nodes = parse_markdown(markdown_content)
-                
-                # 2. Rendering HTML
+
+                parser = MarkdownParser()
+
+                document = parser.parse(
+                    markdown_content
+                )
+
                 renderer = HTMLRenderer()
-                html_code = renderer.render(nodes)
-                
-                # 3. Generating PDF via WeasyPrint
-                pdf_bytes = PDFGenerator().generate(html_code)
-                
-                st.balloons()
-                st.success("تم إنشاء الـ PDF بنجاح!")
-                
-                # زِر تحميل الـ PDF
+
+                html = renderer.render(
+                    document
+                )
+
+                pdf = PDFGenerator().generate(
+                    html
+                )
+
+                st.success(
+                    "PDF generated successfully."
+                )
+
                 st.download_button(
-                    label="📥 تحميل ملف الـ PDF",
-                    data=pdf_bytes,
+                    label="📥 Download PDF",
+                    data=pdf,
                     file_name=f"{os.path.splitext(uploaded_file.name)[0]}.pdf",
                     mime="application/pdf"
                 )
-            except Exception as e:
-                st.error(f"حدث خطأ أثناء المعالجة: {str(e)}")
+
+            except Exception as exc:
+
+                st.exception(exc)
