@@ -7,9 +7,11 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -34,17 +36,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build Capsule
+      - name: Build Project
         run: |
-          python src/build.py capsules/linux-cli-essentials.md
+          python src/build.py
 
-      - name: Debug Output Directory
+      - name: Show Output
         run: |
-          echo "=== Checking Output Directory Content ==="
-          ls -lah output/
+          ls -R output || true
+          ls -R docs || true
 
-      - name: Upload Output Artifact
+      - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
           name: tech-capsules
-          path: output/
+          path: |
+            output
+            docs
