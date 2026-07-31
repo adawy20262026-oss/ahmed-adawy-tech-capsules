@@ -31,6 +31,8 @@ class CapsuleBuilder:
             metadata
         )
 
+        print(html[:500])
+        
         output = Path("output")
         output.mkdir(exist_ok=True)
 
