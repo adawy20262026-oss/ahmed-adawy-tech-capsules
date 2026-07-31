@@ -10,16 +10,33 @@ from footer import FooterRenderer
 
 
 class HTMLRenderer:
+    """
+    Main HTML renderer.
 
-    def render(self, document, metadata):
+    Supports both:
+
+    renderer.render(document)
+
+    and
+
+    renderer.render(document, metadata)
+
+    so Streamlit and Builder use the same engine.
+    """
+
+    def render(self, document, metadata=None):
+
+        if metadata is None:
+            metadata = {}
 
         html = []
 
         html.append(self.header())
 
-        html.append(
-            CoverRenderer().render(metadata)
-        )
+        if metadata:
+            html.append(
+                CoverRenderer().render(metadata)
+            )
 
         html.append(
             ContentRenderer().render(document)
@@ -29,12 +46,15 @@ class HTMLRenderer:
             FooterRenderer().render()
         )
 
+        html.append("</body>")
+        html.append("</html>")
+
         return "\n".join(html)
 
     def header(self):
 
         return f"""<!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
