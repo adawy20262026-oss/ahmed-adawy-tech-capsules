@@ -157,10 +157,11 @@ onkeyup="searchCapsules()"
 
         for capsule in capsules:
 
-            title = capsule["title"]
-            category = capsule["category"]
-            version = capsule["version"]
-            filename = capsule["file"]
+            title = capsule.get("title", "Untitled Capsule")
+            category = capsule.get("category", "General")
+            version = capsule.get("version", "1.0")
+            filename = capsule.get("file", "unknown")
+            
 
             color = colors.get(category, "#444")
 
