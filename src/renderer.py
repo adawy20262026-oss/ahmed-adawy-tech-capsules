@@ -5,6 +5,7 @@ Ahmed Adawy Tech Capsules
 
 from styles import get_styles
 from cover import CoverRenderer
+from toc import TOCRenderer
 from content_renderer import ContentRenderer
 from footer import FooterRenderer
 
@@ -33,15 +34,24 @@ class HTMLRenderer:
 
         html.append(self.header())
 
+        # Cover Page
         if metadata:
             html.append(
                 CoverRenderer().render(metadata)
             )
 
+        # Table of Contents
+        toc_html = TOCRenderer().render(document)
+
+        if toc_html:
+            html.append(toc_html)
+
+        # Main Content
         html.append(
             ContentRenderer().render(document)
         )
 
+        # Footer
         html.append(
             FooterRenderer().render()
         )
