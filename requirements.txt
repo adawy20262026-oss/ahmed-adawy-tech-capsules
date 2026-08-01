@@ -4,3 +4,4 @@ pygments
 pyyaml
 mistletoe
 streamlit
+pytest
