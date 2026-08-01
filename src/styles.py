@@ -3,6 +3,8 @@ Styles
 Ahmed Adawy Tech Capsules
 """
 
+from highlighter import SyntaxHighlighter
+
 from theme import (
     PRIMARY_COLOR,
     SECONDARY_COLOR,
@@ -26,6 +28,8 @@ from theme import (
 
 
 def get_styles():
+
+    pygments_css = SyntaxHighlighter().css()
 
     return f"""
 body{{
@@ -77,7 +81,6 @@ font-size:18px;
 
 pre{{
 background:{CODE_BACKGROUND};
-color:white;
 padding:15px;
 border-radius:{BORDER_RADIUS};
 overflow:auto;
@@ -85,10 +88,13 @@ white-space:pre-wrap;
 }}
 
 code{{
-background:#f3f4f6;
-padding:2px 6px;
-border-radius:4px;
 font-family:monospace;
+}}
+
+.highlight{{
+margin:20px 0;
+border-radius:{BORDER_RADIUS};
+overflow:auto;
 }}
 
 table{{
@@ -184,4 +190,9 @@ padding-left:40px;
 font-size:14px;
 color:#666;
 }}
+
+/* ===== Pygments Theme ===== */
+
+{pygments_css}
+
 """
