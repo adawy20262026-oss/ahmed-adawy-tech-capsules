@@ -1,128 +1,294 @@
-![GitHub last commit](https://img.shields.io/github/last-commit/adawy20262026-oss/ahmed-adawy-tech-capsules)
 # Ahmed Adawy Tech Capsules
 
-Build beautiful technical micro-books from Markdown.
+> **Write once in Markdown. Generate beautiful technical publications everywhere.**
 
-![Python](https://img.shields.io/badge/Python-3.x-blue) ![Status](https://img.shields.io/badge/Status-In_Development-orange) ![License](https://img.shields.io/badge/License-MIT-green)
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black__white.svg)](https://share.streamlit.io)
-
-## 📖 About
-
-Ahmed Adawy Tech Capsules is an open-source toolkit for creating professional technical micro-books.
-
-Instead of writing long books, this project focuses on creating concise, high-quality Tech Capsules that are easy to read and visually appealing.
-
-Each capsule is written in Markdown and can be exported into beautifully formatted PDF documents.
+![Python](https://img.shields.io/badge/Python-3.12+-blue)
+![Status](https://img.shields.io/badge/Status-Stable-success)
+![Build](https://img.shields.io/github/actions/workflow/status/adawy20262026-oss/ahmed-adawy-tech-capsules/build.yml?branch=main)
+![License](https://img.shields.io/badge/License-MIT-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/adawy20262026-oss/ahmed-adawy-tech-capsules)
 
 ---
 
-## ✨ Features
+# Overview
 
-- Professional PDF generation
-- Markdown-based writing
-- Clean project structure
-- Syntax-highlighted code blocks
-- Beautiful typography
-- Reusable templates
-- Easy customization
-- Open Source
+**Ahmed Adawy Tech Capsules** is an open-source publishing engine for creating professional technical micro-books from Markdown.
+
+Instead of maintaining separate versions for PDF, HTML, and online articles, this project follows a simple philosophy:
+
+> **One Markdown file → Multiple professional outputs.**
+
+The project automatically transforms Markdown into beautifully formatted publications with a clean architecture designed for scalability and future publishing automation.
 
 ---
 
-## 📂 Project Structure
+# Features
 
+## Core Engine
+
+- Markdown Parsing Engine
+- HTML Rendering Engine
+- Professional PDF Generation
+- Modular Architecture
+- Metadata Support
+- Automatic Cover Pages
+- Automatic Table of Contents
+- Professional Typography
+- Responsive Images
+- Styled Tables
+- Code Block Rendering
+- HTML Escaping
+- Library Index Generator
+
+---
+
+## User Interface
+
+- Streamlit Interface
+- Markdown Upload
+- Live PDF Generation
+- Instant PDF Download
+
+---
+
+## Developer Experience
+
+- GitHub Actions CI
+- Automatic Capsule Builds
+- Modular Components
+- Clean Project Structure
+- Easily Extendable Architecture
+
+---
+
+# Architecture
+
+```text
+                 Markdown
+                     │
+                     ▼
+             Markdown Parser
+                     │
+                     ▼
+              Internal Document
+                     │
+                     ▼
+              HTML Renderer
+      ┌──────────┬────────────┐
+      ▼          ▼            ▼
+   Cover      TOC         Content
+                     │
+                     ▼
+               HTML Document
+                     │
+                     ▼
+              PDF Generator
+                     │
+                     ▼
+            Professional PDF
 ```
+
+---
+
+# Project Structure
+
+```text
 ahmed-adawy-tech-capsules/
-│
-├── assets/
+
+├── app.py
 ├── capsules/
+├── assets/
 ├── output/
-├── src/
 ├── templates/
 │
-├── README.md
-├── LICENSE
+├── src/
+│   ├── builder.py
+│   ├── parser.py
+│   ├── renderer.py
+│   ├── content_renderer.py
+│   ├── cover.py
+│   ├── toc.py
+│   ├── footer.py
+│   ├── pdf_generator.py
+│   ├── metadata.py
+│   ├── styles.py
+│   ├── theme.py
+│   └── ...
+│
 ├── requirements.txt
-└── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## 🚀 Roadmap
+# Quick Start
 
-### Phase 1
-- [x] Repository setup
-- [x] Initial project structure
-- [x] First capsule draft
+Clone the repository
 
-### Phase 2
-- [ ] Markdown parser
-- [ ] HTML generator
-- [ ] PDF generator
+```bash
+git clone https://github.com/adawy20262026-oss/ahmed-adawy-tech-capsules.git
+```
 
-### Phase 3
-- [ ] Professional PDF theme
-- [ ] Cover page
-- [ ] Table of Contents
-- [ ] Syntax highlighting
+Enter the project
 
-### Phase 4
-- [ ] GitHub Actions
-- [ ] Automatic PDF builds
-- [ ] GitHub Pages documentation
+```bash
+cd ahmed-adawy-tech-capsules
+```
 
----
+Install dependencies
 
-## 📚 Tech Capsules
+```bash
+pip install -r requirements.txt
+```
 
-| Capsule | Status |
-|---------|--------|
-| Linux CLI Essentials | 🚧 In Progress |
-| Linux Permissions | ⏳ Planned |
-| Docker Fundamentals | ⏳ Planned |
-| Docker Compose | ⏳ Planned |
-| Docker Networking | ⏳ Planned |
-| Docker Security | ⏳ Planned |
-| NGINX Reverse Proxy | ⏳ Planned |
-| FastAPI Deployment | ⏳ Planned |
+Run the application
+
+```bash
+streamlit run app.py
+```
 
 ---
 
-## 🛠️ Technologies
+# How It Works
+
+```
+Write Markdown
+
+        │
+
+        ▼
+
+Upload to Streamlit
+
+        │
+
+        ▼
+
+Generate HTML
+
+        │
+
+        ▼
+
+Generate PDF
+
+        │
+
+        ▼
+
+Download Your Capsule
+```
+
+---
+
+# Current Capabilities
+
+- Professional PDF Layout
+- Cover Pages
+- Automatic Table of Contents
+- Styled Code Blocks
+- Styled Tables
+- Metadata Parsing
+- Multi-Capsule Build
+- Library Index Generation
+- GitHub Actions Automation
+- Streamlit Interface
+
+---
+
+# Roadmap
+
+## Version 0.5
+
+- Syntax Highlighting (Pygments)
+- Better Code Formatting
+- Page Numbers
+- Cover Images
+- HTML Preview
+- ZIP Export
+
+---
+
+## Version 0.6
+
+- HTML Export
+- EPUB Export
+- DOCX Export
+- Theme Selector
+- Custom Templates
+
+---
+
+## Version 1.0
+
+**One Markdown → Publish Everywhere**
+
+Future publishing targets include:
+
+- Medium
+- Hashnode
+- Dev.to
+- Substack
+- Static HTML
+- GitHub Pages
+
+---
+
+# Why This Project?
+
+Writing technical content should not require maintaining multiple versions of the same document.
+
+This project allows technical authors to focus on writing once while automatically producing professional publications with a consistent design and scalable architecture.
+
+---
+
+# Technologies
 
 - Python
 - Markdown
 - HTML
 - CSS
-- PDF Generation
+- WeasyPrint
+- Streamlit
+- GitHub Actions
 
 ---
 
-## 🎯 Vision
+# Contributing
 
-The goal of this project is to build a complete open-source publishing toolkit for creating high-quality technical publications with a consistent design and professional layout.
+Contributions are welcome.
 
----
-
-## 🤝 Contributing
-
-Contributions, suggestions, and improvements are always welcome.
+Whether you're fixing bugs, improving documentation, or adding new publishing capabilities, every contribution helps make the project better.
 
 Feel free to open an Issue or submit a Pull Request.
 
 ---
 
-## 👨‍💻 Author
+# Author
 
-**Ahmed Adawy**
+## Ahmed Adawy
 
-Software Engineer • AI Researcher • Technical Author
+AI Technical Author • Python Developer • Open Source Enthusiast
 
-GitHub:
+GitHub
+
 https://github.com/adawy20262026-oss
+
+LinkedIn
+
+https://www.linkedin.com/in/ahmed-adawy
 
 ---
 
-## 📄 License
+# License
 
-This project is licensed under the MIT License.
+Released under the MIT License.
+
+---
+
+## Vision
+
+The long-term vision is to transform this project into a complete technical publishing platform capable of producing and distributing professional publications from a single Markdown source.
+
+**Write Once. Publish Everywhere.**
