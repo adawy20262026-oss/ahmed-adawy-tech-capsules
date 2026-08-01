@@ -8,9 +8,14 @@ class CoverRenderer:
 
     def render(self, metadata):
 
+        project = metadata.get(
+            "project",
+            "Ahmed Adawy Tech Capsules"
+        )
+
         title = metadata.get(
             "title",
-            "Ahmed Adawy Tech Capsules"
+            "Untitled Capsule"
         )
 
         subtitle = metadata.get(
@@ -23,6 +28,21 @@ class CoverRenderer:
             "Ahmed Adawy"
         )
 
+        category = metadata.get(
+            "category",
+            "General"
+        )
+
+        difficulty = metadata.get(
+            "difficulty",
+            "Beginner"
+        )
+
+        language = metadata.get(
+            "language",
+            "English"
+        )
+
         version = metadata.get(
             "version",
             "1.0"
@@ -31,25 +51,50 @@ class CoverRenderer:
         return f"""
 <div class="cover">
 
-<p>Ahmed Adawy Tech Capsules</p>
+<div class="cover-brand">
+{project}
+</div>
 
 <h1>{title}</h1>
 
 <h2>{subtitle}</h2>
 
-<p>
+<div class="cover-divider"></div>
 
-<b>Author</b><br>
+<table class="cover-meta">
 
-{author}
+<tr>
+<td><strong>Author</strong></td>
+<td>{author}</td>
+</tr>
 
-</p>
+<tr>
+<td><strong>Category</strong></td>
+<td>{category}</td>
+</tr>
 
-<p>
+<tr>
+<td><strong>Difficulty</strong></td>
+<td>{difficulty}</td>
+</tr>
 
-Version {version}
+<tr>
+<td><strong>Language</strong></td>
+<td>{language}</td>
+</tr>
 
-</p>
+<tr>
+<td><strong>Version</strong></td>
+<td>{version}</td>
+</tr>
+
+</table>
+
+<div class="cover-footer">
+
+Professional Technical Capsule
+
+</div>
 
 </div>
 """
