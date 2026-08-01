@@ -27,7 +27,7 @@ from theme import (
 )
 
 
-def get_styles():
+def get_styles(template="default"):
 
     pygments_css = SyntaxHighlighter().css()
 
