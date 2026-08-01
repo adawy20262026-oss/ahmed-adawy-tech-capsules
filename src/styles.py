@@ -118,7 +118,7 @@ width:40%;
 text-align:right;
 }}
 
-.cover-meta td:last-child{
+.cover-meta td:last-child{{
 text-align:left;
 }}
 
