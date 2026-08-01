@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ahmed-adawy-tech-capsules"
+version = "0.6.0"
+description = "Build beautiful technical micro-books from Markdown."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Ahmed Adawy" }
+]
+
+keywords = [
+    "markdown",
+    "pdf",
+    "ebook",
+    "publishing",
+    "documentation",
+    "python",
+    "weasyprint",
+    "technical-writing"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "mistletoe",
+    "weasyprint",
+    "pygments",
+    "pyyaml",
+    "streamlit",
+]
+
+[project.urls]
+Homepage = "https://github.com/adawy20262026-oss/ahmed-adawy-tech-capsules"
+Repository = "https://github.com/adawy20262026-oss/ahmed-adawy-tech-capsules"
+Issues = "https://github.com/adawy20262026-oss/ahmed-adawy-tech-capsules/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
