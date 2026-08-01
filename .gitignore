@@ -1,14 +1,38 @@
 # Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 
-# Virtual Environment
+# Virtual Environments
 venv/
+.venv/
+env/
 
-# Build Output
-output/*.pdf
+# IDE
+.vscode/
+.idea/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Output
+output/
+*.pdf
+*.html
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
