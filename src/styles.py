@@ -36,6 +36,18 @@ background:{BACKGROUND};
 color:{TEXT_COLOR};
 }}
 
+h1,h2,h3,h4,h5,h6{{
+font-family:{TITLE_FONT},sans-serif;
+color:{PRIMARY_COLOR};
+margin-top:28px;
+margin-bottom:14px;
+}}
+
+p{{
+text-align:justify;
+margin-bottom:16px;
+}}
+
 .cover{{
 text-align:center;
 padding:{COVER_PADDING};
@@ -69,18 +81,20 @@ color:white;
 padding:15px;
 border-radius:{BORDER_RADIUS};
 overflow:auto;
+white-space:pre-wrap;
 }}
 
 code{{
 background:#f3f4f6;
 padding:2px 6px;
 border-radius:4px;
+font-family:monospace;
 }}
 
 table{{
 border-collapse:collapse;
 width:100%;
-margin:20px 0;
+margin:24px 0;
 }}
 
 th{{
@@ -95,7 +109,23 @@ padding:10px;
 }}
 
 img{{
+display:block;
+margin:24px auto;
 max-width:{IMAGE_MAX_WIDTH};
+height:auto;
+}}
+
+blockquote{{
+border-left:4px solid {PRIMARY_COLOR};
+padding-left:16px;
+color:#555;
+margin:20px 0;
+}}
+
+hr{{
+border:none;
+border-top:1px solid #dddddd;
+margin:30px 0;
 }}
 
 @page{{
@@ -110,26 +140,48 @@ color:#666;
 }}
 
 .toc{{
+page-break-after:always;
 margin:40px 0;
-padding:25px;
+padding:30px;
 background:#f8fafc;
 border:1px solid #e5e7eb;
 border-radius:12px;
-page-break-after:always;
 }}
 
 .toc h2{{
 margin-top:0;
-color:#2563eb;
+margin-bottom:20px;
+color:{PRIMARY_COLOR};
+text-align:center;
 }}
 
 .toc ul{{
 list-style:none;
 padding-left:0;
+margin:0;
 }}
 
 .toc li{{
-padding:6px 0;
+padding:8px 0;
 border-bottom:1px solid #eeeeee;
+}}
+
+.toc li:last-child{{
+border-bottom:none;
+}}
+
+.toc .level-1{{
+font-weight:bold;
+font-size:18px;
+}}
+
+.toc .level-2{{
+padding-left:20px;
+}}
+
+.toc .level-3{{
+padding-left:40px;
+font-size:14px;
+color:#666;
 }}
 """
