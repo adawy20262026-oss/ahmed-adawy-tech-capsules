@@ -1,8 +1,9 @@
-
 """
 Content Renderer
 Ahmed Adawy Tech Capsules
 """
+
+from html import escape
 
 from parser import (
     Heading,
@@ -49,13 +50,17 @@ class ContentRenderer:
             elif isinstance(node, CodeBlock):
 
                 html.append(
-                    f"<pre><code>{node.text}</code></pre>"
+                    "<pre><code>"
+                    f"{escape(node.text)}"
+                    "</code></pre>"
                 )
 
             elif isinstance(node, Image):
 
                 html.append(
-                    f'<img src="{node.src}" alt="{node.alt}">'
+                    f'<img src="{escape(node.src)}" '
+                    f'alt="{escape(node.alt)}" '
+                    'style="max-width:100%;height:auto;">'
                 )
 
             elif isinstance(node, Table):
@@ -64,6 +69,7 @@ class ContentRenderer:
 
                 if node.header:
 
+                    table.append("<thead>")
                     table.append("<tr>")
 
                     for h in node.header:
@@ -73,6 +79,9 @@ class ContentRenderer:
                         )
 
                     table.append("</tr>")
+                    table.append("</thead>")
+
+                table.append("<tbody>")
 
                 for row in node.rows:
 
@@ -86,10 +95,18 @@ class ContentRenderer:
 
                     table.append("</tr>")
 
+                table.append("</tbody>")
                 table.append("</table>")
 
                 html.append(
                     "\n".join(table)
+                )
+
+            else:
+
+                print(
+                    f"Warning: Unsupported node "
+                    f"{type(node).__name__}"
                 )
 
         return "\n".join(html)
