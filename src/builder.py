@@ -6,32 +6,33 @@ Ahmed Adawy Tech Capsules
 from pathlib import Path
 
 from parser import MarkdownParser
-from renderer import HTMLRenderer
-from pdf_generator import PDFGenerator
 from metadata import MetadataParser
+from publisher import Publisher
 from index_generator import IndexGenerator
 
 
 class CapsuleBuilder:
+
+    def __init__(self):
+
+        self.publisher = Publisher()
 
     def build(self, source: Path):
 
         print(f"Building {source.name}")
 
         try:
-            text = source.read_text(encoding="utf-8")
 
-            metadata_parser = MetadataParser()
-            metadata, markdown = metadata_parser.parse(text)
+            text = source.read_text(
+                encoding="utf-8"
+            )
 
-            parser = MarkdownParser()
-            document = parser.parse(markdown)
+            metadata, markdown = (
+                MetadataParser().parse(text)
+            )
 
-            renderer = HTMLRenderer()
-
-            html = renderer.render(
-                document,
-                metadata
+            document = MarkdownParser().parse(
+                markdown
             )
 
             output = Path("output")
@@ -39,33 +40,50 @@ class CapsuleBuilder:
 
             capsule_name = source.stem
 
-            html_file = output / f"{capsule_name}.html"
-            pdf_file = output / f"{capsule_name}.pdf"
+            html = self.publisher.html(
+                document,
+                metadata
+            )
+
+            html_file = (
+                output / f"{capsule_name}.html"
+            )
+
+            pdf_file = (
+                output / f"{capsule_name}.pdf"
+            )
 
             html_file.write_text(
                 html,
                 encoding="utf-8"
             )
 
-            PDFGenerator().generate(
-                html,
-                pdf_file
+            self.publisher.pdf_file(
+                document,
+                pdf_file,
+                metadata
             )
 
-            print(f"✓ {capsule_name}.pdf generated successfully")
+            print(
+                f"✓ {capsule_name}.pdf generated successfully"
+            )
 
             return {
                 "file": capsule_name,
-                "title": metadata.get("title", capsule_name),
-                "subtitle": metadata.get("subtitle", ""),
-                "category": metadata.get("category", "-"),
-                "difficulty": metadata.get("difficulty", "Beginner"),
-                "language": metadata.get("language", "en"),
-                "version": metadata.get("version", "-")
+                "title": metadata["title"],
+                "subtitle": metadata["subtitle"],
+                "category": metadata["category"],
+                "difficulty": metadata["difficulty"],
+                "language": metadata["language"],
+                "version": metadata["version"],
             }
 
         except Exception as exc:
-            print(f"✗ Failed to build {source.name}")
+
+            print(
+                f"✗ Failed to build {source.name}"
+            )
+
             raise RuntimeError(
                 f"Error while building '{source.name}': {exc}"
             ) from exc
@@ -76,7 +94,9 @@ class CapsuleBuilder:
 
         library = []
 
-        for source in sorted(capsules_dir.glob("*.md")):
+        for source in sorted(
+            capsules_dir.glob("*.md")
+        ):
 
             library.append(
                 self.build(source)
@@ -86,4 +106,6 @@ class CapsuleBuilder:
             library
         )
 
-        print("All capsules generated successfully.")
+        print(
+            "All capsules generated successfully."
+        )
