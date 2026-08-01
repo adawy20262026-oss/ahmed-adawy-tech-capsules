@@ -16,50 +16,59 @@ class CapsuleBuilder:
 
     def build(self, source: Path):
 
-        text = source.read_text(encoding="utf-8")
+        print(f"Building {source.name}")
 
-        metadata_parser = MetadataParser()
-        metadata, markdown = metadata_parser.parse(text)
+        try:
+            text = source.read_text(encoding="utf-8")
 
-        parser = MarkdownParser()
-        document = parser.parse(markdown)
+            metadata_parser = MetadataParser()
+            metadata, markdown = metadata_parser.parse(text)
 
-        renderer = HTMLRenderer()
+            parser = MarkdownParser()
+            document = parser.parse(markdown)
 
-        html = renderer.render(
-            document,
-            metadata
-        )
+            renderer = HTMLRenderer()
 
-        print(html[:500])
-        
-        output = Path("output")
-        output.mkdir(exist_ok=True)
+            html = renderer.render(
+                document,
+                metadata
+            )
 
-        capsule_name = source.stem
+            output = Path("output")
+            output.mkdir(exist_ok=True)
 
-        html_file = output / f"{capsule_name}.html"
-        pdf_file = output / f"{capsule_name}.pdf"
+            capsule_name = source.stem
 
-        html_file.write_text(
-            html,
-            encoding="utf-8"
-        )
+            html_file = output / f"{capsule_name}.html"
+            pdf_file = output / f"{capsule_name}.pdf"
 
-        PDFGenerator().generate(
-            html,
-            pdf_file
-        )
+            html_file.write_text(
+                html,
+                encoding="utf-8"
+            )
 
-        return {
-    "file": capsule_name,
-    "title": metadata.get("title", capsule_name),
-    "subtitle": metadata.get("subtitle", ""),
-    "category": metadata.get("category", "-"),
-    "difficulty": metadata.get("difficulty", "Beginner"),
-    "language": metadata.get("language", "en"),
-    "version": metadata.get("version", "-")
-        }
+            PDFGenerator().generate(
+                html,
+                pdf_file
+            )
+
+            print(f"✓ {capsule_name}.pdf generated successfully")
+
+            return {
+                "file": capsule_name,
+                "title": metadata.get("title", capsule_name),
+                "subtitle": metadata.get("subtitle", ""),
+                "category": metadata.get("category", "-"),
+                "difficulty": metadata.get("difficulty", "Beginner"),
+                "language": metadata.get("language", "en"),
+                "version": metadata.get("version", "-")
+            }
+
+        except Exception as exc:
+            print(f"✗ Failed to build {source.name}")
+            raise RuntimeError(
+                f"Error while building '{source.name}': {exc}"
+            ) from exc
 
     def build_all(self):
 
@@ -68,8 +77,6 @@ class CapsuleBuilder:
         library = []
 
         for source in sorted(capsules_dir.glob("*.md")):
-
-            print(f"Building {source.name}")
 
             library.append(
                 self.build(source)
