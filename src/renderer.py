@@ -14,46 +14,51 @@ class HTMLRenderer:
     """
     Main HTML renderer.
 
-    Supports both:
-
-    renderer.render(document)
-
-    and
-
-    renderer.render(document, metadata)
-
-    so Streamlit and Builder use the same engine.
+    Responsible for converting a parsed document
+    into a complete HTML page.
     """
 
     def render(self, document, metadata=None):
 
-        if metadata is None:
-            metadata = {}
+        metadata = metadata or {}
 
-        html = []
+        template = metadata.get(
+            "template",
+            "default"
+        )
 
-        html.append(self.header())
+        html = [
 
-        # Cover Page
+            self.header(template)
+
+        ]
+
         if metadata:
+
             html.append(
                 CoverRenderer().render(metadata)
             )
 
-        # Table of Contents
-        toc_html = TOCRenderer().render(document)
-
-        if toc_html:
-            html.append(toc_html)
-
-        # Main Content
-        html.append(
-            ContentRenderer().render(document)
+        toc = TOCRenderer().render(
+            document
         )
 
-        # Footer
+        if toc:
+
+            html.append(toc)
+
         html.append(
+
+            ContentRenderer().render(
+                document
+            )
+
+        )
+
+        html.append(
+
             FooterRenderer().render()
+
         )
 
         html.append("</body>")
@@ -61,7 +66,7 @@ class HTMLRenderer:
 
         return "\n".join(html)
 
-    def header(self):
+    def header(self, template="default"):
 
         return f"""<!DOCTYPE html>
 <html lang="en">
@@ -74,7 +79,7 @@ class HTMLRenderer:
 
 <style>
 
-{get_styles()}
+{get_styles(template)}
 
 </style>
 
