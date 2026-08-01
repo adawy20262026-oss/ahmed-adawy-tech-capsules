@@ -3,48 +3,62 @@ Build Entry Point
 Ahmed Adawy Tech Capsules
 """
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from builder import CapsuleBuilder
+from metadata import MetadataParser
 from index_generator import IndexGenerator
 from site_generator import SiteGenerator
-from metadata import MetadataParser
 
 
 def main():
 
     builder = CapsuleBuilder()
 
-    capsules = []
-
-    capsule_dir = Path("capsules")
-
     if len(sys.argv) > 1:
 
-        builder.build(Path(sys.argv[1]))
+        builder.build(
+            Path(sys.argv[1])
+        )
 
-    else:
+        print(
+            "Build completed successfully."
+        )
 
-        builder.build_all()
+        return
 
-        parser = MetadataParser()
+    builder.build_all()
 
-        for file in sorted(capsule_dir.glob("*.md")):
+    parser = MetadataParser()
 
-            text = file.read_text(encoding="utf-8")
+    capsules = []
 
-            metadata, _ = parser.parse(text)
+    for file in sorted(
+        Path("capsules").glob("*.md")
+    ):
 
-            metadata["file"] = file.stem
+        metadata, _ = parser.parse(
+            file.read_text(
+                encoding="utf-8"
+            )
+        )
 
-            capsules.append(metadata)
+        metadata["file"] = file.stem
 
-        IndexGenerator().generate(capsules)
+        capsules.append(
+            metadata
+        )
 
-        SiteGenerator().generate()
+    IndexGenerator().generate(
+        capsules
+    )
 
-    print("Build completed successfully.")
+    SiteGenerator().generate()
+
+    print(
+        "Build completed successfully."
+    )
 
 
 if __name__ == "__main__":
