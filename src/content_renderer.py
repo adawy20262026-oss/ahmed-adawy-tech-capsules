@@ -14,8 +14,14 @@ from parser import (
     Table,
 )
 
+from highlighter import SyntaxHighlighter
+
 
 class ContentRenderer:
+
+    def __init__(self):
+
+        self.highlighter = SyntaxHighlighter()
 
     def render(self, document):
 
@@ -50,17 +56,17 @@ class ContentRenderer:
             elif isinstance(node, CodeBlock):
 
                 html.append(
-                    "<pre><code>"
-                    f"{escape(node.text)}"
-                    "</code></pre>"
+                    self.highlighter.highlight(
+                        node.text,
+                        node.language
+                    )
                 )
 
             elif isinstance(node, Image):
 
                 html.append(
                     f'<img src="{escape(node.src)}" '
-                    f'alt="{escape(node.alt)}" '
-                    'style="max-width:100%;height:auto;">'
+                    f'alt="{escape(node.alt)}">'
                 )
 
             elif isinstance(node, Table):
