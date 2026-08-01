@@ -5,6 +5,12 @@ Ahmed Adawy Tech Capsules
 
 from pathlib import Path
 
+from config import (
+    OUTPUT_DIR,
+    CAPSULES_DIR,
+    DEFAULT_ENCODING,
+)
+
 from parser import MarkdownParser
 from metadata import MetadataParser
 from publisher import Publisher
@@ -24,7 +30,7 @@ class CapsuleBuilder:
         try:
 
             text = source.read_text(
-                encoding="utf-8"
+                encoding=DEFAULT_ENCODING
             )
 
             metadata, markdown = (
@@ -35,8 +41,9 @@ class CapsuleBuilder:
                 markdown
             )
 
-            output = Path("output")
-            output.mkdir(exist_ok=True)
+            OUTPUT_DIR.mkdir(
+                exist_ok=True
+            )
 
             capsule_name = source.stem
 
@@ -46,16 +53,16 @@ class CapsuleBuilder:
             )
 
             html_file = (
-                output / f"{capsule_name}.html"
+                OUTPUT_DIR / f"{capsule_name}.html"
             )
 
             pdf_file = (
-                output / f"{capsule_name}.pdf"
+                OUTPUT_DIR / f"{capsule_name}.pdf"
             )
 
             html_file.write_text(
                 html,
-                encoding="utf-8"
+                encoding=DEFAULT_ENCODING
             )
 
             self.publisher.pdf_file(
@@ -70,12 +77,30 @@ class CapsuleBuilder:
 
             return {
                 "file": capsule_name,
-                "title": metadata["title"],
-                "subtitle": metadata["subtitle"],
-                "category": metadata["category"],
-                "difficulty": metadata["difficulty"],
-                "language": metadata["language"],
-                "version": metadata["version"],
+                "title": metadata.get(
+                    "title",
+                    capsule_name,
+                ),
+                "subtitle": metadata.get(
+                    "subtitle",
+                    "",
+                ),
+                "category": metadata.get(
+                    "category",
+                    "-",
+                ),
+                "difficulty": metadata.get(
+                    "difficulty",
+                    "Beginner",
+                ),
+                "language": metadata.get(
+                    "language",
+                    "en",
+                ),
+                "version": metadata.get(
+                    "version",
+                    "1.0",
+                ),
             }
 
         except Exception as exc:
@@ -85,17 +110,16 @@ class CapsuleBuilder:
             )
 
             raise RuntimeError(
-                f"Error while building '{source.name}': {exc}"
+                f"Error while building "
+                f"'{source.name}': {exc}"
             ) from exc
 
     def build_all(self):
 
-        capsules_dir = Path("capsules")
-
         library = []
 
         for source in sorted(
-            capsules_dir.glob("*.md")
+            CAPSULES_DIR.glob("*.md")
         ):
 
             library.append(
