@@ -6,6 +6,11 @@ Ahmed Adawy Tech Capsules
 import sys
 from pathlib import Path
 
+from config import (
+    CAPSULES_DIR,
+    DEFAULT_ENCODING,
+)
+
 from builder import CapsuleBuilder
 from metadata import MetadataParser
 from index_generator import IndexGenerator
@@ -35,13 +40,15 @@ def main():
     capsules = []
 
     for file in sorted(
-        Path("capsules").glob("*.md")
+        CAPSULES_DIR.glob("*.md")
     ):
 
         metadata, _ = parser.parse(
+
             file.read_text(
-                encoding="utf-8"
+                encoding=DEFAULT_ENCODING
             )
+
         )
 
         metadata["file"] = file.stem
@@ -62,4 +69,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
