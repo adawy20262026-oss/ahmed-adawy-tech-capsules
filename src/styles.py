@@ -79,55 +79,55 @@ margin-top:40px;
 font-size:18px;
 }}
 
-.cover-brand{
+.cover-brand{{
 font-size:20px;
 font-weight:bold;
 letter-spacing:2px;
 text-transform:uppercase;
 margin-bottom:50px;
 opacity:.9;
-}
+}}
 
-.cover-divider{
+.cover-divider{{
 width:120px;
 height:4px;
 background:white;
 margin:35px auto;
 border-radius:4px;
-}
+}}
 
-.cover-meta{
+.cover-meta{{
 width:70%;
 margin:50px auto;
 border-collapse:collapse;
 background:rgba(255,255,255,.08);
 border-radius:10px;
 overflow:hidden;
-}
+}}
 
-.cover-meta td{
+.cover-meta td{{
 padding:12px;
 border:none;
 color:white;
 font-size:16px;
-}
+}}
 
-.cover-meta td:first-child{
+.cover-meta td:first-child{{
 font-weight:bold;
 width:40%;
 text-align:right;
-}
+}}
 
 .cover-meta td:last-child{
 text-align:left;
-}
+}}
 
-.cover-footer{
+.cover-footer{{
 margin-top:70px;
 font-size:15px;
 letter-spacing:1px;
 opacity:.85;
-}
+}}
 
 pre{{
 background:{CODE_BACKGROUND};
@@ -141,19 +141,19 @@ code{{
 font-family:monospace;
 }}
 
-.highlight{
+.highlight{{
 margin:24px 0;
 border-radius:10px;
 overflow:auto;
 page-break-inside:avoid;
-}
+}}
 
-table{
+table{{
 border-collapse:collapse;
 width:100%;
 margin:24px 0;
 page-break-inside:avoid;
-}
+}}
 
 th{{
 background:{TABLE_HEADER_BACKGROUND};
@@ -166,17 +166,17 @@ border:1px solid {TABLE_BORDER};
 padding:10px;
 }}
 
-tr{
+tr{{
 page-break-inside:avoid;
-}
+}}
 
-img{
+img{{
 display:block;
 margin:24px auto;
 max-width:100%;
 height:auto;
 page-break-inside:avoid;
-}
+}}
 
 blockquote{{
 border-left:4px solid {PRIMARY_COLOR};
