@@ -3,13 +3,15 @@ Library Index Generator
 Ahmed Adawy Tech Capsules
 """
 
-from pathlib import Path
-from pathlib import Path
 from config import OUTPUT_DIR, DEFAULT_ENCODING
+
 
 class IndexGenerator:
 
+    def generate(self, capsules):
+
         OUTPUT_DIR.mkdir(exist_ok=True)
+
         total = len(capsules)
 
         html = []
@@ -247,5 +249,6 @@ cards[i].style.display="none";
         (OUTPUT_DIR / "index.html").write_text(
     "\n".join(html),
     encoding=DEFAULT_ENCODING
+)
    )
         print("Library index generated.")
