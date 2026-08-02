@@ -3,50 +3,58 @@ Static Site Generator
 Ahmed Adawy Tech Capsules
 """
 
-from pathlib import Path
 import shutil
+
+from config import OUTPUT_DIR, DOCS_DIR
 
 
 class SiteGenerator:
 
     def generate(self):
 
-        output = Path("output")
-        docs = Path("docs")
+        DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
-        docs.mkdir(exist_ok=True)
+        (DOCS_DIR / "library").mkdir(
+            exist_ok=True
+        )
 
-        # إنشاء المجلدات المطلوبة
-        (docs / "library").mkdir(exist_ok=True)
-        (docs / "capsules").mkdir(exist_ok=True)
-        (docs / "pdf").mkdir(exist_ok=True)
+        (DOCS_DIR / "capsules").mkdir(
+            exist_ok=True
+        )
 
-        # نسخ صفحة المكتبة
-        library = output / "index.html"
+        (DOCS_DIR / "pdf").mkdir(
+            exist_ok=True
+        )
+
+        # Copy Library Index
+        library = OUTPUT_DIR / "index.html"
 
         if library.exists():
+
             shutil.copy(
                 library,
-                docs / "library" / "index.html"
+                DOCS_DIR / "library" / "index.html",
             )
 
-        # نسخ ملفات HTML
-        for html in output.glob("*.html"):
+        # Copy HTML Capsules
+        for html in OUTPUT_DIR.glob("*.html"):
 
             if html.name == "index.html":
                 continue
 
             shutil.copy(
                 html,
-                docs / "capsules" / html.name
+                DOCS_DIR / "capsules" / html.name,
             )
 
-        # نسخ ملفات PDF
-        for pdf in output.glob("*.pdf"):
+        # Copy PDF Capsules
+        for pdf in OUTPUT_DIR.glob("*.pdf"):
 
             shutil.copy(
                 pdf,
-                docs / "pdf" / pdf.name
+                DOCS_DIR / "pdf" / pdf.name,
             )
 
-        print("Static website generated successfully.")
+        print(
+            "Static website generated successfully."
+        )
