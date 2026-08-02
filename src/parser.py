@@ -124,7 +124,6 @@ def parse_inline(token):
 
     return getattr(token, "content", "")
 
-
 def parse_markdown(markdown_text):
     """
     Parse markdown into internal nodes.
@@ -146,13 +145,13 @@ def parse_markdown(markdown_text):
             nodes.append(
                 Heading(
                     token.level,
-                    text
+                    text,
                 )
             )
 
         elif isinstance(
             token,
-            MistletoeParagraph
+            MistletoeParagraph,
         ):
 
             if (
@@ -205,29 +204,33 @@ def parse_markdown(markdown_text):
                         child,
                         "children",
                     ):
+
                         value += "".join(
                             parse_inline(c)
                             for c in child.children
                         )
 
                 items.append(value)
-
             nodes.append(
                 BulletList(items)
             )
 
-        elif isinstance(token, BlockCode):
-            code = "".join(
-                parse_inline(child)
-                for child in token.children
-           )
+        elif isinstance(
+            token,
+            BlockCode,
+        ):
 
-           nodes.append(
-               CodeBlock(
-                   code,
-                   token.language or "",
-               )
-           )
+            nodes.append(
+                CodeBlock(
+                    token.content,
+                    token.language or "",
+                )
+            )
+
+        elif isinstance(
+            token,
+            MistletoeTable,
+        ):
 
             header = []
 
@@ -258,7 +261,6 @@ def parse_markdown(markdown_text):
                     )
 
                 rows.append(current)
-
             nodes.append(
                 Table(
                     header,
