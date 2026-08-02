@@ -4,15 +4,12 @@ Ahmed Adawy Tech Capsules
 """
 
 from pathlib import Path
-
+from pathlib import Path
+from config import OUTPUT_DIR, DEFAULT_ENCODING
 
 class IndexGenerator:
 
-    def generate(self, capsules):
-
-        output = Path("output")
-        output.mkdir(exist_ok=True)
-
+        OUTPUT_DIR.mkdir(exist_ok=True)
         total = len(capsules)
 
         html = []
@@ -247,9 +244,8 @@ cards[i].style.display="none";
 </html>
 """)
 
-        (output / "index.html").write_text(
-            "\n".join(html),
-            encoding="utf-8"
-        )
-
+        (OUTPUT_DIR / "index.html").write_text(
+    "\n".join(html),
+    encoding=DEFAULT_ENCODING
+   )
         print("Library index generated.")
