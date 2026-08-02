@@ -197,7 +197,7 @@ def parse_markdown(markdown_text):
 
             for item in token.children:
 
-                                value = ""
+                value = ""
 
                 for child in item.children:
 
@@ -205,7 +205,6 @@ def parse_markdown(markdown_text):
                         child,
                         "children",
                     ):
-
                         value += "".join(
                             parse_inline(c)
                             for c in child.children
