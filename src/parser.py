@@ -1,4 +1,5 @@
 import mistletoe
+
 from mistletoe.block_token import (
     Heading as MistletoeHeading,
     Paragraph as MistletoeParagraph,
@@ -6,6 +7,7 @@ from mistletoe.block_token import (
     BlockCode,
     Table as MistletoeTable,
 )
+
 from mistletoe.span_token import (
     RawText,
     Strong,
@@ -17,41 +19,55 @@ from mistletoe.span_token import (
 
 
 class Heading:
+
     def __init__(self, level, text):
+
         self.level = level
         self.text = text
 
 
 class Paragraph:
+
     def __init__(self, text):
+
         self.text = text
 
 
 class BulletList:
+
     def __init__(self, items):
+
         self.items = items
 
 
 class CodeBlock:
+
     def __init__(self, text, language=""):
+
         self.text = text
         self.language = language or ""
 
 
 class Image:
+
     def __init__(self, src, alt):
+
         self.src = src
         self.alt = alt
 
 
 class Table:
+
     def __init__(self, header, rows):
+
         self.header = header
         self.rows = rows
 
 
 def parse_inline(token):
-    """Convert inline markdown tokens to HTML."""
+    """
+    Convert inline markdown tokens into HTML.
+    """
 
     if isinstance(token, RawText):
         return token.content
@@ -59,36 +75,60 @@ def parse_inline(token):
     if isinstance(token, Strong):
         return (
             "<strong>"
-            + "".join(parse_inline(child) for child in token.children)
+            + "".join(
+                parse_inline(child)
+                for child in token.children
+            )
             + "</strong>"
         )
 
     if isinstance(token, Emphasis):
         return (
             "<em>"
-            + "".join(parse_inline(child) for child in token.children)
+            + "".join(
+                parse_inline(child)
+                for child in token.children
+            )
             + "</em>"
         )
 
     if isinstance(token, InlineCode):
         return (
             "<code>"
-            + "".join(parse_inline(child) for child in token.children)
+            + "".join(
+                parse_inline(child)
+                for child in token.children
+            )
             + "</code>"
         )
 
     if isinstance(token, MistletoeLink):
-        text = "".join(parse_inline(child) for child in token.children)
-        return f'<a href="{token.target}">{text}</a>'
+
+        text = "".join(
+            parse_inline(child)
+            for child in token.children
+        )
+
+        return (
+            f'<a href="{token.target}">'
+            f"{text}"
+            "</a>"
+        )
 
     if hasattr(token, "children") and token.children:
-        return "".join(parse_inline(child) for child in token.children)
+
+        return "".join(
+            parse_inline(child)
+            for child in token.children
+        )
 
     return getattr(token, "content", "")
 
 
 def parse_markdown(markdown_text):
-    """Parse markdown into internal document nodes."""
+    """
+    Parse markdown into internal nodes.
+    """
 
     document = mistletoe.Document(markdown_text)
 
@@ -104,16 +144,22 @@ def parse_markdown(markdown_text):
             )
 
             nodes.append(
-                Heading(token.level, text)
+                Heading(
+                    token.level,
+                    text
+                )
             )
 
-        elif isinstance(token, MistletoeParagraph):
+        elif isinstance(
+            token,
+            MistletoeParagraph
+        ):
 
             if (
                 len(token.children) == 1
                 and isinstance(
                     token.children[0],
-                    MistletoeImage
+                    MistletoeImage,
                 )
             ):
 
@@ -125,7 +171,10 @@ def parse_markdown(markdown_text):
                 )
 
                 nodes.append(
-                    Image(image.src, alt)
+                    Image(
+                        image.src,
+                        alt,
+                    )
                 )
 
             else:
@@ -139,7 +188,10 @@ def parse_markdown(markdown_text):
                     Paragraph(text)
                 )
 
-        elif isinstance(token, MistletoeList):
+        elif isinstance(
+            token,
+            MistletoeList,
+        ):
 
             items = []
 
@@ -149,7 +201,10 @@ def parse_markdown(markdown_text):
 
                 for child in item.children:
 
-                    if hasattr(child, "children"):
+                    if hasattr(
+                        child,
+                        "children",
+                    ):
 
                         value += "".join(
                             parse_inline(c)
@@ -157,12 +212,14 @@ def parse_markdown(markdown_text):
                         )
 
                 items.append(value)
-
-            nodes.append(
+                            nodes.append(
                 BulletList(items)
             )
 
-        elif isinstance(token, BlockCode):
+        elif isinstance(
+            token,
+            BlockCode,
+        ):
 
             code = "".join(
                 parse_inline(child)
@@ -172,11 +229,14 @@ def parse_markdown(markdown_text):
             nodes.append(
                 CodeBlock(
                     code,
-                    token.language or ""
+                    token.language or "",
                 )
             )
 
-        elif isinstance(token, MistletoeTable):
+        elif isinstance(
+            token,
+            MistletoeTable,
+        ):
 
             header = []
 
@@ -209,17 +269,28 @@ def parse_markdown(markdown_text):
                 rows.append(current)
 
             nodes.append(
-                Table(header, rows)
+                Table(
+                    header,
+                    rows,
+                )
             )
 
     return nodes
 
 
 class MarkdownParser:
-    """Compatibility wrapper."""
+    """
+    Compatibility wrapper.
+    """
 
     def parse(self, markdown_text):
-        return parse_markdown(markdown_text)
+
+        return parse_markdown(
+            markdown_text
+        )
 
     def __call__(self, markdown_text):
-        return self.parse(markdown_text)
+
+        return self.parse(
+            markdown_text
+        )
