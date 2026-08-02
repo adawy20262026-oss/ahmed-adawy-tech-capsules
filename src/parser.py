@@ -216,26 +216,18 @@ def parse_markdown(markdown_text):
                 BulletList(items)
             )
 
-        elif isinstance(
-            token,
-            BlockCode,
-        ):
+        elif isinstance(token, BlockCode):
             code = "".join(
                 parse_inline(child)
                 for child in token.children
-            )
+           )
 
-            nodes.append(
-                CodeBlock(
-                    code,
-                    token.language or "",
-                )
-            )
-
-        elif isinstance(
-            token,
-            MistletoeTable,
-        ):
+           nodes.append(
+               CodeBlock(
+                   code,
+                   token.language or "",
+               )
+           )
 
             header = []
 
