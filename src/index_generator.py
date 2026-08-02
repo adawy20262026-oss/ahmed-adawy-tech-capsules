@@ -151,7 +151,7 @@ onkeyup="searchCapsules()"
             "Python": "#198754",
             "AI": "#6f42c1",
             "DevOps": "#fd7e14",
-            "Security": "#dc3545"
+            "Security": "#dc3545",
         }
 
         for capsule in capsules:
@@ -163,7 +163,6 @@ onkeyup="searchCapsules()"
             language = capsule.get("language", "en")
             version = capsule.get("version", "1.0")
             filename = capsule.get("file", "unknown")
-            
 
             color = colors.get(category, "#444")
 
@@ -231,7 +230,7 @@ for(let i=0;i<cards.length;i++){
 let title=cards[i].innerText.toLowerCase();
 
 if(title.includes(input))
-cards[i].style.display="block";
+cards[i].style.display="";
 else
 cards[i].style.display="none";
 
@@ -247,8 +246,8 @@ cards[i].style.display="none";
 """)
 
         (OUTPUT_DIR / "index.html").write_text(
-    "\n".join(html),
-    encoding=DEFAULT_ENCODING
-)
-   )
+            "\n".join(html),
+            encoding=DEFAULT_ENCODING,
+        )
+
         print("Library index generated.")
