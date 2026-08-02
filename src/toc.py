@@ -12,39 +12,39 @@ class TOCRenderer:
     from parsed Heading nodes.
     """
 
+    MAX_LEVEL = 3
+
     def render(self, document):
 
-        headings = []
-
-        for node in document:
-
-            if isinstance(node, Heading):
-
-                if node.level <= 3:
-
-                    headings.append(node)
+        headings = [
+            node
+            for node in document
+            if isinstance(node, Heading)
+            and node.level <= self.MAX_LEVEL
+        ]
 
         if not headings:
             return ""
 
-        html = []
-
-        html.append('<div class="toc">')
-
-        html.append("<h2>Table of Contents</h2>")
-
-        html.append("<ul>")
+        html = [
+            '<div class="toc">',
+            "<h2>Table of Contents</h2>",
+            "<ul>",
+        ]
 
         for heading in headings:
 
             html.append(
                 f'<li class="level-{heading.level}">'
-                f'{heading.text}'
+                f"{heading.text}"
                 "</li>"
             )
 
-        html.append("</ul>")
-
-        html.append("</div>")
+        html.extend(
+            [
+                "</ul>",
+                "</div>",
+            ]
+        )
 
         return "\n".join(html)
