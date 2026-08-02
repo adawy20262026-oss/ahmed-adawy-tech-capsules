@@ -220,10 +220,6 @@ def parse_markdown(markdown_text):
             token,
             BlockCode,
         ):
-            token,
-            BlockCode,
-        ):
-
             code = "".join(
                 parse_inline(child)
                 for child in token.children
