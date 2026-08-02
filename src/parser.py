@@ -210,10 +210,11 @@ def parse_markdown(markdown_text):
                             parse_inline(c)
                             for c in child.children
                         )
-
                 items.append(value)
-                            nodes.append(
+
+            nodes.append(
                 BulletList(items)
+            )
             )
 
         elif isinstance(
