@@ -12,6 +12,8 @@ CAPSULES_DIR = PROJECT_ROOT / "capsules"
 
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
+DOCS_DIR = PROJECT_ROOT / "docs"
+
 ASSETS_DIR = PROJECT_ROOT / "assets"
 
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
