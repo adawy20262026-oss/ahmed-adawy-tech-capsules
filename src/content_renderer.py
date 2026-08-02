@@ -5,16 +5,15 @@ Ahmed Adawy Tech Capsules
 
 from html import escape
 
+from highlighter import SyntaxHighlighter
 from parser import (
-    Heading,
-    Paragraph,
     BulletList,
     CodeBlock,
+    Heading,
     Image,
+    Paragraph,
     Table,
 )
-
-from highlighter import SyntaxHighlighter
 
 
 class ContentRenderer:
@@ -58,7 +57,7 @@ class ContentRenderer:
                 html.append(
                     self.highlighter.highlight(
                         node.text,
-                        node.language
+                        node.language,
                     )
                 )
 
@@ -75,17 +74,25 @@ class ContentRenderer:
 
                 if node.header:
 
-                    table.append("<thead>")
-                    table.append("<tr>")
+                    table.extend(
+                        [
+                            "<thead>",
+                            "<tr>",
+                        ]
+                    )
 
-                    for h in node.header:
+                    for header in node.header:
 
                         table.append(
-                            f"<th>{h}</th>"
+                            f"<th>{header}</th>"
                         )
 
-                    table.append("</tr>")
-                    table.append("</thead>")
+                    table.extend(
+                        [
+                            "</tr>",
+                            "</thead>",
+                        ]
+                    )
 
                 table.append("<tbody>")
 
@@ -101,8 +108,12 @@ class ContentRenderer:
 
                     table.append("</tr>")
 
-                table.append("</tbody>")
-                table.append("</table>")
+                table.extend(
+                    [
+                        "</tbody>",
+                        "</table>",
+                    ]
+                )
 
                 html.append(
                     "\n".join(table)
@@ -111,7 +122,7 @@ class ContentRenderer:
             else:
 
                 print(
-                    f"Warning: Unsupported node "
+                    "Warning: Unsupported node "
                     f"{type(node).__name__}"
                 )
 
