@@ -197,7 +197,7 @@ def parse_markdown(markdown_text):
 
             for item in token.children:
 
-                value = ""
+                                value = ""
 
                 for child in item.children:
 
@@ -210,14 +210,17 @@ def parse_markdown(markdown_text):
                             parse_inline(c)
                             for c in child.children
                         )
+
                 items.append(value)
 
             nodes.append(
                 BulletList(items)
             )
-            )
 
         elif isinstance(
+            token,
+            BlockCode,
+        ):
             token,
             BlockCode,
         ):
