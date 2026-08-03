@@ -134,7 +134,8 @@ def parse_markdown(markdown_text):
     nodes = []
 
     for token in document.children:
-
+        print(type(token))
+        
         if isinstance(token, MistletoeHeading):
 
             text = "".join(
