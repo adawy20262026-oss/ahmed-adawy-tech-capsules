@@ -4,7 +4,7 @@ from mistletoe.block_token import (
     Heading as MistletoeHeading,
     Paragraph as MistletoeParagraph,
     List as MistletoeList,
-    BlockCode,
+    CodeFence,
     Table as MistletoeTable,
 )
 
@@ -218,12 +218,35 @@ def parse_markdown(markdown_text):
 
         elif isinstance(
             token,
-            BlockCode,
+            CodeFence,
         ):
+
+            code = getattr(
+                token,
+                "content", 
+                "",
+            )
+
+            if (
+                not code
+                and hasattr(
+                    token, 
+                    "children",
+                )
+            ):
+                
+                code = "".join(
+                    getattr(
+                        child, 
+                        "content", 
+                        "",
+                    )
+                    for child in token.children
+                )
 
             nodes.append(
                 CodeBlock(
-                    token.content,
+                    code,
                     token.language or "",
                 )
             )
