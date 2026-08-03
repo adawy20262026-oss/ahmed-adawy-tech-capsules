@@ -36,9 +36,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Tests
+      - name: Run Tests with Coverage
         run: |
-          pytest
+          pytest --cov=src --cov-report=term-missing
 
       - name: Build Project
         run: |
