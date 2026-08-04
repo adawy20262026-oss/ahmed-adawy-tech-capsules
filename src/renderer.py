@@ -3,11 +3,11 @@ HTML Renderer
 Ahmed Adawy Tech Capsules
 """
 
-from styles import get_styles
-from cover import CoverRenderer
-from toc import TOCRenderer
-from content_renderer import ContentRenderer
-from footer import FooterRenderer
+from .styles import get_styles
+from .cover import CoverRenderer
+from .toc import TOCRenderer
+from .content_renderer import ContentRenderer
+from .footer import FooterRenderer
 
 
 class HTMLRenderer:
