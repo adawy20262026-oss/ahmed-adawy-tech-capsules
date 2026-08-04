@@ -43,7 +43,6 @@ def test_render_card_default_values():
     assert "General" in html
     assert "Beginner" in html
     assert "Version 1.0" in html
-    assert "UNKNOWN".lower() not in html
     assert "unknown.html" in html
     assert "unknown.pdf" in html
 
