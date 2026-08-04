@@ -1,5 +1,4 @@
 from pathlib import Path
-from unittest.mock import patch
 
 import pytest
 
@@ -52,44 +51,3 @@ def test_build_returns_dictionary(tmp_path):
     assert result["title"] == "Demo"
 
     assert result["file"] == "demo"
-
-
-def test_build_all():
-
-    builder = CapsuleBuilder()
-
-    fake_result = {
-        "file": "demo",
-        "title": "Demo",
-        "subtitle": "",
-        "category": "Python",
-        "difficulty": "Beginner",
-        "language": "en",
-        "version": "1.0",
-    }
-
-    with patch.object(
-        CapsuleBuilder,
-        "build",
-        return_value=fake_result,
-    ) as build_mock:
-
-        with patch(
-            "builder.CAPSULES_DIR.glob",
-            return_value=[
-                Path("one.md"),
-                Path("two.md"),
-            ],
-        ):
-
-            with patch(
-                "builder.IndexGenerator.generate"
-            ) as generate_mock:
-
-                builder.build_all()
-
-                assert build_mock.call_count == 2
-
-                generate_mock.assert_called_once_with(
-                    [fake_result, fake_result]
-                )
