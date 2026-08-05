@@ -30,14 +30,25 @@ class ContentRenderer:
 
             if isinstance(node, Heading):
 
+                heading_id = (
+                    node.text.lower()
+                    .replace(" ", "-")
+                    .replace(".", "")
+                    .replace(",", "")
+                    .replace(":", "")
+                    .replace("/", "-")
+                )
+
                 html.append(
-                    f"<h{node.level}>{node.text}</h{node.level}>"
+                    f'<h{node.level} id="{heading_id}">'
+                    f'{escape(node.text)}'
+                    f'</h{node.level}>'
                 )
 
             elif isinstance(node, Paragraph):
 
                 html.append(
-                    f"<p>{node.text}</p>"
+                    f"<p>{escape(node.text)}</p>"
                 )
 
             elif isinstance(node, BulletList):
@@ -47,7 +58,7 @@ class ContentRenderer:
                 for item in node.items:
 
                     html.append(
-                        f"<li>{item}</li>"
+                        f"<li>{escape(item)}</li>"
                     )
 
                 html.append("</ul>")
@@ -55,17 +66,21 @@ class ContentRenderer:
             elif isinstance(node, CodeBlock):
 
                 html.append(
+
                     self.highlighter.highlight(
                         node.text,
                         node.language,
                     )
+
                 )
 
             elif isinstance(node, Image):
 
                 html.append(
+
                     f'<img src="{escape(node.src)}" '
                     f'alt="{escape(node.alt)}">'
+
                 )
 
             elif isinstance(node, Table):
@@ -84,7 +99,7 @@ class ContentRenderer:
                     for header in node.header:
 
                         table.append(
-                            f"<th>{header}</th>"
+                            f"<th>{escape(header)}</th>"
                         )
 
                     table.extend(
@@ -103,7 +118,7 @@ class ContentRenderer:
                     for cell in row:
 
                         table.append(
-                            f"<td>{cell}</td>"
+                            f"<td>{escape(cell)}</td>"
                         )
 
                     table.append("</tr>")
