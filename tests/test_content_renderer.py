@@ -24,7 +24,7 @@ def test_render_heading():
         Heading(1, "Hello")
     ])
 
-    assert "<h1>Hello</h1>" in html
+    assert '<h1 id="hello">Hello</h1>' in html
 
 
 def test_render_paragraph():
