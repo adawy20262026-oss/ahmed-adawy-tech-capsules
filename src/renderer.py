@@ -9,7 +9,8 @@ try:
     from .toc import TOCRenderer
     from .content_renderer import ContentRenderer
     from .footer import FooterRenderer
-except ImportError:
+
+except ModuleNotFoundError:
     from styles import get_styles
     from cover import CoverRenderer
     from toc import TOCRenderer
