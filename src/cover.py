@@ -5,6 +5,9 @@ Ahmed Adawy Tech Capsules
 
 
 class CoverRenderer:
+    """
+    Renders the cover page for a Tech Capsule.
+    """
 
     def render(self, metadata):
 
@@ -20,7 +23,7 @@ class CoverRenderer:
 
         subtitle = metadata.get(
             "subtitle",
-            ""
+            "Professional Technical Publication"
         )
 
         author = metadata.get(
@@ -48,53 +51,63 @@ class CoverRenderer:
             "1.0"
         )
 
+        release = metadata.get(
+            "release",
+            "2026"
+        )
+
         return f"""
 <div class="cover">
 
-<div class="cover-brand">
-{project}
-</div>
+    <div class="cover-brand">
+        {project}
+    </div>
 
-<h1>{title}</h1>
+    <h1>{title}</h1>
 
-<h2>{subtitle}</h2>
+    <h2>{subtitle}</h2>
 
-<div class="cover-divider"></div>
+    <div class="cover-divider"></div>
 
-<table class="cover-meta">
+    <table class="cover-meta">
 
-<tr>
-<td><strong>Author</strong></td>
-<td>{author}</td>
-</tr>
+        <tr>
+            <td>Author</td>
+            <td>{author}</td>
+        </tr>
 
-<tr>
-<td><strong>Category</strong></td>
-<td>{category}</td>
-</tr>
+        <tr>
+            <td>Category</td>
+            <td>{category}</td>
+        </tr>
 
-<tr>
-<td><strong>Difficulty</strong></td>
-<td>{difficulty}</td>
-</tr>
+        <tr>
+            <td>Difficulty</td>
+            <td>{difficulty}</td>
+        </tr>
 
-<tr>
-<td><strong>Language</strong></td>
-<td>{language}</td>
-</tr>
+        <tr>
+            <td>Language</td>
+            <td>{language}</td>
+        </tr>
 
-<tr>
-<td><strong>Version</strong></td>
-<td>{version}</td>
-</tr>
+        <tr>
+            <td>Version</td>
+            <td>{version}</td>
+        </tr>
 
-</table>
+        <tr>
+            <td>Release</td>
+            <td>{release}</td>
+        </tr>
 
-<div class="cover-footer">
+    </table>
 
-Professional Technical Capsule
-
-</div>
+    <div class="cover-footer">
+        Professional Technical Capsule
+        <br><br>
+        © Ahmed Adawy
+    </div>
 
 </div>
 """
