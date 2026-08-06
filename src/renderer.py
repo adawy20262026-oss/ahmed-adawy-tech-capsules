@@ -10,7 +10,7 @@ try:
     from .content_renderer import ContentRenderer
     from .footer import FooterRenderer
 
-except ModuleNotFoundError:
+except ImportError:
     from styles import get_styles
     from cover import CoverRenderer
     from toc import TOCRenderer
