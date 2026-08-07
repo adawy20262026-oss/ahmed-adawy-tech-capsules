@@ -1,3 +1,4 @@
+This is **bold** text.
 ---
 title: GitHub Actions for Python Projects
 subtitle: Automating Testing, Building & Deployment
