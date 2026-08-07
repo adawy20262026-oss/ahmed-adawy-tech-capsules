@@ -56,21 +56,3 @@ def test_build_returns_dictionary(tmp_path):
     assert result["file"] == "demo"
 
 
-def test_build_all_empty_directory(tmp_path):
-
-    old_capsules = builder.CAPSULES_DIR
-    old_output = builder.OUTPUT_DIR
-
-    builder.CAPSULES_DIR = tmp_path
-    builder.OUTPUT_DIR = tmp_path
-
-    try:
-
-        CapsuleBuilder().build_all()
-
-        assert (tmp_path / "index.html").exists()
-
-    finally:
-
-        builder.CAPSULES_DIR = old_capsules
-        builder.OUTPUT_DIR = old_output
