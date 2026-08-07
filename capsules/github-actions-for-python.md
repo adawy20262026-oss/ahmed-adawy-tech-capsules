@@ -21,8 +21,6 @@ tags:
 
 # Introduction
 
-This is **bold** text
-
 Modern software development is no longer just about writing code.
 
 Every professional project requires automation to ensure that code is tested, built, and deployed consistently. Performing these tasks manually quickly becomes repetitive, error-prone, and difficult to maintain.
