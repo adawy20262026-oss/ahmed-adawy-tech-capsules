@@ -1,4 +1,4 @@
-This is **bold** text.
+
 ---
 title: GitHub Actions for Python Projects
 subtitle: Automating Testing, Building & Deployment
@@ -20,6 +20,8 @@ tags:
 > A practical guide to automating testing, building, and deployment using GitHub Actions.
 
 # Introduction
+
+This is **bold** text
 
 Modern software development is no longer just about writing code.
 
