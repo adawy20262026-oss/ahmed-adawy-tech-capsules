@@ -479,3 +479,172 @@ Always use GitHub Secrets.
 > **Key Takeaway**
 
 > Most GitHub Actions problems are caused by small configuration mistakes rather than complex programming errors.
+
+# GitHub Actions Cheat Sheet
+
+The following reference summarizes the most commonly used GitHub Actions concepts.
+
+## Workflow Location
+
+```text
+.github/workflows/
+```
+
+---
+
+## Common Events
+
+| Event | Purpose |
+|--------|---------|
+| push | Trigger after pushing commits |
+| pull_request | Trigger for Pull Requests |
+| workflow_dispatch | Manual execution |
+| release | Trigger when publishing a release |
+| schedule | Execute on a schedule |
+
+---
+
+## Common Runners
+
+| Runner | Operating System |
+|---------|------------------|
+| ubuntu-latest | Ubuntu Linux |
+| windows-latest | Microsoft Windows |
+| macos-latest | Apple macOS |
+
+---
+
+## Frequently Used Actions
+
+```yaml
+actions/checkout@v4
+actions/setup-python@v5
+actions/upload-artifact@v4
+```
+
+---
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Run Tests
+
+```bash
+pytest
+```
+
+---
+
+## Run Tests with Coverage
+
+```bash
+pytest --cov=src --cov-report=term-missing
+```
+
+---
+
+## Build Documentation
+
+```bash
+python src/build.py
+```
+
+---
+
+## Upload Artifacts
+
+```yaml
+uses: actions/upload-artifact@v4
+```
+
+---
+
+## Recommended Workflow Order
+
+Repository Event
+
+↓
+
+Checkout Repository
+
+↓
+
+Setup Python
+
+↓
+
+Install Dependencies
+
+↓
+
+Run Tests
+
+↓
+
+Build Project
+
+↓
+
+Upload Artifacts
+
+↓
+
+Workflow Finished
+
+> **Quick Tip**
+
+> Keep this page as a quick reference whenever creating a new GitHub Actions workflow.
+
+# Summary
+
+GitHub Actions has become one of the most important tools in modern software development.
+
+Throughout this capsule, you learned how to:
+
+- Understand workflows.
+- Configure workflow events.
+- Organize jobs and steps.
+- Install Python dependencies.
+- Execute automated tests.
+- Measure code coverage.
+- Upload generated artifacts.
+- Apply professional workflow practices.
+- Avoid common configuration mistakes.
+
+Most importantly, you saw these concepts applied in a real-world project rather than isolated examples.
+
+Automation is not just about saving time.
+
+It improves reliability, consistency, collaboration, and software quality.
+
+Once a workflow is written correctly, every future commit benefits from the same automated process.
+
+---
+
+# Further Reading
+
+- GitHub Actions Documentation
+- Pytest Documentation
+- Coverage.py Documentation
+- Python Official Documentation
+
+---
+
+# About This Capsule
+
+**Ahmed Adawy Tech Capsules**
+
+Professional technical micro-books designed for developers who prefer practical knowledge over lengthy theory.
+
+Each capsule focuses on one topic, providing concise explanations, real-world examples, and immediately applicable best practices.
+
+---
+
+Thank you for reading.
+
+Happy Coding!
