@@ -336,3 +336,146 @@ In the Ahmed Adawy Tech Capsules project, artifacts are used to archive generate
 > **Key Takeaway**
 
 > Artifacts make it easy to distribute generated files without committing them to the repository.
+
+# Best Practices
+
+Writing a workflow is easy.
+
+Writing a maintainable workflow is the real challenge.
+
+The following practices are recommended for professional Python projects.
+
+## 1. Keep Workflows Small
+
+Instead of creating one huge workflow, split responsibilities into multiple jobs or separate workflow files.
+
+This improves readability and makes debugging much easier.
+
+---
+
+## 2. Pin Action Versions
+
+Avoid using floating versions whenever possible.
+
+Good:
+
+```yaml
+uses: actions/checkout@v4
+```
+
+Better than:
+
+```yaml
+uses: actions/checkout@main
+```
+
+Pinning versions ensures predictable behavior over time.
+
+---
+
+## 3. Test Every Push
+
+Never wait until release day to discover problems.
+
+Run automated tests on every push and every pull request.
+
+---
+
+## 4. Use Secrets Correctly
+
+Never hardcode passwords, API keys, or tokens.
+
+Instead, store sensitive information inside GitHub Secrets.
+
+Example:
+
+```yaml
+env:
+  API_KEY: ${{ secrets.API_KEY }}
+```
+
+---
+
+## 5. Cache Dependencies
+
+Large projects spend significant time reinstalling packages.
+
+GitHub Actions caching can dramatically reduce build time.
+
+---
+
+## 6. Read Workflow Logs
+
+Every workflow execution produces detailed logs.
+
+Learning to read these logs makes debugging much faster.
+
+> **Key Takeaway**
+
+> Simple workflows are easier to maintain, easier to debug, and more reliable over time.
+
+# Common Mistakes
+
+Even experienced developers occasionally make mistakes when writing GitHub Actions workflows.
+
+Here are some of the most common ones.
+
+## Incorrect YAML Indentation
+
+YAML depends entirely on indentation.
+
+Even a single misplaced space can prevent the workflow from running.
+
+---
+
+## Forgetting Checkout
+
+Without:
+
+```yaml
+uses: actions/checkout@v4
+```
+
+GitHub Actions does not download your repository.
+
+---
+
+## Missing Dependencies
+
+Running tests before installing project requirements usually results in import errors.
+
+Always install dependencies first.
+
+---
+
+## Wrong Python Version
+
+Projects should explicitly define the Python version.
+
+Example:
+
+```yaml
+python-version: "3.12"
+```
+
+This guarantees consistent execution across environments.
+
+---
+
+## Ignoring Failed Tests
+
+Never ignore failing tests.
+
+A failing workflow should stop deployment until the problem is fixed.
+
+---
+
+## Hardcoding Secrets
+
+Sensitive credentials should never appear inside workflow files.
+
+Always use GitHub Secrets.
+
+> **Key Takeaway**
+
+> Most GitHub Actions problems are caused by small configuration mistakes rather than complex programming errors.
