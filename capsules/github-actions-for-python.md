@@ -153,3 +153,87 @@ This behavior prevents invalid builds from continuing.
 > **Key Takeaway**
 
 > Steps are the smallest executable units inside a GitHub Actions job.
+
+# Your First Workflow
+
+A GitHub Actions workflow is defined inside a YAML file.
+
+The file must be placed inside:
+
+```text
+.github/workflows/
+```
+
+A minimal workflow looks like this:
+
+```yaml
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python --version
+```
+
+Let's understand each part.
+
+| Section | Purpose |
+|---------|---------|
+| name | Workflow name displayed in GitHub |
+| on | Defines the trigger event |
+| jobs | Collection of jobs |
+| runs-on | Operating system used |
+| steps | Individual tasks |
+
+This workflow simply starts a Linux virtual machine, downloads the repository, installs Python, and prints the Python version.
+
+> **Key Takeaway**
+
+> Every GitHub Actions workflow starts with a trigger, then executes one or more jobs composed of sequential steps.
+
+# Installing Project Dependencies
+
+Most Python projects rely on external packages.
+
+Before running tests or building the project, these packages must be installed.
+
+The standard approach is:
+
+```yaml
+- run: pip install -r requirements.txt
+```
+
+The `requirements.txt` file contains all project dependencies.
+
+Example:
+
+```text
+markdown
+weasyprint
+pytest
+pytest-cov
+pygments
+mistletoe
+```
+
+Installing dependencies guarantees that every workflow runs in a clean and reproducible environment.
+
+Without this step, many builds would fail because required libraries would not be available.
+
+> **Key Takeaway**
+
+> Always install project dependencies before executing tests or build commands.
