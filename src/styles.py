@@ -53,12 +53,17 @@ margin-bottom:16px;
 }}
 
 .cover{{
-text-align:center;
-padding:{COVER_PADDING};
-page-break-after:always;
-background:{PRIMARY_COLOR};
-color:white;
-border-radius:{BORDER_RADIUS};
+    position:relative;
+    text-align:center;
+    padding:{COVER_PADDING};
+    page-break-after:always;
+    background:{PRIMARY_COLOR};
+    color:white;
+    border-radius:{BORDER_RADIUS};
+
+    height:240mm;
+    overflow:hidden;
+    box-sizing:border-box;
 }}
 
 .cover h1{{
@@ -123,10 +128,14 @@ text-align:left;
 }}
 
 .cover-footer{{
-margin-top:70px;
-font-size:15px;
-letter-spacing:1px;
-opacity:.85;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:35px;
+
+    font-size:15px;
+    letter-spacing:1px;
+    opacity:.85;
 }}
 
 pre{{
