@@ -237,3 +237,102 @@ Without this step, many builds would fail because required libraries would not b
 > **Key Takeaway**
 
 > Always install project dependencies before executing tests or build commands.
+
+# Testing with Pytest
+
+Automated testing is one of the main reasons developers use GitHub Actions.
+
+Instead of manually running tests before every commit, GitHub Actions can execute the test suite automatically whenever new code is pushed.
+
+A common workflow step looks like this:
+
+```yaml
+- name: Run Tests
+  run: |
+    pytest --cov=src --cov-report=term-missing
+```
+
+Let's understand this command.
+
+| Option | Description |
+|---------|-------------|
+| pytest | Executes all project tests |
+| --cov=src | Measures code coverage for the `src` package |
+| --cov-report=term-missing | Displays missing lines directly in the terminal |
+
+Running tests automatically provides several advantages:
+
+- Detects bugs early.
+- Prevents broken code from reaching the main branch.
+- Increases confidence before releases.
+- Ensures consistent quality across contributors.
+
+## Real Project Example
+
+The **Ahmed Adawy Tech Capsules** project uses the following command inside its GitHub Actions workflow:
+
+```yaml
+- name: Run Tests with Coverage
+  run: |
+    pytest --cov=src --cov-report=term-missing
+```
+
+A successful execution produces output similar to:
+
+```text
+============================ test session starts ============================
+
+collected 54 items
+
+54 passed
+
+Coverage Report
+
+TOTAL............................94%
+```
+
+This means:
+
+- All automated tests completed successfully.
+- No failing test cases were found.
+- Approximately 94% of the source code is covered by automated tests.
+
+High code coverage does not guarantee bug-free software, but it significantly improves confidence in the stability of a project.
+
+> **Key Takeaway**
+
+> Automating tests with GitHub Actions ensures that every code change is validated before becoming part of the project.
+
+# Uploading Build Artifacts
+
+After a successful build, GitHub Actions can store generated files as artifacts.
+
+Artifacts allow developers to download build outputs directly from the workflow page.
+
+Typical artifacts include:
+
+- PDF files
+- Documentation
+- Test reports
+- Coverage reports
+- Executable binaries
+
+Example:
+
+```yaml
+- name: Upload PDF
+  uses: actions/upload-artifact@v4
+  with:
+    name: tech-capsules
+    path: output/
+```
+
+Once the workflow finishes successfully, GitHub stores the generated files for later download.
+
+This feature is particularly useful for documentation projects where every commit automatically produces updated PDF versions.
+
+In the Ahmed Adawy Tech Capsules project, artifacts are used to archive generated technical capsules after every successful build.
+
+> **Key Takeaway**
+
+> Artifacts make it easy to distribute generated files without committing them to the repository.
