@@ -1,4 +1,3 @@
-
 ---
 title: GitHub Actions for Python Projects
 subtitle: Automating Testing, Building & Deployment
