@@ -45,11 +45,20 @@ font-family:{TITLE_FONT},sans-serif;
 color:{PRIMARY_COLOR};
 margin-top:28px;
 margin-bottom:14px;
+break-after:avoid;
+page-break-after:avoid;
 }}
 
 p{{
 text-align:justify;
 margin-bottom:16px;
+}}
+
+p{{
+text-align:justify;
+margin-bottom:16px;
+orphans:3;
+widows:3;
 }}
 
 .cover{{
