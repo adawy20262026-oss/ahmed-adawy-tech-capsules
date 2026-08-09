@@ -106,6 +106,20 @@ Automated tests provide an early warning system for these regressions.
 
 Faster Feedback
 
+
 A test suite can execute many checks in seconds.
 
 This is much faster than manually testing every feature after every change.
+Safer Refactoring
+
+Tests allow developers to change internal implementation while verifying that expected behavior remains intact.
+
+Better Documentation
+
+A good test communicates how a function is expected to behave.
+
+Continuous Integration
+
+Tests can also run automatically whenever code is pushed to a repository.
+
+This is especially useful with GitHub Actions.
