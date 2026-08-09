@@ -30,7 +30,7 @@ Each capsule focuses on one topic, providing concise explanations, real-world ex
 
 Software becomes harder to maintain as it grows.
 
-A small Python project may begin with a few functions and a handful of files. At that stage, manually checking whether everything still works may seem reasonable.
+A small Python project may begin with a few functions and a handful of files. At that stage, manually checking whether everything still works can seem reasonable.
 
 But as the project grows, manual verification becomes expensive.
 
@@ -50,17 +50,18 @@ This capsule focuses on using pytest to build reliable tests for Python projects
 
 The goal is not to cover every feature of pytest.
 
-Instead, we will build a practical understanding of the features that developers use most often:
+Instead, we will build a practical understanding of the features developers use most often:
 
 - Writing tests
 - Assertions
 - Fixtures
-- Parametrization
+- Parameterization
 - Exception testing
 - Test organization
 - Code coverage
 - Continuous integration
 - Testing a small real-world project
+- Best practices
 
 By the end of this capsule, you should be able to create a small but useful automated testing system for a Python project.
 
@@ -79,24 +80,78 @@ Consider a simple function:
 ```python
 def add(a, b):
     return a + b
+```
 
 A basic test could verify its expected behavior:
 
+```python
 def test_add():
     assert add(2, 3) == 5
+```
 
 This test is small, but it establishes an important contract:
 
-When add() receives 2 and 3, the expected result is 5.
+> When `add()` receives `2` and `3`, the expected result is `5`.
 
 As the project grows, more tests can protect more behavior.
 
-2. What pytest Provides
+## Tests as Contracts
 
-pytest is a Python testing framework designed to make writing and running tests simple.
+A useful way to think about automated tests is that they describe expected behavior.
 
-A typical pytest workflow looks like this:
+For example:
 
+```python
+def divide(a, b):
+    return a / b
+```
+
+A test can define what successful division should look like:
+
+```python
+def test_divide():
+    assert divide(10, 2) == 5
+```
+
+The test becomes an executable statement about the software.
+
+If a future change accidentally modifies the result, the test can expose the regression.
+
+## Regression Protection
+
+Regression means that previously working behavior stops working after a change.
+
+For example:
+
+```python
+def calculate_total(price, quantity):
+    return price * quantity
+```
+
+Tests might establish:
+
+```python
+def test_calculate_total():
+    assert calculate_total(10, 3) == 30
+```
+
+Later, someone changes the implementation.
+
+If the function suddenly returns `25`, the automated test fails.
+
+This is one of the greatest advantages of testing:
+
+**The test suite remembers behavior that developers might otherwise forget.**
+
+---
+
+# 2. What pytest Provides
+
+`pytest` is a Python testing framework designed to make writing and running tests simple.
+
+A typical workflow looks like this:
+
+```text
 Write code
     ↓
 Write tests
@@ -108,191 +163,285 @@ Inspect failures
 Fix code
     ↓
 Run pytest again
+```
 
 This cycle can be repeated whenever the project changes.
 
-## 2. What pytest Provides
+## Installing pytest
 
-pytest is a Python testing framework designed to make automated testing simple, readable, and practical.
+pytest can be installed with pip:
 
-Instead of building a large testing infrastructure, developers can create small Python functions that describe expected behavior and then execute them with pytest.
+```bash
+pip install pytest
+```
 
-A typical workflow looks like this:
-
-1. Write application code.
-2. Write tests for the expected behavior.
-3. Run pytest.
-4. Inspect failures.
-5. Fix the implementation.
-6. Run the tests again.
-
-This cycle can be repeated whenever the project changes.
-
-### Simple Test Discovery
-
-pytest automatically discovers test files and test functions when they follow common naming conventions.
-
-A typical project might contain:
+For a project using a requirements file:
 
 ```text
-project/
-├── calculator.py
-├── test_calculator.py
-└── requirements.txt
+pytest
+```
 
-The test file can contain:
+Then install the dependencies:
 
+```bash
+pip install -r requirements.txt
+```
+
+## Running pytest
+
+From the project directory:
+
+```bash
+pytest
+```
+
+pytest automatically searches for test files and test functions using its standard discovery rules.
+
+A common test file name is:
+
+```text
+test_calculator.py
+```
+
+A common test function name is:
+
+```python
+def test_add():
+    ...
+```
+
+## A First pytest Test
+
+Consider:
+
+```python
+def add(a, b):
+    return a + b
+```
+
+The test file could be:
+
+```python
 from calculator import add
 
 
 def test_add():
     assert add(2, 3) == 5
+```
 
-Running:
+Run:
 
+```bash
 pytest
+```
 
-allows pytest to discover and execute the test automatically.
+A successful result indicates that the test passed.
 
-Why This Matters
+---
 
-The biggest advantage is not simply that pytest runs tests.
+# 3. Writing Effective Tests
 
-The important advantage is that developers can create a predictable feedback loop.
+A test should have a clear purpose.
 
-When code changes, the same tests can be executed again.
+Avoid writing tests that attempt to verify an entire application in one function.
 
-This makes regression detection much easier.
+Instead, focus on one behavior or a closely related group of behaviors.
 
-A developer does not need to remember every behavior that was previously verified manually.
+## Clear Test Names
 
-The test suite becomes an executable description of expected behavior.
+Prefer:
 
-3. Writing Your First Tests
+```python
+def test_user_creation():
+    ...
+```
 
-A pytest test is usually just a Python function whose name begins with test_.
+over:
 
-Consider this function:
+```python
+def test_everything():
+    ...
+```
 
-def multiply(a, b):
-    return a * b
+The first name immediately communicates what is being tested.
 
-A simple test could be:
+## Small Tests
 
-def test_multiply():
-    assert multiply(4, 5) == 20
+A focused test is easier to understand.
 
-The test contains an important idea:
-Given these inputs, the function should produce this result.
+For example:
 
-The assert statement verifies that expectation.
+```python
+def test_user_email():
+    user = create_user("Ahmed", "ahmed@example.com")
+
+    assert user.email == "ahmed@example.com"
+```
+
+This test has one obvious purpose.
+
+## Arrange, Act, Assert
+
+A useful structure for many tests is:
+
+1. Arrange
+2. Act
+3. Assert
+
+For example:
+
+```python
+def test_add():
+    # Arrange
+    a = 2
+    b = 3
+
+    # Act
+    result = add(a, b)
+
+    # Assert
+    assert result == 5
+```
+
+This structure makes the intention of the test easy to follow.
+
+---
+
+# 4. Assertions
+
+Assertions are the foundation of automated testing.
+
+An assertion checks whether an actual result matches an expected condition.
+
+The simplest example is:
+
+```python
+assert add(2, 3) == 5
+```
 
 If the expression is true, the test passes.
 
-If the expression is false, pytest reports a failure.
+If it is false, the test fails.
 
-Testing More Than One Case
+## Equality Assertions
 
-A single test can verify one behavior, but real functions usually need more than one case.
-
-For example:
-def divide(a, b):
-    return a / b
-
-Tests could include:
-
-def test_divide_positive_numbers():
-    assert divide(10, 2) == 5
-
-
-def test_divide_fraction():
-    assert divide(5, 2) == 2.5
-
-Each test has a focused responsibility.
-
-This makes failures easier to understand.
-
-A Useful Testing Principle
-
-A good test should make its expectation obvious.
-
-Compare:
-
-def test_calculation():
-    assert calculate(10, 2) == 5
-
-with:
-
-def test_divide_ten_by_two_returns_five():
-    assert divide(10, 2) == 5
-
-The second name communicates the intended behavior more clearly.
-Test names are part of the documentation of a project.
-
-4. Assertions
-
-Assertions are the foundation of pytest tests.
-
-An assertion expresses something that must be true.
-
-For example:
-
-assert add(2, 3) == 5
-
-The expression can use normal Python comparison operators.
-
-Equality
+```python
 assert result == expected
-This is one of the most common forms.
+```
 
 Example:
 
-assert add(2, 3) == 5
-Inequality
-assert result != unexpecte
-assert calculate_discount(100) != 100
-Boolean Conditions
+```python
+def test_total():
+    total = 10 + 5
 
-Assertions can also verify boolean expressions:
+    assert total == 15
+```
 
-assert is_valid("admin")
+## Inequality Assertions
 
-or:
+```python
+assert result != unexpected
+```
 
-assert not is_valid("")
-Membership
+Example:
 
-Python membership operations can also be tested:
+```python
+def test_status():
+    status = "active"
 
+    assert status != "inactive"
+```
+
+## Boolean Assertions
+
+```python
+assert is_valid
+```
+
+Example:
+
+```python
+def is_positive(value):
+    return value > 0
+
+
+def test_positive_number():
+    assert is_positive(10)
+```
+
+## Membership Assertions
+
+```python
 assert "Python" in ["Python", "Java", "Go"]
-Comparing Collections
+```
 
-Lists and dictionaries can be compared directly:
+This is useful when testing collections and returned data.
 
-def get_languages():
-    return ["Python", "JavaScript", "Go"]
+## Multiple Assertions
 
-A test can verify:
-def test_get_languages():
-    assert get_languages() == [
-        "Python",
-        "JavaScript",
-        "Go",
-    ]
+Multiple assertions can be reasonable when they verify closely related behavior:
 
-This is one reason pytest tests can remain concise.
+```python
+def test_user():
+    user = create_user("Ahmed", "ahmed@example.com")
 
-There is usually no need to manually construct complex comparison logic for ordinary Python objects.
+    assert user.name == "Ahmed"
+    assert user.email == "ahmed@example.com"
+```
 
-5. Fixtures
+However, avoid turning one test into an unrelated collection of checks.
 
-As test suites become larger, tests often need common setup data.
+---
 
-For example, several tests may need the same temporary configuration or object.
+# 5. Testing Functions
 
-Instead of repeating the setup code in every test, pytest provides fixtures.
+Functions are often the easiest part of a Python application to test.
 
-A simple fixture looks like this:
+Consider:
+
+```python
+def multiply(a, b):
+    return a * b
+```
+
+A test can verify several normal cases:
+
+```python
+def test_multiply():
+    assert multiply(2, 3) == 6
+    assert multiply(5, 4) == 20
+```
+
+Testing edge cases is also important.
+
+```python
+def test_multiply_by_zero():
+    assert multiply(10, 0) == 0
+```
+
+Negative values can be tested as well:
+
+```python
+def test_multiply_negative():
+    assert multiply(-2, 3) == -6
+```
+
+The goal is not simply to test random values.
+
+The goal is to test meaningful behavior.
+
+---
+
+# 6. Fixtures
+
+Fixtures are one of pytest's most useful features.
+
+A fixture provides reusable data or setup logic for tests.
+
+Consider:
+
+```python
 import pytest
 
 
@@ -300,192 +449,205 @@ import pytest
 def sample_user():
     return {
         "name": "Ahmed",
-        "role": "developer",
+        "email": "ahmed@example.com",
     }
-A test can request the fixture by using its name as an argument:
+```
 
+A test can use the fixture simply by requesting it as an argument:
+
+```python
 def test_user_name(sample_user):
     assert sample_user["name"] == "Ahmed"
+```
 
-Another test can use the same fixture:
+Another test can reuse it:
 
-def test_user_role(sample_user):
-    assert sample_user["role"] == "developer"
+```python
+def test_user_email(sample_user):
+    assert sample_user["email"] == "ahmed@example.com"
+```
 
-The fixture keeps the setup logic in one place.
-Why Fixtures Matter
+This avoids repeating the same setup code.
 
-Fixtures become especially useful when tests require:
+## Why Fixtures Matter
 
-temporary files
-database connections
-configuration objects
-reusable test data
-API clients
-application objects
-cleanup operations
+Without fixtures, multiple tests might contain:
 
-Instead of every test knowing how to construct these resources, the fixture can provide them.
+```python
+user = {
+    "name": "Ahmed",
+    "email": "ahmed@example.com",
+}
+```
 
-This creates a cleaner separation between:
-Test behavior
+With a fixture, setup becomes centralized.
 
-and:
+```python
+@pytest.fixture
+def sample_user():
+    return {
+        "name": "Ahmed",
+        "email": "ahmed@example.com",
+    }
+```
 
-Test setup
-Fixtures With Cleanup
+This improves maintainability.
 
-Fixtures can also be used when a resource needs cleanup.
+## Fixture for Temporary Data
+
+Fixtures can also create temporary resources.
 
 For example:
-import pytest
 
-
+```python
 @pytest.fixture
-def resource():
-    connection = create_connection()
+def sample_data():
+    return [10, 20, 30]
+```
 
-    yield connection
+Then:
 
-    connection.close()
+```python
+def test_sum(sample_data):
+    assert sum(sample_data) == 60
+```
 
-The code before yield prepares the resource.
+Fixtures become particularly valuable when tests require databases, files, configuration, or other reusable resources.
 
-The value after yield is provided to the test.
+---
 
-The code after yield performs cleanup.
+# 7. Parameterization
 
-This pattern is useful when tests work with resources that should not remain open after execution.
+Sometimes the same test logic should be executed with multiple inputs.
 
-6. Parametrization
+Instead of writing several nearly identical tests, pytest provides parameterization.
 
-Sometimes the same test logic needs to run against several inputs.
+Example:
 
-Without parametrization, a developer might write:
-
-def test_add_one():
-    assert add(1, 1) == 2
-
-
-def test_add_two():
-    assert add(2, 2) == 4
-
-
-def test_add_three():
-    assert add(3, 3) == 6
-The tests work, but the structure contains repeated logic.
-
-pytest provides parametrization for this situation.
-
+```python
 import pytest
 
 
 @pytest.mark.parametrize(
     "a,b,expected",
     [
-        (1, 1, 2),
-        (2, 2, 4),
-        (3, 3, 6),
+        (1, 2, 3),
+        (2, 3, 5),
+        (10, 5, 15),
+        (-1, 1, 0),
+    ],
+)
+def test_add(a, b, expected):
+    assert a + b == expected
+```
+
+pytest runs the test for each set of values.
+
+This produces multiple test cases from one test function.
+
+## Why Parameterization Helps
+
+Without parameterization:
+
+```python
+def test_add_1():
+    assert 1 + 2 == 3
+
+
+def test_add_2():
+    assert 2 + 3 == 5
+
+
+def test_add_3():
+    assert 10 + 5 == 15
+```
+
+With parameterization:
+
+```python
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        (1, 2, 3),
+        (2, 3, 5),
         (10, 5, 15),
     ],
 )
 def test_add(a, b, expected):
-    assert add(a, b) == expected
-Now the same test logic runs against multiple input combinations.
+    assert a + b == expected
+```
 
-Why Parametrization Is Useful
+The second version is shorter and communicates the test pattern more clearly.
 
-Parametrization is especially valuable for functions with many input combinations.
+---
 
-For example:
+# 8. Testing Exceptions
 
-Input                  Expected Result
---------------------------------------
-1 + 1                  2
-2 + 2                  4
-3 + 3                  6
-10 + 5                 15
-Instead of creating four separate test functions, one test describes the general behavior.
+Not every function should succeed for every input.
 
-This reduces duplication while increasing coverage.
-
-Testing Boundary Values
-
-Parametrization is also useful for boundary conditions.
+Some inputs should intentionally raise exceptions.
 
 Consider:
 
-def is_adult(age):
-    return age >= 18
-attention.
-
-@pytest.mark.parametrize(
-    "age,expected",
-    [
-        (17, False),
-        (18, True),
-        (19, True),
-    ],
-)
-def test_is_adult(age, expected):
-    assert is_adult(age) == expected
-
-This makes the boundary explicit.
-
-7. Exception Testing
-
-Not every correct behavior produces a normal return value.
-
-Some functions are expected to raise exceptions when invalid input is provided.
-
-Consider:
-
+```python
 def divide(a, b):
     if b == 0:
         raise ValueError("Cannot divide by zero")
 
     return a / b
-The test should verify that the exception is actually raised.
+```
 
-pytest provides raises for this:
+The normal case can be tested with:
 
+```python
+def test_divide():
+    assert divide(10, 2) == 5
+```
+
+But the invalid case should also be tested.
+
+pytest provides `raises()`:
+
+```python
 import pytest
 
 
 def test_divide_by_zero():
     with pytest.raises(ValueError):
         divide(10, 0)
+```
 
-This test is important because it verifies the error-handling contract of the function.
+This verifies that the expected exception occurs.
 
-Testing the Exception Message
-Sometimes the message itself is part of the expected behavior.
+## Testing the Exception Message
 
+The exception itself may not be enough.
+
+The message can also be checked:
+
+```python
 def test_divide_by_zero_message():
-    with pytest.raises(
-        ValueError,
-        match="Cannot divide by zero",
-    ):
+    with pytest.raises(ValueError, match="Cannot divide by zero"):
         divide(10, 0)
+```
 
-Now the test verifies both:
+This makes the expected failure behavior explicit.
 
-The correct exception type.
-The expected message.
-Why Exception Tests Matter
+## Why Exception Testing Matters
 
-Error paths are often less frequently exercised manually than successful paths.
+Invalid input is part of real software behavior.
 
-A function may work correctly for normal input while failing to handle invalid input safely.
+A reliable test suite should verify not only what happens when users provide valid input, but also what happens when they provide invalid input.
 
-Testing exceptions makes those behaviors explicit.
+---
 
-8. Test Organization
+# 9. Test Organization
 
 A growing project needs a predictable testing structure.
 
 A simple project might look like this:
 
+```text
 project/
 ├── src/
 │   ├── calculator.py
@@ -499,33 +661,44 @@ project/
 │
 ├── requirements.txt
 └── pyproject.toml
+```
+
 Separating application code from test code makes the repository easier to navigate.
 
-One Test File Per Logical Area
+## One Test File Per Logical Area
 
 For example:
 
+```text
 calculator.py
 test_calculator.py
+```
 
 and:
 
+```text
 users.py
 test_users.py
+```
 
 This is not a strict requirement, but it creates an intuitive relationship between implementation and tests.
-Keep Tests Focused
+
+## Keep Tests Focused
 
 A test should ideally verify one behavior or a closely related group of behaviors.
 
 Avoid creating enormous tests that verify many unrelated things.
 
-For example, instead of:
+Instead of:
 
+```python
 def test_everything():
     ...
+```
 
 prefer focused tests such as:
+
+```python
 def test_user_creation():
     ...
 
@@ -536,95 +709,125 @@ def test_user_email_validation():
 
 def test_user_permissions():
     ...
+```
 
 Focused tests are easier to debug.
 
-Arrange, Act, Assert
+## Descriptive Test Names
 
-A useful structure for many tests is:
+Good:
 
-Arrange
-   ↓
-Act
-   ↓
-Assert
-For example:
+```python
+def test_user_cannot_login_with_wrong_password():
+    ...
+```
 
-def test_add():
-    # Arrange
-    a = 2
-    b = 3
+Less useful:
 
-    # Act
-    result = add(a, b)
+```python
+def test_login_2():
+    ...
+```
 
-    # Assert
-    assert result == 5
+The test name should communicate the expected behavior.
 
-This structure makes the intention of the test easy to follow.
+---
 
-9. Code Coverage
+# 10. Code Coverage
 
-A test suite can contain many tests without necessarily covering important parts of the application.
+Code coverage measures how much of the application code is executed by tests.
 
-Code coverage provides a way to measure which parts of the code are executed by the tests.
+A popular tool is `pytest-cov`.
 
-A common tool is pytest-cov.
+Install it with:
 
-It can be installed with:
-
+```bash
 pip install pytest-cov
+```
 
-A test suite can then be executed with:
+Then run:
+
+```bash
 pytest --cov
+```
 
 A more specific example is:
 
+```bash
 pytest --cov=src
+```
 
-The output can show which files were executed and which lines were missed.
+Coverage can help identify areas of the application that are not being exercised by tests.
 
-Coverage Is a Measurement, Not a Goal
+## Coverage Is Not the Same as Quality
 
-A high coverage percentage does not automatically mean that a project has high-quality tests.
-Consider:
-
-def add(a, b):
-    return a + b
-
-A test that executes the function increases coverage.
-
-But the quality of the test depends on whether it verifies meaningful behavior.
-
-Coverage answers a question such as:
-
-Which code was executed?
-
-It does not completely answer:
-
-Was the behavior tested correctly?
-
-Use Coverage to Find Gaps
-Coverage becomes useful when it identifies code that has never been exercised.
+A project can have high coverage and still contain poor tests.
 
 For example:
 
-calculator.py       95%
-users.py            91%
-payments.py         63%
+```python
+def test_function():
+    function()
+```
 
-The lower coverage in payments.py may indicate that important branches deserve additional tests.
+The line may execute, but the test may not actually verify the result.
 
-Coverage should therefore be used as a diagnostic tool rather than treated as the only measure of testing quality.
+A better test checks behavior:
 
-10. Continuous Integration
+```python
+def test_function():
+    result = function()
 
-Automated tests become significantly more useful when they run automatically.
+    assert result == expected
+```
 
-Continuous Integration, commonly called CI, allows tests to run whenever changes are pushed to a repository or submitted through a pull request.
+Coverage is therefore a measurement tool, not a replacement for good test design.
 
-A basic GitHub Actions workflow might look like:
-name: Tests
+## What Coverage Can Reveal
+
+Coverage can help identify:
+
+- Untested functions
+- Untested branches
+- Unused code
+- Areas that deserve additional tests
+
+Use coverage as a guide rather than a target to maximize blindly.
+
+---
+
+# 11. Continuous Integration
+
+Automated tests become even more valuable when they run automatically.
+
+A common workflow is:
+
+```text
+Code Change
+    ↓
+Git Push
+    ↓
+Continuous Integration
+    ↓
+Automated Tests
+    ↓
+Pass or Fail
+```
+
+This creates a useful relationship:
+
+**Code Change → Push → Automated Tests → Pass or Fail**
+
+The feedback becomes part of the development workflow rather than a separate manual task.
+
+## GitHub Actions
+
+GitHub Actions can run pytest automatically whenever code is pushed.
+
+A simple workflow might look like:
+
+```yaml
+name: Python Tests
 
 on:
   push:
@@ -646,46 +849,37 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install -r requirements.txt
 
       - name: Run tests
         run: pytest
-The workflow creates an automated verification step.
+```
 
-A developer pushes code.
+Whenever the workflow runs, pytest provides automated feedback.
 
-GitHub Actions starts the workflow.
+## Why CI Matters
 
-The project dependencies are installed.
+Without CI, a developer may forget to run tests before pushing code.
 
-pytest runs.
+With CI, the repository can automatically verify the project.
 
-If a test fails, the workflow reports a failure.
+This is especially useful for:
 
-Why CI Matters
+- Pull requests
+- Refactoring
+- Team projects
+- Open-source projects
+- Production applications
 
-Without CI, a developer may forget to run the full test suite before pushing changes.
+---
 
-With CI, the repository can automatically verify the changes.
-
-This creates a useful relationship:
-
-Code Change
-     ↓
-Push
-     ↓
-Automated Tests
-     ↓
-Pass or Fail
-
-The feedback becomes part of the development workflow rather than a separate manual task.
-
-11. Testing a Small Real-World Project
+# 12. Testing a Small Real-World Project
 
 The ideas in this capsule become more useful when combined.
 
 Consider a small utility module:
 
+```python
 def add(a, b):
     return a + b
 
@@ -699,7 +893,11 @@ def divide(a, b):
 
 def is_positive(value):
     return value > 0
+```
+
 A corresponding test file could be:
+
+```python
 import pytest
 
 from calculator import add
@@ -730,202 +928,505 @@ def test_divide_by_zero():
 )
 def test_is_positive(value, expected):
     assert is_positive(value) == expected
+```
+
 This small example already demonstrates several important pytest features:
 
-normal assertions
-exception testing
-parametrization
-focused test functions
-readable test names
+- Normal assertions
+- Exception testing
+- Parameterization
+- Focused test functions
+- Readable test names
 
 The project can now be executed with:
 
+```bash
 pytest
+```
 
 A successful run provides evidence that the tested behaviors currently match the expected results.
 
-12. Best Practices
+---
+
+# 13. Improving the Real-World Test Suite
+
+As the project grows, the test suite can evolve.
+
+Suppose the calculator later gains:
+
+```python
+def subtract(a, b):
+    return a - b
+```
+
+A corresponding test can be added:
+
+```python
+def test_subtract():
+    assert subtract(10, 3) == 7
+```
+
+Suppose multiplication is added:
+
+```python
+def multiply(a, b):
+    return a * b
+```
+
+The behavior can be protected with:
+
+```python
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        (2, 3, 6),
+        (5, 4, 20),
+        (-2, 3, -6),
+        (10, 0, 0),
+    ],
+)
+def test_multiply(a, b, expected):
+    assert multiply(a, b) == expected
+```
+
+The test suite grows together with the application.
+
+This is much safer than waiting until the end of a project to start testing.
+
+---
+
+# 14. Best Practices
 
 A useful pytest test suite is not simply a large collection of test functions.
 
 It should be understandable, maintainable, and trustworthy.
 
-Keep Tests Readable
+## Keep Tests Readable
 
 Tests are read by developers when something breaks.
 
 Prefer:
 
+```python
 def test_divide_by_zero_raises_error():
     with pytest.raises(ValueError):
         divide(10, 0)
-over unnecessarily complicated test code.
+```
 
-Test Behavior, Not Implementation Details
+over unnecessarily complicated test logic.
 
-Tests should generally focus on what a function or component does.
+## Test Behavior, Not Implementation Details
 
-For example:
-
-assert calculate_total(items) == 150
-
-is often more useful than testing every internal variable used to produce 150.
-
-This makes tests more resistant to refactoring.
-
-Use Descriptive Names
-A test name should help explain the expected behavior.
-
-Good:
-
-def test_empty_username_is_rejected():
-    ...
-
-Less useful:
-
-def test_case_7():
-    ...
-Avoid Excessive Duplication
-
-If many tests repeat the same setup, consider a fixture.
-
-If the same test logic is repeated with different values, consider parametrization.
-
-Test Important Boundaries
-
-Typical boundary values deserve special attention.
+Tests should generally verify what the software does rather than how the internal implementation happens to work.
 
 For example:
 
-Below the boundary
-At the boundary
-Above the boundary
-If a function accepts ages from 18 onward, test:
+```python
+result = calculate_total(10, 3)
 
-17
-18
-19
-Keep the Test Suite Fast
+assert result == 30
+```
 
-A test suite that takes a few seconds is easier to run frequently than one that takes several minutes.
+This is usually more useful than testing every internal variable used to produce the result.
 
-Fast tests encourage developers to run them after every meaningful change.
+## Avoid Excessive Duplication
 
-Run Tests Locally and in CI
-Local testing provides immediate feedback.
+If many tests require the same setup, consider a fixture.
 
-CI provides an independent automated verification step.
+```python
+@pytest.fixture
+def sample_user():
+    return {
+        "name": "Ahmed",
+        "email": "ahmed@example.com",
+    }
+```
 
-Both are valuable.
+Then reuse it:
 
-13. Final Checklist
+```python
+def test_user_name(sample_user):
+    assert sample_user["name"] == "Ahmed"
+```
 
-Before considering a small Python testing setup complete, verify the following:
+## Test Edge Cases
 
- pytest is installed.
- Tests are stored in a dedicated test directory when appropriate.
- Test files follow predictable naming conventions.
- Test functions have descriptive names.
- Assertions verify expected behavior.
- Important error conditions are tested.
- Fixtures are used when setup is shared.
- Parametrization is used when test logic is repeated.
- Boundary values are considered.
- Coverage is used to identify testing gaps.
- Tests run successfully from the command line.
- CI runs the test suite automatically.
- The test suite remains understandable as the project grows.
+Normal inputs are important, but edge cases often reveal hidden problems.
 
-Conclusion
+For numeric functions, consider:
 
-Automated testing is most valuable when it becomes part of the normal development process.
+- Zero
+- Negative values
+- Large values
+- Empty input
+- Boundary values
 
-pytest makes this practical by providing a simple way to write tests using ordinary Python code.
+For example:
 
-The basic workflow is straightforward:
-Write Code
-    ↓
-Write Tests
-    ↓
-Run pytest
-    ↓
-Inspect Failures
-    ↓
-Improve Code
-    ↓
-Run Tests Again
-As projects grow, fixtures, parametrization, exception testing, coverage, and continuous integration provide additional structure.
+```python
+def test_multiply_by_zero():
+    assert multiply(10, 0) == 0
+```
 
-The goal is not to create the largest possible test suite.
+## Test Failure Behavior
 
-The goal is to create a test suite that developers can trust.
+Do not test only successful scenarios.
 
-A reliable test suite gives a project something extremely valuable:
+If a function is supposed to reject invalid input, test that behavior explicitly.
 
-confidence when the code changes.
+```python
+def test_invalid_input():
+    with pytest.raises(ValueError):
+        divide(10, 0)
+```
+
+## Keep Tests Independent
+
+One test should not depend on another test having already executed.
+
+Bad structure:
+
+```python
+def test_create_user():
+    global_user = create_user()
+
+
+def test_user_email():
+    assert global_user.email == "..."
+```
+
+A better approach is to create the required state within a fixture or inside the test itself.
+
+## Run Tests Frequently
+
+Do not wait until the end of a development session.
+
+Run:
+
+```bash
+pytest
+```
+
+after meaningful changes.
+
+Frequent feedback makes failures easier to understand.
+
+---
+
+# 15. A Practical Testing Checklist
+
+Before considering a Python project well tested, ask the following questions.
+
+## Test Design
+
+- Are important functions covered?
+- Are test names descriptive?
+- Does each test have a clear purpose?
+- Are tests reasonably small?
+
+## Input Coverage
+
+- Are normal inputs tested?
+- Are boundary values tested?
+- Are invalid inputs tested?
+- Are empty values considered where appropriate?
+
+## Exceptions
+
+- Are expected exceptions tested?
+- Are important exception messages checked?
+
+## Reusability
+
+- Is repeated setup extracted into fixtures?
+- Could parameterization reduce duplicated tests?
+
+## Organization
+
+- Are tests separated from application code?
+- Are test files organized by logical area?
+- Is the project structure easy to navigate?
+
+## Automation
+
+- Can the complete test suite be run with one command?
+
+```bash
+pytest
+```
+
+- Are tests executed automatically in CI?
+
+## Maintainability
+
+- Can another developer understand the tests?
+- Do tests focus on behavior?
+- Are tests independent?
+- Do failures provide useful information?
+
+---
+
+# 16. A Complete Mini Project
+
+Here is a compact example that combines the main ideas from this capsule.
+
+## Application Code
+
+```python
+# calculator.py
+
+
+def add(a, b):
+    return a + b
+
+
+def subtract(a, b):
+    return a - b
+
+
+def multiply(a, b):
+    return a * b
+
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+
+    return a / b
+
+
+def is_positive(value):
+    return value > 0
+```
+
+## Test Code
+
+```python
+# test_calculator.py
+
+import pytest
+
+from calculator import add
+from calculator import subtract
+from calculator import multiply
+from calculator import divide
+from calculator import is_positive
+
+
+def test_add():
+    assert add(2, 3) == 5
+
+
+def test_subtract():
+    assert subtract(10, 3) == 7
+
+
+@pytest.mark.parametrize(
+    "a,b,expected",
+    [
+        (2, 3, 6),
+        (5, 4, 20),
+        (-2, 3, -6),
+        (10, 0, 0),
+    ],
+)
+def test_multiply(a, b, expected):
+    assert multiply(a, b) == expected
+
+
+def test_divide():
+    assert divide(10, 2) == 5
+
+
+def test_divide_by_zero():
+    with pytest.raises(ValueError, match="Cannot divide by zero"):
+        divide(10, 0)
+
+
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        (1, True),
+        (0, False),
+        (-1, False),
+    ],
+)
+def test_is_positive(value, expected):
+    assert is_positive(value) == expected
+```
+
+## Project Structure
+
+```text
+calculator-project/
+├── calculator.py
+├── test_calculator.py
+├── requirements.txt
+└── pyproject.toml
+```
+
+## Running the Project
+
+Install pytest:
+
+```bash
+pip install pytest
+```
+
+Run the tests:
+
+```bash
+pytest
+```
+
+Run with detailed output:
+
+```bash
+pytest -v
+```
+
+Run coverage:
+
+```bash
+pytest --cov=.
+```
+
+This small project demonstrates a practical testing workflow without unnecessary complexity.
+
+---
+
+# 17. Final Perspective
+
+A reliable test suite is not created by writing hundreds of tests at once.
+
+It is created incrementally.
+
+Start with important behaviors.
+
+Protect those behaviors with focused tests.
+
+Add tests when bugs are discovered.
+
+Use fixtures when setup becomes repetitive.
+
+Use parameterization when the same behavior needs many inputs.
+
+Test exceptions when invalid behavior matters.
+
+Use coverage to discover areas that deserve attention.
+
+Finally, run the tests automatically through continuous integration.
+
+The most valuable result is not a large number of tests.
+
+The most valuable result is **confidence**.
+
+When developers can change code and quickly discover whether existing behavior still works, the project becomes easier to maintain.
+
+That is the real purpose of automated testing.
+
+---
+
+# 18. Quick Reference
+
+## Install pytest
+
+```bash
+pip install pytest
+```
+
+## Run all tests
+
+```bash
+pytest
+```
+
+## Run with verbose output
+
+```bash
+pytest -v
+```
+
+## Run one test file
+
+```bash
+pytest tests/test_calculator.py
+```
+
+## Run one test
+
+```bash
+pytest tests/test_calculator.py::test_add
+```
+
+## Run coverage
+
+```bash
+pytest --cov=src
+```
+
+## Test an exception
+
+```python
+with pytest.raises(ValueError):
+    divide(10, 0)
+```
+
+## Parameterize a test
+
+```python
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        (1, True),
+        (0, False),
+        (-1, False),
+    ],
+)
+def test_is_positive(value, expected):
+    assert is_positive(value) == expected
+```
+
+## Basic assertion
+
+```python
+assert actual == expected
+```
+
+## Basic fixture
+
+```python
+@pytest.fixture
+def sample_data():
+    return [1, 2, 3]
+```
 
 ---
 
 # Thank You for Reading
 
-Thank you for reading **Python Testing with pytest**.
+Thank you for reading **Python Testing with pytest: A Practical Guide to Writing Reliable Tests**.
 
-The goal of this capsule was simple: to turn automated testing from a concept into a practical development habit.
+The goal of this capsule was simple:
 
-You do not need hundreds of tests to start building confidence in your code.
+**Write tests that give developers confidence.**
 
-Start small.
+Good testing is not about making software complicated.
 
-Write a test.
+It is about making change safer.
 
-Run it.
+Keep testing.
 
-Improve your code.
+Keep improving.
 
-Run the tests again.
-
-Over time, this simple workflow becomes one of the strongest safeguards in a growing Python project.
+Keep building reliable software.
 
 ---
 
-## Keep Building. Keep Testing.
+**Ahmed Adawy**
 
-Good software is not only code that works.
+**Ahmed Adawy Tech Capsules**
 
-It is code that can be changed with confidence.
+Professional technical micro-books for practical developers.
 
-**Write better code.  
-Test it.  
-Understand it.  
-Keep improving it.**
-
----
-
-### Ahmed Adawy Tech Capsules
-
-Professional technical micro-books designed for developers who prefer practical knowledge over lengthy theory.
-
-**Author:** Ahmed Adawy  
-**Series:** Ahmed Adawy Tech Capsules  
-**Category:** Python / Testing  
-**Version:** 1.0  
-**Release:** 2026
-
----
-
-## More from Ahmed Adawy
-
-Explore more technical capsules covering:
-
-- Python
-- Software Architecture
-- AI & Generative AI
-- High-Performance Computing
-- Developer Tools
-- Testing & Software Quality
-
----
-
-**© 2026 Ahmed Adawy**
-
-*Thank you for reading.*
+**Version 1.0 — 2026**
