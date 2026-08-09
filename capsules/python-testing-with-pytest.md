@@ -79,3 +79,34 @@ Consider a simple function:
 ```python
 def add(a, b):
     return a + b
+
+A basic test could verify its expected behavior:
+
+def test_add():
+    assert add(2, 3) == 5
+
+This test is small, but it establishes an important contract:
+
+When add() receives 2 and 3, the expected result is 5.
+
+As the project grows, more tests can protect more behavior.
+
+2. What pytest Provides
+
+pytest is a Python testing framework designed to make writing and running tests simple.
+
+A typical pytest workflow looks like this:
+
+Write code
+    ↓
+Write tests
+    ↓
+Run pytest
+    ↓
+Inspect failures
+    ↓
+Fix code
+    ↓
+Run pytest again
+
+This cycle can be repeated whenever the project changes.
