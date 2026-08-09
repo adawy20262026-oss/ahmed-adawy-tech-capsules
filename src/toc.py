@@ -12,18 +12,29 @@ class TOCRenderer:
     from parsed Heading nodes.
     """
 
-    MAX_LEVEL = 3
-
     def render(self, document):
 
+        # Collect all heading nodes
         headings = [
             node
             for node in document
             if isinstance(node, Heading)
-            and node.level <= self.MAX_LEVEL
         ]
 
         if not headings:
+            return ""
+
+        # The first H1 is the capsule title.
+        # It should not appear in the Table of Contents.
+        title_heading = headings[0]
+
+        toc_headings = [
+            node
+            for node in headings[1:]
+            if node.level == 1
+        ]
+
+        if not toc_headings:
             return ""
 
         html = [
@@ -32,8 +43,7 @@ class TOCRenderer:
             "<ul>",
         ]
 
-        for heading in headings:
-
+        for heading in toc_headings:
             html.append(
                 f'<li class="level-{heading.level}">'
                 f"{heading.text}"
