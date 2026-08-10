@@ -5,8 +5,8 @@ Ahmed Adawy Tech Capsules
 
 from pathlib import Path
 
-from renderer import HTMLRenderer
-from pdf_generator import PDFGenerator
+from .renderer import HTMLRenderer
+from .pdf_generator import PDFGenerator
 
 
 class Publisher:
@@ -18,22 +18,19 @@ class Publisher:
     """
 
     def __init__(self):
-
         self.renderer = HTMLRenderer()
         self.pdf = PDFGenerator()
 
     def html(self, document, metadata=None):
-
         return self.renderer.render(
             document,
-            metadata
+            metadata,
         )
 
     def pdf_bytes(self, document, metadata=None):
-
         html = self.html(
             document,
-            metadata
+            metadata,
         )
 
         return self.pdf.generate(html)
@@ -44,15 +41,14 @@ class Publisher:
         output_file: Path,
         metadata=None,
     ):
-
         html = self.html(
             document,
-            metadata
+            metadata,
         )
 
         self.pdf.generate(
             html,
-            output_file
+            output_file,
         )
 
         return output_file
