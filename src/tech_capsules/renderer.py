@@ -3,19 +3,11 @@ HTML Renderer
 Ahmed Adawy Tech Capsules
 """
 
-try:
-    from .styles import get_styles
-    from .cover import CoverRenderer
-    from .toc import TOCRenderer
-    from .content_renderer import ContentRenderer
-    from .footer import FooterRenderer
-
-except ImportError:
-    from styles import get_styles
-    from cover import CoverRenderer
-    from toc import TOCRenderer
-    from content_renderer import ContentRenderer
-    from footer import FooterRenderer
+from .styles import get_styles
+from .cover import CoverRenderer
+from .toc import TOCRenderer
+from .content_renderer import ContentRenderer
+from .footer import FooterRenderer
 
 
 class HTMLRenderer:
@@ -32,41 +24,29 @@ class HTMLRenderer:
 
         template = metadata.get(
             "template",
-            "default"
+            "default",
         )
 
         html = [
-
-            self.header(template)
-
+            self.header(template),
         ]
 
         if metadata:
-
             html.append(
                 CoverRenderer().render(metadata)
             )
 
-        toc = TOCRenderer().render(
-            document
-        )
+        toc = TOCRenderer().render(document)
 
         if toc:
-
             html.append(toc)
 
         html.append(
-
-            ContentRenderer().render(
-                document
-            )
-
+            ContentRenderer().render(document)
         )
 
         html.append(
-
             FooterRenderer().render()
-
         )
 
         html.append("</body>")
@@ -78,20 +58,14 @@ class HTMLRenderer:
 
         return f"""<!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="utf-8">
-
-<title>Tech Capsule</title>
-
-<style>
-
-{get_styles(template)}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Ahmed Adawy Tech Capsules</title>
+    <style>
+        {get_styles(template)}
+    </style>
 </head>
-
 <body>
 """
