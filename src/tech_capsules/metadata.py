@@ -5,6 +5,9 @@ Ahmed Adawy Tech Capsules
 
 
 class MetadataParser:
+    """
+    Parses YAML-like metadata blocks from Markdown files.
+    """
 
     DEFAULTS = {
         "project": "Ahmed Adawy Tech Capsules",
@@ -18,6 +21,18 @@ class MetadataParser:
     }
 
     def parse(self, text: str):
+        """
+        Parse metadata from a Markdown document.
+
+        Expected format:
+
+        ---
+        title: Example
+        author: Ahmed Adawy
+        ---
+
+        Markdown content...
+        """
 
         if not text.startswith("---"):
             return self.DEFAULTS.copy(), text
