@@ -5,39 +5,42 @@ Ahmed Adawy Tech Capsules
 
 from pathlib import Path
 
-from config import (
+from .config import (
     OUTPUT_DIR,
     CAPSULES_DIR,
     DEFAULT_ENCODING,
 )
 
-from parser import MarkdownParser
-from metadata import MetadataParser
-from publisher import Publisher
-from index_generator import IndexGenerator
+from .parser import MarkdownParser
+from .metadata import MetadataParser
+from .publisher import Publisher
+from .index_generator import IndexGenerator
 
 
 class CapsuleBuilder:
+    """
+    Builds technical capsules from Markdown sources.
+    """
 
     def __init__(self):
-
         self.publisher = Publisher()
+        self.metadata_parser = MetadataParser()
+        self.markdown_parser = MarkdownParser()
+        self.index_generator = IndexGenerator()
 
     def build(self, source: Path):
-
         print(f"Building {source.name}")
 
         try:
-
             text = source.read_text(
                 encoding=DEFAULT_ENCODING
             )
 
             metadata, markdown = (
-                MetadataParser().parse(text)
+                self.metadata_parser.parse(text)
             )
 
-            document = MarkdownParser().parse(
+            document = self.markdown_parser.parse(
                 markdown
             )
 
@@ -53,11 +56,13 @@ class CapsuleBuilder:
             )
 
             html_file = (
-                OUTPUT_DIR / f"{capsule_name}.html"
+                OUTPUT_DIR
+                / f"{capsule_name}.html"
             )
 
             pdf_file = (
-                OUTPUT_DIR / f"{capsule_name}.pdf"
+                OUTPUT_DIR
+                / f"{capsule_name}.pdf"
             )
 
             html_file.write_text(
@@ -115,18 +120,16 @@ class CapsuleBuilder:
             ) from exc
 
     def build_all(self):
-
         library = []
 
         for source in sorted(
             CAPSULES_DIR.glob("*.md")
         ):
-
             library.append(
                 self.build(source)
             )
 
-        IndexGenerator().generate(
+        self.index_generator.generate(
             library
         )
 
