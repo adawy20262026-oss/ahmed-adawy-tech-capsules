@@ -1,3 +1,8 @@
+"""
+Markdown Parser
+Ahmed Adawy Tech Capsules
+"""
+
 import mistletoe
 
 from mistletoe.block_token import (
@@ -19,54 +24,42 @@ from mistletoe.span_token import (
 
 
 class Heading:
-
     def __init__(self, level, text):
-
         self.level = level
         self.text = text
 
 
 class Paragraph:
-
     def __init__(self, text):
-
         self.text = text
 
 
 class BulletList:
-
     def __init__(self, items):
-
         self.items = items
 
 
 class CodeBlock:
-
     def __init__(self, text, language=""):
-
         self.text = text
         self.language = language or ""
 
 
 class Image:
-
     def __init__(self, src, alt):
-
         self.src = src
         self.alt = alt
 
 
 class Table:
-
     def __init__(self, header, rows):
-
         self.header = header
         self.rows = rows
 
 
 def parse_inline(token):
     """
-    Convert inline markdown tokens into HTML.
+    Convert inline Markdown tokens into HTML.
     """
 
     if isinstance(token, RawText):
@@ -103,7 +96,6 @@ def parse_inline(token):
         )
 
     if isinstance(token, MistletoeLink):
-
         text = "".join(
             parse_inline(child)
             for child in token.children
@@ -116,7 +108,6 @@ def parse_inline(token):
         )
 
     if hasattr(token, "children") and token.children:
-
         return "".join(
             parse_inline(child)
             for child in token.children
@@ -124,9 +115,10 @@ def parse_inline(token):
 
     return getattr(token, "content", "")
 
+
 def parse_markdown(markdown_text):
     """
-    Parse markdown into internal nodes.
+    Parse Markdown into internal document nodes.
     """
 
     document = mistletoe.Document(markdown_text)
@@ -134,10 +126,8 @@ def parse_markdown(markdown_text):
     nodes = []
 
     for token in document.children:
-        print(type(token))
-        
-        if isinstance(token, MistletoeHeading):
 
+        if isinstance(token, MistletoeHeading):
             text = "".join(
                 parse_inline(child)
                 for child in token.children
@@ -150,10 +140,7 @@ def parse_markdown(markdown_text):
                 )
             )
 
-        elif isinstance(
-            token,
-            MistletoeParagraph,
-        ):
+        elif isinstance(token, MistletoeParagraph):
 
             if (
                 len(token.children) == 1
@@ -162,7 +149,6 @@ def parse_markdown(markdown_text):
                     MistletoeImage,
                 )
             ):
-
                 image = token.children[0]
 
                 alt = "".join(
@@ -178,7 +164,6 @@ def parse_markdown(markdown_text):
                 )
 
             else:
-
                 text = "".join(
                     parse_inline(child)
                     for child in token.children
@@ -188,10 +173,7 @@ def parse_markdown(markdown_text):
                     Paragraph(text)
                 )
 
-        elif isinstance(
-            token,
-            MistletoeList,
-        ):
+        elif isinstance(token, MistletoeList):
 
             items = []
 
@@ -205,40 +187,36 @@ def parse_markdown(markdown_text):
                         child,
                         "children",
                     ):
-
                         value += "".join(
                             parse_inline(c)
                             for c in child.children
                         )
 
                 items.append(value)
+
             nodes.append(
                 BulletList(items)
             )
 
-        elif isinstance(
-            token,
-            CodeFence,
-        ):
+        elif isinstance(token, CodeFence):
 
             code = getattr(
                 token,
-                "content", 
+                "content",
                 "",
             )
 
             if (
                 not code
                 and hasattr(
-                    token, 
+                    token,
                     "children",
                 )
             ):
-                
                 code = "".join(
                     getattr(
-                        child, 
-                        "content", 
+                        child,
+                        "content",
                         "",
                     )
                     for child in token.children
@@ -251,10 +229,7 @@ def parse_markdown(markdown_text):
                 )
             )
 
-        elif isinstance(
-            token,
-            MistletoeTable,
-        ):
+        elif isinstance(token, MistletoeTable):
 
             header = []
 
@@ -285,6 +260,7 @@ def parse_markdown(markdown_text):
                     )
 
                 rows.append(current)
+
             nodes.append(
                 Table(
                     header,
@@ -301,13 +277,11 @@ class MarkdownParser:
     """
 
     def parse(self, markdown_text):
-
         return parse_markdown(
             markdown_text
         )
 
     def __call__(self, markdown_text):
-
         return self.parse(
             markdown_text
         )
