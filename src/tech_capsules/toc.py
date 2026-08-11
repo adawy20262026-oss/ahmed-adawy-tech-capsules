@@ -3,7 +3,10 @@ Table of Contents Renderer
 Ahmed Adawy Tech Capsules
 """
 
-from parser import Heading
+try:
+    from .parser import Heading
+except ImportError:
+    from parser import Heading
 
 
 class TOCRenderer:
@@ -13,7 +16,6 @@ class TOCRenderer:
     """
 
     def render(self, document):
-
         # Collect all heading nodes
         headings = [
             node
