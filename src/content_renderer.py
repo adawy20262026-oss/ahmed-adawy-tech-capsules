@@ -7,7 +7,7 @@ from html import escape
 from html.parser import HTMLParser
 
 from highlighter import SyntaxHighlighter
-from parser import (
+from .parser import (
     BulletList,
     CodeBlock,
     Heading,
