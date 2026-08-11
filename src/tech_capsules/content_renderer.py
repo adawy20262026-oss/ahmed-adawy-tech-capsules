@@ -6,7 +6,7 @@ Ahmed Adawy Tech Capsules
 from html import escape
 from html.parser import HTMLParser
 
-from highlighter import SyntaxHighlighter
+from .highlighter import SyntaxHighlighter
 from parser import (
     BulletList,
     CodeBlock,
