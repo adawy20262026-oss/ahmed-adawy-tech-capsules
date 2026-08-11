@@ -3,9 +3,9 @@ Styles
 Ahmed Adawy Tech Capsules
 """
 
-from .highlighter import SyntaxHighlighter
+from highlighter import SyntaxHighlighter
 
-from .theme import (
+from theme import (
     PRIMARY_COLOR,
     SECONDARY_COLOR,
     BACKGROUND,
