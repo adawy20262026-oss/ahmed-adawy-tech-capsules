@@ -8,7 +8,6 @@ class LibraryTemplate:
 
     @staticmethod
     def render_header(total):
-
         return f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -231,6 +230,7 @@ Version {version}
 
 </div>
 """
+
     @staticmethod
     def render_footer():
 
