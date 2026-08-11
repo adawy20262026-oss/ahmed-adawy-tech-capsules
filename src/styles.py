@@ -3,9 +3,9 @@ Styles
 Ahmed Adawy Tech Capsules
 """
 
-from highlighter import SyntaxHighlighter
+from .highlighter import SyntaxHighlighter
 
-from theme import (
+from .theme import (
     PRIMARY_COLOR,
     SECONDARY_COLOR,
     BACKGROUND,
@@ -52,27 +52,21 @@ page-break-after:avoid;
 p{{
 text-align:justify;
 margin-bottom:16px;
-}}
-
-p{{
-text-align:justify;
-margin-bottom:16px;
 orphans:3;
 widows:3;
 }}
 
 .cover{{
-    position:relative;
-    text-align:center;
-    padding:{COVER_PADDING};
-    page-break-after:always;
-    background:{PRIMARY_COLOR};
-    color:white;
-    border-radius:{BORDER_RADIUS};
-
-    height:240mm;
-    overflow:hidden;
-    box-sizing:border-box;
+position:relative;
+text-align:center;
+padding:{COVER_PADDING};
+page-break-after:always;
+background:{PRIMARY_COLOR};
+color:white;
+border-radius:{BORDER_RADIUS};
+height:240mm;
+overflow:hidden;
+box-sizing:border-box;
 }}
 
 .cover h1{{
@@ -137,14 +131,13 @@ text-align:left;
 }}
 
 .cover-footer{{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:35px;
-
-    font-size:15px;
-    letter-spacing:1px;
-    opacity:.85;
+position:absolute;
+left:0;
+right:0;
+bottom:35px;
+font-size:15px;
+letter-spacing:1px;
+opacity:.85;
 }}
 
 pre{{
