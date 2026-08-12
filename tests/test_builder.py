@@ -2,14 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from pathlib import Path
-
-import pytest
-
 from tech_capsules.builder import CapsuleBuilder
-
-
-def test_builder_creation():
 
 
 def test_builder_creation():
@@ -51,6 +44,10 @@ def test_build_returns_dictionary(tmp_path):
         encoding="utf-8",
     )
 
+    # IMPORTANT:
+    # use the builder module, not an undefined "builder" name.
+    from tech_capsules import builder
+
     builder.OUTPUT_DIR = tmp_path
 
     result = obj.build(capsule)
@@ -60,5 +57,3 @@ def test_build_returns_dictionary(tmp_path):
     assert result["title"] == "Demo"
 
     assert result["file"] == "demo"
-
-
