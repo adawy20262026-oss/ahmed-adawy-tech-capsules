@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import build
+from tech_capsules import build
 
 
 def test_main_build_all(monkeypatch, tmp_path):
