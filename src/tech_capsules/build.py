@@ -6,15 +6,13 @@ Ahmed Adawy Tech Capsules
 import sys
 from pathlib import Path
 
+from .builder import CapsuleBuilder
 from .config import (
     CAPSULES_DIR,
     DEFAULT_ENCODING,
 )
-
-from .builder import CapsuleBuilder
-from .metadata import MetadataParser
 from .index_generator import IndexGenerator
-from .site_generator import SiteGenerator
+from .metadata import MetadataParser
 
 
 def main():
@@ -55,8 +53,6 @@ def main():
     IndexGenerator().generate(
         capsules
     )
-
-    SiteGenerator().generate()
 
     print(
         "Build completed successfully."
