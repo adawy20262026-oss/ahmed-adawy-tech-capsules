@@ -2,8 +2,14 @@ from pathlib import Path
 
 import pytest
 
-import builder
-from builder import CapsuleBuilder
+from pathlib import Path
+
+import pytest
+
+from tech_capsules.builder import CapsuleBuilder
+
+
+def test_builder_creation():
 
 
 def test_builder_creation():
