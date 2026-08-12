@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from publisher import Publisher
-
+from tech_capsules.publisher import Publisher
 
 def test_publisher_creation():
 
