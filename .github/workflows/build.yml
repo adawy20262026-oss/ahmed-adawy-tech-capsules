@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Project
         run: |
-          python src/build.py
+          PYTHONPATH=src python -m tech_capsules.build
 
       - name: Show Output
         run: |
@@ -56,3 +56,4 @@ jobs:
           path: |
             output
             docs
+ 
