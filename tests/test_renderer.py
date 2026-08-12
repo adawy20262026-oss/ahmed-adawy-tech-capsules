@@ -1,5 +1,4 @@
-from renderer import HTMLRenderer
-
+from tech_capsules.renderer import HTMLRenderer
 
 def test_renderer_returns_html():
 
