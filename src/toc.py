@@ -3,8 +3,7 @@ Table of Contents Renderer
 Ahmed Adawy Tech Capsules
 """
 
-from parser import Heading
-
+from .parser import Heading
 
 class TOCRenderer:
     """
