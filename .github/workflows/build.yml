@@ -5,16 +5,21 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -45,15 +50,25 @@ jobs:
       - name: Show Output
         run: |
           echo "===== OUTPUT ====="
-          find output -maxdepth 3 -type f -print 2>/dev/null || true
+          ls -R output || true
 
           echo "===== DOCS ====="
-          find docs -maxdepth 4 -type f -print 2>/dev/null || true
+          ls -R docs || true
 
-      - name: Upload Output
-        uses: actions/upload-artifact@v4
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: tech-capsules
-          path: |
-            output
-            docs
+          path: ./docs
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
