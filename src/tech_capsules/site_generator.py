@@ -5,7 +5,7 @@ Ahmed Adawy Tech Capsules
 
 import shutil
 
-from config import OUTPUT_DIR, DOCS_DIR
+from .config import OUTPUT_DIR, DOCS_DIR
 
 
 class SiteGenerator:
