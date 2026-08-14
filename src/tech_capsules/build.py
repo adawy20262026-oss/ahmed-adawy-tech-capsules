@@ -13,6 +13,7 @@ from .config import (
 )
 from .index_generator import IndexGenerator
 from .metadata import MetadataParser
+from .site_generator import SiteGenerator
 
 
 def main():
@@ -53,6 +54,8 @@ def main():
     IndexGenerator().generate(
         capsules
     )
+
+    SiteGenerator().generate()
 
     print(
         "Build completed successfully."
