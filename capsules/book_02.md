@@ -1,20 +1,3 @@
-title: "The Mathematics of Generative AI: From Probability to Language Models"
-author: "Ahmed Adawy"
-language: "en"
-edition: "1st Edition"
-year: "2026"
-description: "A practical mathematical introduction to probability, information theory, sampling, and language-model generation using Python and NumPy."
-keywords:
-  - Generative AI
-  - Large Language Models
-  - Probability
-  - Information Theory
-  - Python
-  - NumPy
-  - Language Models
-  - Machine Learning
----
-
 # The Mathematics of Generative AI
 
 ## From Probability to Language Models
