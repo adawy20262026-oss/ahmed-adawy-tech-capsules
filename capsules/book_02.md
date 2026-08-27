@@ -1885,7 +1885,7 @@ count(x,y)
 
 is the observed count, we can use:
 
-# [ P(y|x)
+[ P(y|x)
 
 \frac{
 count(x,y)+\alpha
