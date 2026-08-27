@@ -560,7 +560,7 @@ x\_1,x\_2,\ldots,x\_n
 
 the probability of the entire sequence can be decomposed as:
 
-# [ P(x\_1,\ldots,x\_n)
+[ P(x\_1,\ldots,x\_n)
 
 P(x\_1)
 P(x\_2|x\_1)
@@ -719,7 +719,7 @@ P\_\theta(x\_i)
 
 We want parameters that maximize this likelihood:
 
-# [ \theta^\*
+[ \theta^\*
 
 \arg\max\_\theta L(\theta)
 ]
@@ -750,7 +750,7 @@ Because:
 
 we get:
 
-# [ \log L(\theta)
+[ \log L(\theta)
 
 \sum\_i \log P\_\theta(x\_i)
 ]
@@ -765,7 +765,7 @@ Machine learning systems usually minimize a loss.
 
 Therefore we define:
 
-# [ NLL
+ [ NLL
 
 -\sum\_i \log P\_\theta(x\_i)
 ]
@@ -904,7 +904,7 @@ Entropy measures the average uncertainty of a probability distribution.
 
 For a discrete distribution:
 
-# [ H(X)
+[ H(X)
 
 -\sum\_x P(x)\log P(x)
 ]
@@ -998,7 +998,7 @@ Cross-entropy measures how well one probability distribution represents another.
 
 For distributions (p) and (q):
 
-# [ H(p,q)
+[ H(p,q)
 
 -\sum\_x p(x)\log q(x)
 ]
@@ -2384,7 +2384,7 @@ This is the mathematical heart of autoregressive generation.
 
 ## Conditional Probability
 
-# [ P(A|B)
+[ P(A|B)
 
 \frac{P(A\cap B)}
 {P(B)}
@@ -2392,14 +2392,14 @@ This is the mathematical heart of autoregressive generation.
 
 ## Joint Probability
 
-# [ P(A,B)
+[ P(A,B)
 
 P(A|B)P(B)
 ]
 
 ## Bayes' Theorem
 
-# [ P(A|B)
+[ P(A|B)
 
 \frac{
 P(B|A)P(A)
@@ -2410,7 +2410,7 @@ P(B)
 
 ## Chain Rule
 
-# [ P(x\_1,\ldots,x\_n)
+[ P(x\_1,\ldots,x\_n)
 
 \prod\_{i=1}^{n}
 P(x\_i|x\_1,\ldots,x\_{i-1})
@@ -2424,28 +2424,28 @@ I(x)=-\log p(x)
 
 ## Entropy
 
-# [ H(X)
+[ H(X)
 
 -\sum\_x P(x)\log P(x)
 ]
 
 ## Cross-Entropy
 
-# [ H(p,q)
+[ H(p,q)
 
 -\sum\_x p(x)\log q(x)
 ]
 
 ## Negative Log-Likelihood
 
-# [ NLL
+[ NLL
 
 -\sum\_i\log P(x\_i)
 ]
 
 ## Softmax
 
-# [ P\_i
+[ P\_i
 
 \frac{e^{z\_i}}
 {\sum\_j e^{z\_j}}
@@ -2453,7 +2453,7 @@ I(x)=-\log p(x)
 
 ## Temperature Softmax
 
-# [ P\_i
+[ P\_i
 
 \frac{e^{z\_i/T}}
 {\sum\_j e^{z\_j/T}}
@@ -2461,7 +2461,7 @@ I(x)=-\log p(x)
 
 ## Perplexity
 
-# [ PP
+[ PP
 
 \exp
 \left(
