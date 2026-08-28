@@ -1,3 +1,14 @@
+---
+title: "The Mathematics of Generative AI"
+subtitle: "From Probability to Language Models"
+author: "Ahmed Adawy"
+category: "Generative AI & LLMs"
+difficulty: "Intermediate to Advanced"
+language: "English"
+version: "1.0"
+release: "2026"
+---
+
 # The Mathematics of Generative AI
 
 ## From Probability to Language Models
