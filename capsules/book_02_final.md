@@ -1,12 +1,19 @@
 ---
-title: "The Mathematics of Generative AI"
-subtitle: "From Probability to Language Models"
+title: "The Mathematics of Generative AI: From Probability to Language Models"
 author: "Ahmed Adawy"
-category: "Generative AI & LLMs"
-difficulty: "Intermediate to Advanced"
-language: "English"
-version: "1.0"
-release: "2026"
+language: "en"
+edition: "1st Edition"
+year: "2026"
+description: "A practical mathematical introduction to probability, information theory, sampling, and language-model generation using Python and NumPy."
+keywords:
+  - Generative AI
+  - Large Language Models
+  - Probability
+  - Information Theory
+  - Python
+  - NumPy
+  - Language Models
+  - Machine Learning
 ---
 
 # The Mathematics of Generative AI
@@ -91,7 +98,7 @@ chair     0.07
 table     0.05
 street    0.01
 ...
-````
+```
 
 The model does not necessarily "know" that the answer is `mat`.
 
@@ -99,9 +106,7 @@ Instead, it estimates a probability distribution over possible next tokens.
 
 Mathematically:
 
-[
-P(x\_{t+1} \mid x\_1,x\_2,\ldots,x\_t)
-]
+> **Formula:** P(x_t+1 mid x_1,x_2,ldots,x_t)
 
 This means:
 
@@ -117,31 +122,23 @@ Probability gives us a way to describe uncertainty.
 
 If we say:
 
-[
-P(A)=1
-]
+> **Formula:** P(A)=1
 
 then event (A) is certain.
 
 If:
 
-[
-P(A)=0
-]
+> **Formula:** P(A)=0
 
 then event (A) is impossible.
 
 For any event:
 
-[
-0 \leq P(A) \leq 1
-]
+> **Formula:** 0 leq P(A) leq 1
 
 A language model typically produces many probabilities whose sum is one:
 
-[
-\sum\_i P(x\_i)=1
-]
+> **Formula:** sum_i P(x_i)=1
 
 For example:
 
@@ -153,9 +150,7 @@ P("bird") = 0.20
 
 Then:
 
-[
-0.50+0.30+0.20=1
-]
+> **Formula:** 0.50+0.30+0.20=1
 
 ---
 
@@ -239,15 +234,11 @@ The model ultimately predicts a probability distribution over the vocabulary.
 
 If the vocabulary has size (V), the model produces:
 
-[
-P(x\_1),P(x\_2),\ldots,P(x\_V)
-]
+> **Formula:** P(x_1),P(x_2),ldots,P(x_V)
 
 with:
 
-[
-\sum\_{i=1}^{V}P(x\_i)=1
-]
+> **Formula:** sum_i=1^VP(x_i)=1
 
 ---
 
@@ -290,9 +281,7 @@ The result is random, but not equally random.
 
 A language model can be viewed as a function:
 
-[
-f(\text{context}) \rightarrow \text{probability distribution}
-]
+> **Formula:** f(context) arrow probability distribution
 
 For example:
 
@@ -321,9 +310,7 @@ A random variable is a mathematical representation of an uncertain outcome.
 
 Suppose:
 
-[
-X = \text{next token}
-]
+> **Formula:** X = next token
 
 If our vocabulary is:
 
@@ -335,17 +322,11 @@ then (X) can take one of those values.
 
 We can assign probabilities:
 
-[
-P(X=\text{cat})=0.5
-]
+> **Formula:** P(X=cat)=0.5
 
-[
-P(X=\text{dog})=0.3
-]
+> **Formula:** P(X=dog)=0.3
 
-[
-P(X=\text{bird})=0.2
-]
+> **Formula:** P(X=bird)=0.2
 
 ---
 
@@ -355,23 +336,17 @@ Language-model tokens are discrete outcomes.
 
 A discrete distribution can be represented as:
 
-[
-P(X=x\_i)
-]
+> **Formula:** P(X=x_i)
 
 for every possible token (x\_i).
 
 The probabilities must satisfy:
 
-[
-P(X=x\_i)\geq0
-]
+> **Formula:** P(X=x_i)geq0
 
 and:
 
-[
-\sum\_i P(X=x\_i)=1
-]
+> **Formula:** sum_i P(X=x_i)=1
 
 ---
 
@@ -381,9 +356,7 @@ The expected value represents the weighted average outcome.
 
 For a discrete variable:
 
-[
-E[X]=\sum\_x xP(X=x)
-]
+> **Formula:** E[X]=sum_x xP(X=x)
 
 For language tokens, numerical interpretation of the token itself is usually not meaningful.
 
@@ -395,15 +368,11 @@ However, expected values become extremely useful when we work with numerical qua
 
 Variance measures how spread out a random variable is.
 
-[
-Var(X)=E[(X-E[X])^2]
-]
+> **Formula:** Var(X)=E[(X-E[X])^2]
 
 Standard deviation is:
 
-[
-\sigma=\sqrt{Var(X)}
-]
+> **Formula:** sigma=sqrtVar(X)
 
 Although language generation does not require us to manually calculate token variance at every step, the idea of uncertainty remains fundamental.
 
@@ -450,11 +419,7 @@ These values are not probabilities.
 
 They can be converted into probabilities using softmax.
 
-[
-softmax(z\_i)=
-\frac{e^{z\_i}}
-{\sum\_j e^{z\_j}}
-]
+> **Formula:** softmax(z_i)= frace^z_i sum_j e^z_j
 
 Python:
 
@@ -479,9 +444,7 @@ The subtraction of the maximum value improves numerical stability.
 
 The exponential function has useful properties:
 
-[
-e^x>0
-]
+> **Formula:** e^x>0
 
 for every real number (x).
 
@@ -523,21 +486,15 @@ This is conditional probability.
 
 The probability of (A) given (B) is:
 
-[
-P(A|B)=\frac{P(A\cap B)}{P(B)}
-]
+> **Formula:** P(A|B)=(P(Acap B)) / (P(B))
 
 provided:
 
-[
-P(B)>0
-]
+> **Formula:** P(B)>0
 
 In language modeling:
 
-[
-P(\text{next token}|\text{context})
-]
+> **Formula:** P(next token|context)
 
 is the central quantity.
 
@@ -547,15 +504,11 @@ is the central quantity.
 
 Joint probability describes two events occurring together:
 
-[
-P(A,B)
-]
+> **Formula:** P(A,B)
 
 The relationship between joint and conditional probability is:
 
-[
-P(A,B)=P(A|B)P(B)
-]
+> **Formula:** P(A,B)=P(A|B)P(B)
 
 This equation is extremely important.
 
@@ -565,13 +518,11 @@ This equation is extremely important.
 
 For a sequence:
 
-[
-x\_1,x\_2,\ldots,x\_n
-]
+> **Formula:** x_1,x_2,ldots,x_n
 
 the probability of the entire sequence can be decomposed as:
 
-[ P(x\_1,\ldots,x\_n)
+> **Formula:** P(x_1,ldots,x_n)
 
 P(x\_1)
 P(x\_2|x\_1)
@@ -594,17 +545,11 @@ The cat sat
 
 A language model can estimate:
 
-[
-P(\text{The cat sat})
-]
+> **Formula:** P(The cat sat)
 
 as:
 
-[
-P(\text{The})
-P(\text{cat}|\text{The})
-P(\text{sat}|\text{The cat})
-]
+> **Formula:** P(The) P(cat|The) P(sat|The cat)
 
 For a longer sentence, we continue the process.
 
@@ -616,11 +561,7 @@ This means that generating a sentence can be understood as repeatedly predicting
 
 Bayes' theorem is:
 
-[
-P(A|B)=
-\frac{P(B|A)P(A)}
-{P(B)}
-]
+> **Formula:** P(A|B)= fracP(B|A)P(A) P(B)
 
 It allows us to reverse conditional relationships.
 
@@ -634,51 +575,33 @@ Suppose a test detects a condition.
 
 Let:
 
-[
-P(D)=0.01
-]
+> **Formula:** P(D)=0.01
 
 and:
 
-[
-P(+|D)=0.95
-]
+> **Formula:** P(+|D)=0.95
 
 Suppose:
 
-[
-P(+|\neg D)=0.05
-]
+> **Formula:** P(+|neg D)=0.05
 
 Then:
 
-[
-P(+)=P(+|D)P(D)+P(+|\neg D)P(\neg D)
-]
+> **Formula:** P(+)=P(+|D)P(D)+P(+|neg D)P(neg D)
 
 Therefore:
 
-[
-P(+)=0.95(0.01)+0.05(0.99)
-]
+> **Formula:** P(+)=0.95(0.01)+0.05(0.99)
 
-[
-P(+)=0.059
-]
+> **Formula:** P(+)=0.059
 
 Bayes gives:
 
-[
-P(D|+)=
-\frac{0.95(0.01)}
-{0.059}
-]
+> **Formula:** P(D|+)= frac0.95(0.01) 0.059
 
 approximately:
 
-[
-0.161
-]
+> **Formula:** 0.161
 
 The lesson is important:
 
@@ -698,15 +621,11 @@ It must learn parameters from data.
 
 Suppose a model has parameters:
 
-[
-\theta
-]
+> **Formula:** theta
 
 The model represents:
 
-[
-P\_\theta(x)
-]
+> **Formula:** P_theta(x)
 
 The goal is to find parameters that make observed training data probable.
 
@@ -716,21 +635,15 @@ The goal is to find parameters that make observed training data probable.
 
 Suppose our dataset contains:
 
-[
-D={x\_1,x\_2,\ldots,x\_n}
-]
+> **Formula:** D=x_1,x_2,ldots,x_n
 
 The likelihood is:
 
-[
-L(\theta)=
-\prod\_{i=1}^{n}
-P\_\theta(x\_i)
-]
+> **Formula:** L(theta)= prod_i=1^n P_theta(x_i)
 
 We want parameters that maximize this likelihood:
 
-[ \theta^\*
+> **Formula:** theta^*
 
 \arg\max\_\theta L(\theta)
 ]
@@ -745,9 +658,7 @@ If the dataset contains thousands or millions of examples, multiplying probabili
 
 For example:
 
-[
-0.1^{1000}
-]
+> **Formula:** 0.1^1000
 
 is tiny.
 
@@ -755,13 +666,11 @@ Instead, we use logarithms.
 
 Because:
 
-[
-\log(ab)=\log(a)+\log(b)
-]
+> **Formula:** log(ab)=log(a)+log(b)
 
 we get:
 
-[ \log L(\theta)
+> **Formula:** log L(theta)
 
 \sum\_i \log P\_\theta(x\_i)
 ]
@@ -776,7 +685,7 @@ Machine learning systems usually minimize a loss.
 
 Therefore we define:
 
- [ NLL
+> **Formula:** NLL
 
 -\sum\_i \log P\_\theta(x\_i)
 ]
@@ -797,9 +706,7 @@ Suppose the correct token has predicted probability:
 
 Its negative log-likelihood is:
 
-[
--\log(0.8)
-]
+> **Formula:** -log(0.8)
 
 Using Python:
 
@@ -867,9 +774,7 @@ One of the most famous quantities is information content.
 
 For an event with probability (p):
 
-[
-I(x)=-\log\_2 p(x)
-]
+> **Formula:** I(x)=-log_2 p(x)
 
 A rare event contains more information.
 
@@ -881,27 +786,19 @@ A common event contains less information.
 
 If:
 
-[
-p=0.5
-]
+> **Formula:** p=0.5
 
 then:
 
-[
-I=-\log\_2(0.5)=1
-]
+> **Formula:** I=-log_2(0.5)=1
 
 If:
 
-[
-p=0.01
-]
+> **Formula:** p=0.01
 
 then:
 
-[
-I=-\log\_2(0.01)
-]
+> **Formula:** I=-log_2(0.01)
 
 which is much larger.
 
@@ -915,7 +812,7 @@ Entropy measures the average uncertainty of a probability distribution.
 
 For a discrete distribution:
 
-[ H(X)
+> **Formula:** H(X)
 
 -\sum\_x P(x)\log P(x)
 ]
@@ -1009,7 +906,7 @@ Cross-entropy measures how well one probability distribution represents another.
 
 For distributions (p) and (q):
 
-[ H(p,q)
+> **Formula:** H(p,q)
 
 -\sum\_x p(x)\log q(x)
 ]
@@ -1018,17 +915,13 @@ In supervised language modeling, the target distribution is often represented as
 
 If the correct token is (k):
 
-[
-p\_k=1
-]
+> **Formula:** p_k=1
 
 and every other target probability is zero.
 
 Then cross-entropy becomes:
 
-[
-H(p,q)=-\log q\_k
-]
+> **Formula:** H(p,q)=-log q_k
 
 This is exactly the negative log-likelihood of the correct token.
 
@@ -1064,21 +957,11 @@ Suppose the model predicts:
 
 Cross-entropy is:
 
-[
--\left(
-1\log(0.7)
-\+
-0\log(0.2)
-\+
-0\log(0.1)
-\right)
-]
+> **Formula:** -( 1log(0.7) + 0log(0.2) + 0log(0.1) )
 
 Therefore:
 
-[
-Loss=-\log(0.7)
-]
+> **Formula:** Loss=-log(0.7)
 
 ---
 
@@ -1116,9 +999,7 @@ The model gives the correct token only 1% probability.
 
 The loss becomes:
 
-[
--\log(0.01)
-]
+> **Formula:** -log(0.01)
 
 which is large.
 
@@ -1260,14 +1141,7 @@ Temperature modifies the sharpness of the distribution.
 
 Given logits (z\_i):
 
-[
-P\_i=
-\frac{
-e^{z\_i/T}
-}{
-\sum\_j e^{z\_j/T}
-}
-]
+> **Formula:** P_i= ( e^z_i/T ) / ( sum_j e^z_j/T )
 
 where (T) is temperature.
 
@@ -1277,9 +1151,7 @@ where (T) is temperature.
 
 If:
 
-[
-T<1
-]
+> **Formula:** T<1
 
 the distribution becomes sharper.
 
@@ -1293,9 +1165,7 @@ This usually produces more predictable output.
 
 If:
 
-[
-T>1
-]
+> **Formula:** T>1
 
 the distribution becomes flatter.
 
@@ -1414,11 +1284,7 @@ Continue.
 
 Mathematically:
 
-[
-x\_{t+1}
-\sim
-P(x|x\_1,\ldots,x\_t)
-]
+> **Formula:** x_t+1 sim P(x|x_1,ldots,x_t)
 
 ---
 
@@ -1477,15 +1343,11 @@ dog -> ran: 1
 
 Then:
 
-[
-P(cat|the)=0.5
-]
+> **Formula:** P(cat|the)=0.5
 
 and:
 
-[
-P(dog|the)=0.5
-]
+> **Formula:** P(dog|the)=0.5
 
 ---
 
@@ -1582,9 +1444,7 @@ It has no attention.
 
 Yet it already demonstrates the central idea:
 
-[
-context \rightarrow probability\ distribution \rightarrow sample
-]
+> **Formula:** context arrow probability distribution arrow sample
 
 Modern language models make this process dramatically more powerful by learning sophisticated representations of context.
 
@@ -1624,22 +1484,11 @@ Perplexity provides another interpretation.
 
 For a sequence of (N) tokens:
 
-[
-PP=
-\exp
-\left(
--\frac{1}{N}
-\sum\_{i=1}^{N}
-\log P(x\_i)
-\right)
-]
+> **Formula:** PP= exp ( -(1) / (N) sum_i=1^N log P(x_i) )
 
 If logarithms are base 2:
 
-[
-PP=
-2^{H}
-]
+> **Formula:** PP= 2^H
 
 where (H) is average cross-entropy in bits.
 
@@ -1651,9 +1500,7 @@ Lower perplexity generally means the model assigns higher probability to the obs
 
 If:
 
-[
-PP=10
-]
+> **Formula:** PP=10
 
 we can loosely interpret the model as having uncertainty comparable to choosing among about ten equally likely possibilities at each prediction step.
 
@@ -1870,15 +1717,11 @@ never appeared.
 
 Our model assigns:
 
-[
-P(ran|cat)=0
-]
+> **Formula:** P(ran|cat)=0
 
 This can cause problems because:
 
-[
-\log(0)
-]
+> **Formula:** log(0)
 
 is undefined.
 
@@ -1890,13 +1733,11 @@ One classical solution is Laplace smoothing.
 
 If:
 
-[
-count(x,y)
-]
+> **Formula:** count(x,y)
 
 is the observed count, we can use:
 
-[ P(y|x)
+> **Formula:** P(y|x)
 
 \frac{
 count(x,y)+\alpha
@@ -1912,9 +1753,7 @@ where:
 
 For Laplace smoothing:
 
-[
-\alpha=1
-]
+> **Formula:** alpha=1
 
 ---
 
@@ -1946,29 +1785,21 @@ We can now see the complete picture.
 
 A language model receives context:
 
-[
-x\_1,\ldots,x\_t
-]
+> **Formula:** x_1,ldots,x_t
 
 and computes scores:
 
-[
-z\_1,\ldots,z\_V
-]
+> **Formula:** z_1,ldots,z_V
 
 These scores become probabilities:
 
-[
-P(x\_i|context)
-]
+> **Formula:** P(x_i|context)
 
 using softmax.
 
 The probability of the correct token produces a loss:
 
-[
-L=-\log P(correct|context)
-]
+> **Formula:** L=-log P(correct|context)
 
 The training algorithm modifies model parameters to reduce the average loss.
 
@@ -2068,15 +1899,11 @@ They form one mathematical system.
 
 Our bigram model uses:
 
-[
-P(x\_t|x\_{t-1})
-]
+> **Formula:** P(x_t|x_t-1)
 
 A more powerful model might use:
 
-[
-P(x\_t|x\_1,\ldots,x\_{t-1})
-]
+> **Formula:** P(x_t|x_1,ldots,x_t-1)
 
 A Transformer uses learned representations and attention to model relationships across the context.
 
@@ -2086,9 +1913,7 @@ The probabilistic objective remains surprisingly familiar.
 
 The model still ultimately produces:
 
-[
-P(next\ token|context)
-]
+> **Formula:** P(next token|context)
 
 That is one of the most important ideas to remember.
 
@@ -2126,7 +1951,6 @@ Your engine should:
 ```python
 import numpy as np
 from collections import defaultdict, Counter
-
 
 class MiniLanguageModel:
 
@@ -2367,19 +2191,7 @@ During generation, the probability distribution becomes a mechanism for selectin
 
 The loop then repeats.
 
-[
-context
-\rightarrow
-prediction
-\rightarrow
-probability
-\rightarrow
-sampling
-\rightarrow
-token
-\rightarrow
-new\ context
-]
+> **Formula:** context arrow prediction arrow probability arrow sampling arrow token arrow new context
 
 This is the mathematical heart of autoregressive generation.
 
@@ -2389,13 +2201,11 @@ This is the mathematical heart of autoregressive generation.
 
 ## Probability
 
-[
-0\leq P(A)\leq1
-]
+> **Formula:** 0leq P(A)leq1
 
 ## Conditional Probability
 
-[ P(A|B)
+> **Formula:** P(A|B)
 
 \frac{P(A\cap B)}
 {P(B)}
@@ -2403,14 +2213,14 @@ This is the mathematical heart of autoregressive generation.
 
 ## Joint Probability
 
-[ P(A,B)
+> **Formula:** P(A,B)
 
 P(A|B)P(B)
 ]
 
 ## Bayes' Theorem
 
-[ P(A|B)
+> **Formula:** P(A|B)
 
 \frac{
 P(B|A)P(A)
@@ -2421,7 +2231,7 @@ P(B)
 
 ## Chain Rule
 
-[ P(x\_1,\ldots,x\_n)
+> **Formula:** P(x_1,ldots,x_n)
 
 \prod\_{i=1}^{n}
 P(x\_i|x\_1,\ldots,x\_{i-1})
@@ -2429,34 +2239,32 @@ P(x\_i|x\_1,\ldots,x\_{i-1})
 
 ## Information
 
-[
-I(x)=-\log p(x)
-]
+> **Formula:** I(x)=-log p(x)
 
 ## Entropy
 
-[ H(X)
+> **Formula:** H(X)
 
 -\sum\_x P(x)\log P(x)
 ]
 
 ## Cross-Entropy
 
-[ H(p,q)
+> **Formula:** H(p,q)
 
 -\sum\_x p(x)\log q(x)
 ]
 
 ## Negative Log-Likelihood
 
-[ NLL
+> **Formula:** NLL
 
 -\sum\_i\log P(x\_i)
 ]
 
 ## Softmax
 
-[ P\_i
+> **Formula:** P_i
 
 \frac{e^{z\_i}}
 {\sum\_j e^{z\_j}}
@@ -2464,7 +2272,7 @@ I(x)=-\log p(x)
 
 ## Temperature Softmax
 
-[ P\_i
+> **Formula:** P_i
 
 \frac{e^{z\_i/T}}
 {\sum\_j e^{z\_j/T}}
@@ -2472,7 +2280,7 @@ I(x)=-\log p(x)
 
 ## Perplexity
 
-[ PP
+> **Formula:** PP
 
 \exp
 \left(
@@ -2489,7 +2297,6 @@ I(x)=-\log p(x)
 ```python
 import numpy as np
 
-
 def softmax(x):
 
     x = np.asarray(x)
@@ -2503,7 +2310,6 @@ def softmax(x):
         / exp_values.sum()
     )
 
-
 def entropy(probabilities):
 
     p = np.asarray(
@@ -2516,7 +2322,6 @@ def entropy(probabilities):
     return -np.sum(
         p * np.log2(p)
     )
-
 
 def cross_entropy(
     target,
@@ -2543,7 +2348,6 @@ def cross_entropy(
         target * np.log(prediction)
     )
 
-
 def negative_log_likelihood(
     probabilities
 ):
@@ -2563,7 +2367,6 @@ def negative_log_likelihood(
         np.log(probabilities)
     )
 
-
 def perplexity(probabilities):
 
     probabilities = np.asarray(
@@ -2582,7 +2385,6 @@ def perplexity(probabilities):
     )
 
     return np.exp(loss)
-
 
 def temperature_distribution(
     logits,
@@ -2661,17 +2463,7 @@ And autoregressive generation repeats the entire process.
 
 The result is a simple mathematical loop hidden inside extremely sophisticated systems:
 
-[
-\boxed{
-\text{Context}
-\rightarrow
-\text{Probability}
-\rightarrow
-\text{Token}
-\rightarrow
-\text{Context}
-}
-]
+> **Formula:** Context arrow Probability arrow Token arrow Context
 
 Understanding this loop is one of the clearest ways to begin understanding Generative AI.
 
