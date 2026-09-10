@@ -1,5 +1,5 @@
 # The Mathematics of Generative AI: From Probability to Language Models
-
+**title:** The Mathematics of Generative AI: From Probability to Language Models
 **Author:** Ahmed Adawy  
 **Category:** General / Professional Technical Capsule  
 **Difficulty:** Beginner  
