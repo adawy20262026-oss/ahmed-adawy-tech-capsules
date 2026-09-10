@@ -1,12 +1,14 @@
-# The Mathematics of Generative AI: From Probability to Language Models
-**title:** The Mathematics of Generative AI: From Probability to Language Models
-**Author:** Ahmed Adawy  
-**Category:** General / Professional Technical Capsule  
-**Difficulty:** Beginner  
-**Language:** English  
-**Version:** 1.0  
-**Release:** 2026  
+---
+title: "The Mathematics of Generative AI: From Probability to Language Models"
+author: Ahmed Adawy
+category: General / Professional Technical Capsule
+difficulty: Beginner
+language: English
+version: 1.0
+release: 2026
+---
 
+# The Mathematics of Generative AI: From Probability to Language Model.
 ---
 
 ## Table of Contents
@@ -19,7 +21,7 @@
 - [Chapter 5: Information Theory](#chapter-5-information-theory)
 - [Chapter 6: Cross-Entropy and Language Models](#chapter-6-cross-entropy-and-language-models)
 - [Chapter 7: Softmax, Temperature, and Sampling](#chapter-7-softmax-temperature-and-sampling)
-- [Chapter 8: From Probability to Text Generation](#chapter-8-from-probability-to-text-generation)
+- [Chapter 8: From Probability to Text Generation](#chapter-8-rom-probability-to-text-generation)
 - [Chapter 9: Perplexity and Measuring Language Models](#chapter-9-perplexity-and-measuring-language-models)
 - [Chapter 10: Building a Tiny Probabilistic Language Model](#chapter-10-building-a-tiny-probabilistic-language-model)
 - [Chapter 11: Putting Everything Together](#chapter-11-putting-everything-together)
